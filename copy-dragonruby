@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# @example
+#   ./copy-dragonruby ~/Downloads/dragonruby-gtk-macos/dragonruby-macos/* ~/Downloads/dragonruby-gtk-macos/dragonruby-macos/.*
+
+#
+# This will copy everything from dragonruby-macos into the current working directory. Make sure to run this at the root of this github repo.
+for filename in "$@"; do
+  base_filename="$(basename "$filename")"
+
+  if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
+    # cp -R "$filename" .
+    echo "Copying: "$base_filename" ..."
+  fi
+done
+
+# Set the source and destination directories
+source_dir="$1"
+destination_dir="$2"
+
+# Check if source directory exists
+if [ ! -d "$source_dir" ]; then
+  echo "Error: Source directory '$source_dir' does not exist."
+  exit 1
+fi
+
+# Check if destination directory exists, create if it doesn't
+if [ ! -d "$destination_dir" ]; then
+  mkdir -p "$destination_dir"
+  echo "Destination directory '$destination_dir' created."
+fi
+
+# Copy all directories from source to destination
+find "$source_dir/.*" -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' filename; do
+    base_filename="$(basename "$filename")"
+
+    if [ "$dir" != "$source_dir" ]; then
+      if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
+        cp -R "$filename" .
+        echo "Copying: "$base_filename" ..."
+      fi
+    fi
+done
+
+find "$source_dir" -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' dir; do
+    base_filename="$(basename "$filename")"
+
+    if [ "$dir" != "$source_dir" ]; then
+      if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
+        cp -R "$filename" .
+        echo "Copying: "$base_filename" ..."
+      fi
+    fi
+done
+
+echo "All directories copied successfully."
