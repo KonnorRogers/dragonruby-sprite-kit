@@ -1,18 +1,7 @@
 #!/bin/sh
 
 # @example
-#   ./copy-dragonruby ~/Downloads/dragonruby-gtk-macos/dragonruby-macos/* ~/Downloads/dragonruby-gtk-macos/dragonruby-macos/.*
-
-#
-# This will copy everything from dragonruby-macos into the current working directory. Make sure to run this at the root of this github repo.
-for filename in "$@"; do
-  base_filename="$(basename "$filename")"
-
-  if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
-    # cp -R "$filename" .
-    echo "Copying: "$base_filename" ..."
-  fi
-done
+#   ./copy-dragonruby ~/Downloads/dragonruby-gtk-macos/dragonruby-macos .
 
 # Set the source and destination directories
 source_dir="$1"
@@ -24,6 +13,11 @@ if [ ! -d "$source_dir" ]; then
   exit 1
 fi
 
+if [ -z "$destination_dir" ]; then
+  echo "No destination given."
+  exit 1
+fi
+
 # Check if destination directory exists, create if it doesn't
 if [ ! -d "$destination_dir" ]; then
   mkdir -p "$destination_dir"
@@ -31,25 +25,21 @@ if [ ! -d "$destination_dir" ]; then
 fi
 
 # Copy all directories from source to destination
-find "$source_dir/.*" -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' filename; do
+find "$source_dir" -maxdepth 1 -print0 | while IFS= read -r -d $'\0' filename; do
     base_filename="$(basename "$filename")"
 
-    if [ "$dir" != "$source_dir" ]; then
-      if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
-        cp -R "$filename" .
-        echo "Copying: "$base_filename" ..."
-      fi
+    # if [ "$source_dir" == "$filename" ]; then
+    # continue
+    # fi
+
+    if [ "$base_filename" != "mygame" ] && [ "$base_filename" != "samples" ]; then
+      cp -R "$filename" .
+      echo "Copying: "$base_filename" ..."
     fi
-done
 
-find "$source_dir" -maxdepth 1 -type d -print0 | while IFS= read -r -d $'\0' dir; do
-    base_filename="$(basename "$filename")"
-
-    if [ "$dir" != "$source_dir" ]; then
-      if [[ "$base_filename" != "mygame" ]] && [[ "$base_filename" != "samples" ]]; then
-        cp -R "$filename" .
-        echo "Copying: "$base_filename" ..."
-      fi
+    # This is specific to this library.
+    if [ "$base_filename" = "mygame" ]; then
+      cp -R "$filename/app/repl.rb" "$destination_dir/app/repl.rb"
     fi
 done
 

@@ -1,0 +1,17 @@
+/.dragonruby/
+/CHANGELOG-CURR.txt
+/CHANGELOG-PREV.txt
+/README.txt
+/VERSION.txt
+/console-logo.png
+/ctags-emacs
+/ctags-vim
+/docs/
+/dragonruby
+/dragonruby-controller.png
+/dragonruby-httpd
+/dragonruby-publish
+/dragonruby.png
+/eula.txt
+/font.ttf
+/open-source-licenses.txt
