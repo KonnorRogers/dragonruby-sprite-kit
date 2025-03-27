@@ -1,5 +1,5 @@
-require "../lib/dragonruby_sprite_manager"
+require "lib/sprite_toolkit.rb"
 
 def tick(args)
-  SpriteManager::Canvas.new.tick(args)
+  SpriteToolkit::Canvas.new.tick(args)
 end
