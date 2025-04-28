@@ -1,20 +1,8 @@
-require "app/hash_methods.rb"
-require "app/tilesheets/loader.rb"
-require "app/json.rb"
-require "app/features/primitives.rb"
-require "app/features/ui/semantic_palette.rb"
+require SpriteKit.to_load_path("camera")
+require SpriteKit.to_load_path("primitives")
+require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
 
-class ::Array
-  original_concat = instance_method(:concat)
-
-  define_method(:concat) do |*arrays|
-    bound_original_concat = original_concat.bind(self)
-    arrays.each { |array| bound_original_concat.call(array) }
-    self
-  end
-end
-
-module SpriteToolkit
+module SpriteKit
   class MapEditor
     attr :mode, :hovered_tile, :selected_tile, :spritesheet_rect
 
@@ -824,7 +812,7 @@ module SpriteToolkit
     end
 
     def add_layer(layer = {})
-      id = SecureRandom.uuid
+      id = GTK.create_uuid
 
       if !layer.name
         layer.name = "Layer #{@layers.length + 1}"

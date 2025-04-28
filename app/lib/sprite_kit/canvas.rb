@@ -1,11 +1,11 @@
 require_relative "camera.rb"
 
-module SpriteToolkit
+module SpriteKit
   class Canvas
     attr_accessor :camera
 
     def initialize
-      @camera = Camera.new
+      @camera = ::SpriteKit::Camera.new
     end
 
     def tick(args)
