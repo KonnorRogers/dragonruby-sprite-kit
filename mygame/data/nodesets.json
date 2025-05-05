@@ -1,0 +1,81 @@
+{
+  "nodesets": [
+    {
+      "name": "nodeset__1",
+      "id": "e8139e26-afc5-4244-bc6d-7850662f668f",
+      "type": "nodeset",
+      "source_h": 96,
+      "source_w": 176,
+      "source_x": 20,
+      "source_y": 604,
+      "tiles": [
+        {
+          "tilemap_name": null,
+          "tile_name": "__004",
+          "source_x": 0,
+          "source_y": 0,
+          "source_h": 80,
+          "source_w": 80,
+          "path": "sprites/hexagon/red.png",
+          "animation_duration": null,
+          "animation_frames": null,
+          "x": 96,
+          "y": 0,
+          "h": 80,
+          "w": 80
+        },
+        {
+          "tilemap_name": null,
+          "tile_name": "__004",
+          "source_x": 0,
+          "source_y": 0,
+          "source_h": 80,
+          "source_w": 80,
+          "path": "sprites/hexagon/violet.png",
+          "animation_duration": null,
+          "animation_frames": null,
+          "x": 16,
+          "y": 0,
+          "h": 80,
+          "w": 80
+        }
+      ],
+      "x": 20,
+      "y": 508,
+      "h": 192,
+      "w": 352,
+      "scaled_tiles": [
+        {
+          "tilemap_name": null,
+          "tile_name": "__004",
+          "source_x": 0,
+          "source_y": 0,
+          "source_h": 80,
+          "source_w": 80,
+          "path": "sprites/hexagon/red.png",
+          "animation_duration": null,
+          "animation_frames": null,
+          "x": 212,
+          "y": 508,
+          "h": 160,
+          "w": 160
+        },
+        {
+          "tilemap_name": null,
+          "tile_name": "__004",
+          "source_x": 0,
+          "source_y": 0,
+          "source_h": 80,
+          "source_w": 80,
+          "path": "sprites/hexagon/violet.png",
+          "animation_duration": null,
+          "animation_frames": null,
+          "x": 52,
+          "y": 508,
+          "h": 160,
+          "w": 160
+        }
+      ]
+    }
+  ]
+}
