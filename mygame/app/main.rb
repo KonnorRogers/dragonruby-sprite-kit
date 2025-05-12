@@ -7,7 +7,7 @@ def tick(args)
   args.state.tile_size ||= TILE_SIZE
 
   args.state.scenes ||= {
-    map_editor_scene: SpriteKit::Scenes::MapEditorScene.new
+    map_editor_scene: SpriteKit::Scenes::SpritesheetScene.new
   }
 
   args.state.text_fields ||= []

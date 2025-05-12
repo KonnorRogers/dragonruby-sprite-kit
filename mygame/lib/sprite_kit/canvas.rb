@@ -1,28 +1,49 @@
 require SpriteKit.to_load_path("camera")
+require SpriteKit.to_load_path("primitives")
+require SpriteKit.to_load_path("spritesheet_loader")
+require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
+require SpriteKit.to_load_path("serializer")
 
 module SpriteKit
   class Canvas
     attr_accessor :camera
 
-    def initialize
+    def initialize(sprite_directory: "sprites")
       @camera = ::SpriteKit::Camera.new
+      @spritesheet_loader = SpriteKit::SpritesheetLoader.new
+      @spritesheets = @spritesheet_loader.load_directory(sprite_directory)
+      @primitives = Primitives.new
+      @max_width = 2000
+      @rect_size = { w: 16, h: 16 }
+    end
+
+    def camera_speed
+      3 + (12 / @camera.scale)
     end
 
     def tick(args)
-      calc_camera
+      input(args)
+      calc(args)
+      render(args)
+    end
+
+    def input(args)
       move_camera(args)
+    end
+
+    def calc(args)
+      calc_camera(args)
+    end
+
+    def render(args)
+      render_camera(args)
       render_sprite_canvas(args)
-
-      args.outputs.sprites << { **Camera.viewport, path: :scene }
-
-      args.outputs[:scene].w = 1500
-      args.outputs[:scene].h = 1500
     end
 
     def move_camera(args)
       inputs = args.inputs
 
-      speed = 3 + (3 / @camera.scale)
+      speed = camera_speed
 
       # Movement
       if inputs.keyboard.left_arrow
@@ -48,7 +69,7 @@ module SpriteKit
       end
     end
 
-    def calc_camera
+    def calc_camera(_args)
       ease = 0.1
       @camera.scale += (@camera.target_scale - @camera.scale) * ease
 
@@ -56,74 +77,112 @@ module SpriteKit
       @camera.y += (@camera.target_y - @camera.y) * ease
     end
 
+    def render_camera(args)
+      args.outputs[:scene].w = 1500
+      args.outputs[:scene].h = 1500
+      args.outputs.sprites << { **Camera.viewport, path: :scene }
+      args.outputs.debug << "Scale: #{@camera.scale}"
+    end
+
     def render_sprite_canvas(args)
-      to_render_target = ->(index) { ("__spritesheet_canvas__#{index}").to_sym }
+      x = 0
+      y = 0
+      gap = 40
+      current_width = 0
 
-      @spritesheet_tiles = []
+      current_row = []
 
-      if !@sprites
-        @spritesheet_target = []
-
-        @spritesheets.each_with_index do |spritesheet, index|
-          render_target = to_render_target.call(index)
-          args.outputs[render_target].w = spritesheet.w
-          args.outputs[render_target].h = spritesheet.h
-          args.outputs[render_target].background_color = [0, 0, 0, 0]
-          args.outputs[render_target].sprites << spritesheet.tiles.map do |sprite|
-            sprite.x = sprite.source_x
-            sprite.y = sprite.source_y
-            sprite.w = sprite.source_w
-            sprite.h = sprite.source_h
-            sprite.dup
-          end
-        end
-      end
-
-      prev_x = ((Camera::SCREEN_WIDTH / -4)).ifloor(TILE_SIZE)
-
-      y = 0 # (Camera::SCREEN_HEIGHT / -4)
-      gap = TILE_SIZE
-
-      # @rendered_spritesheets = []
       @spritesheets.each_with_index do |spritesheet, index|
-        render_target = to_render_target.call(index)
+        current_width += spritesheet.file_width
 
         if index > 0
-          prev_x += @spritesheets[index - 1].file_width + gap
+          prev_spritesheet = @spritesheets[index - 1]
+          if current_width + gap + spritesheet.file_width > @max_width
+            # move down a row
+            current_width = spritesheet.file_width
+            y -= current_row.max_by(&:h).h + gap
+            x = 0
+            current_row = []
+          else
+            x += prev_spritesheet.file_width + gap
+          end
         end
 
         spritesheet_rect = {
-          x: prev_x,
-          y: y,
+          x: x,
+          y: y - spritesheet.file_height,
           w: spritesheet.file_width,
           h: spritesheet.file_height,
-          path: render_target
+          path: spritesheet.path
         }
+
+        current_row << spritesheet_rect
 
         if Camera.intersect_viewport?(@camera, spritesheet_rect)
           spritesheet_target = Camera.to_screen_space(@camera, spritesheet_rect)
 
-          label = {
-            x: spritesheet_target.x,
-            y: spritesheet_target.y - (8 * @camera.scale).ceil,
-            text: "#{spritesheet.name}",
-            primitive_marker: :label,
-            size_px: (16 * @camera.scale).ceil
-          }
+          hover_rect = {}
 
-          normalized_tiles = spritesheet.tiles.map do |sprite|
-            sprite = sprite.dup
-            sprite.x = spritesheet_rect.x + (sprite.x)
-            sprite.y = spritesheet_rect.y + (sprite.y)
-            sprite
+          world_mouse = Camera.to_world_space(@camera, args.inputs.mouse)
+          if Geometry.intersect_rect?(world_mouse, spritesheet_rect)
+            rect_size = {
+              w: @rect_size.w,
+              h: @rect_size.h,
+            }
+
+            max_x = spritesheet_rect.x + spritesheet_rect.w - rect_size.w
+            min_x = spritesheet_rect.x
+            min_y = spritesheet_rect.y
+            max_y = spritesheet_rect.y + spritesheet_rect.h - rect_size.h
+
+            rect_x = (world_mouse.x).ifloor(rect_size.w)
+            rect_y = (world_mouse.y).ifloor(rect_size.h)
+
+            hover_rect = rect_size.merge!({
+              x: rect_x.clamp(min_x, max_x),
+              y: rect_y.clamp(min_y, max_y),
+              path: :pixel,
+              r: 255,
+              g: 0,
+              b: 0,
+              a: 128
+            })
+
+            hover_rect = Camera.to_screen_space(@camera, hover_rect)
+
+            label_size = 20
+            label = {
+              x: spritesheet_target.x + (spritesheet_target.w / 2),
+              y: spritesheet_target.y + spritesheet_target.h + label_size,
+              text: "#{spritesheet.path}",
+              primitive_marker: :label,
+              size_px: label_size,
+              r: 255,
+              b: 255,
+              g: 255,
+              a: 255,
+              anchor_x: 0.5,
+              anchor_y: 0.5,
+            }
+            label_w, label_h = GTK.calcstringbox(label.text, size_px: label_size)
+            label_background = label.merge({
+              w: label_w + 16,
+              h: label_h + 8,
+              anchor_x: 0.5,
+              anchor_y: 0.5,
+              primitive_marker: :solid,
+              r: 0,
+              b: 0,
+              g: 0,
+              a: 255
+            })
+            args.outputs[:scene].primitives << [
+              label_background,
+              label,
+            ]
           end
-          @spritesheet_tiles.concat(normalized_tiles)
 
-          args.outputs[:scene].sprites << [
-            spritesheet_target,
-            @primitives.create_borders(spritesheet_target, border_width: 1, color: {r: 0, b: 0, g: 0, a: 255}).values
-          ]
-          args.outputs[:scene].labels << label
+          args.outputs[:scene].sprites << [spritesheet_target, hover_rect]
         end
       end
     end

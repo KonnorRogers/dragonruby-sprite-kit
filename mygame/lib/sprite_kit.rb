@@ -10,7 +10,7 @@ module SpriteKit
   def self.load(dir = self.load_path)
     puts GTK.list_files(dir)
     GTK.list_files(dir).each do |file|
-      puts "FILE: ", file
+      # puts "FILE: ", file
       next if file.start_with?(".") || File.basename(file).start_with?(".")
 
       file = File.join(dir, file)

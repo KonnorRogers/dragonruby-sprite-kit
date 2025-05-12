@@ -76,6 +76,44 @@
           "w": 160
         }
       ]
+    },
+    {
+      "name": "nodeset__2",
+      "id": "74bef738-119d-4603-8b4f-cc4216a7d08d",
+      "type": "nodeset",
+      "source_h": 96,
+      "source_w": 176,
+      "source_x": 20,
+      "source_y": 604,
+      "tiles": [
+
+      ],
+      "x": 20,
+      "y": 508,
+      "h": 192,
+      "w": 352,
+      "scaled_tiles": [
+
+      ]
+    },
+    {
+      "name": "nodeset__3",
+      "id": "8e4fa034-037c-4220-8612-bd7b74bef738",
+      "type": "nodeset",
+      "source_h": 96,
+      "source_w": 176,
+      "source_x": 20,
+      "source_y": 604,
+      "tiles": [
+
+      ],
+      "x": 20,
+      "y": 508,
+      "h": 192,
+      "w": 352,
+      "scaled_tiles": [
+
+      ]
     }
   ]
 }
