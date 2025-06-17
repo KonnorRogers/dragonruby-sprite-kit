@@ -78,7 +78,7 @@ module SpriteKit
       viewport_world(camera).intersect_rect?(rect)
     end
 
-    def intersect_viewport(rect)
+    def intersect_viewport?(rect)
       self.class.intersect_viewport?(self, rect)
     end
   end

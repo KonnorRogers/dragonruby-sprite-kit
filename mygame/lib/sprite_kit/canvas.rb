@@ -6,7 +6,7 @@ require SpriteKit.to_load_path("serializer")
 
 module SpriteKit
   class Canvas
-    attr_accessor :camera
+    attr_accessor :camera, :hover_rect, :current_sprite
 
     def initialize(sprite_directory: "sprites")
       @camera = ::SpriteKit::Camera.new
@@ -15,6 +15,11 @@ module SpriteKit
       @primitives = Primitives.new
       @max_width = 2000
       @rect_size = { w: 16, h: 16 }
+
+      @hover_rect = nil
+      @current_sprite = nil
+
+      @files = []
     end
 
     def camera_speed
@@ -29,6 +34,10 @@ module SpriteKit
 
     def input(args)
       move_camera(args)
+
+      if args.inputs.keyboard.key_down.escape
+        @current_sprite = nil
+      end
     end
 
     def calc(args)
@@ -38,6 +47,7 @@ module SpriteKit
     def render(args)
       render_camera(args)
       render_sprite_canvas(args)
+      render_current_sprite(args)
     end
 
     def move_camera(args)
@@ -92,6 +102,8 @@ module SpriteKit
 
       current_row = []
 
+      @hover_rect = nil
+
       @spritesheets.each_with_index do |spritesheet, index|
         current_width += spritesheet.file_width
 
@@ -121,8 +133,6 @@ module SpriteKit
         if Camera.intersect_viewport?(@camera, spritesheet_rect)
           spritesheet_target = Camera.to_screen_space(@camera, spritesheet_rect)
 
-          hover_rect = {}
-
           world_mouse = Camera.to_world_space(@camera, args.inputs.mouse)
           if Geometry.intersect_rect?(world_mouse, spritesheet_rect)
             rect_size = {
@@ -137,18 +147,34 @@ module SpriteKit
 
             rect_x = (world_mouse.x).ifloor(rect_size.w)
             rect_y = (world_mouse.y).ifloor(rect_size.h)
+            hover_rect_x = rect_x.clamp(min_x, max_x)
+            hover_rect_y = rect_y.clamp(min_y, max_y)
 
-            hover_rect = rect_size.merge!({
-              x: rect_x.clamp(min_x, max_x),
-              y: rect_y.clamp(min_y, max_y),
+            @hover_rect = rect_size.merge!({
+              x: hover_rect_x,
+              y: hover_rect_y,
               path: :pixel,
               r: 255,
               g: 0,
               b: 0,
-              a: 128
+              a: 20
             })
 
-            hover_rect = Camera.to_screen_space(@camera, hover_rect)
+            @hover_rect = Camera.to_screen_space(@camera, @hover_rect)
+
+            if args.inputs.mouse.click
+              source_x = hover_rect_x - spritesheet_rect.x
+              source_y = hover_rect_y - spritesheet_rect.y
+              @current_sprite = {
+                source_x: source_x,
+                source_y: source_y,
+                source_w: @hover_rect.w,
+                source_h: @hover_rect.h,
+                path: spritesheet_rect.path
+              }
+              args.outputs
+            end
+
 
             label_size = 20
             label = {
@@ -182,8 +208,20 @@ module SpriteKit
             ]
           end
 
-          args.outputs[:scene].sprites << [spritesheet_target, hover_rect]
+          args.outputs[:scene].sprites << [spritesheet_target, @hover_rect]
         end
+      end
+    end
+
+    def render_current_sprite(args)
+      if @current_sprite
+        world_mouse = Camera.to_world_space(@camera, args.inputs.mouse)
+        @current_sprite.w = @current_sprite.source_w
+        @current_sprite.h = @current_sprite.source_h
+        @current_sprite.x = world_mouse.x - (@current_sprite.w / 2)
+        @current_sprite.y = world_mouse.y - (@current_sprite.h / 2)
+
+        args.outputs[:scene].sprites << Camera.to_screen_space(@camera, @current_sprite)
       end
     end
   end
