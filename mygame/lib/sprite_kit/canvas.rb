@@ -1,19 +1,22 @@
 require SpriteKit.to_load_path("camera")
-require SpriteKit.to_load_path("primitives")
 require SpriteKit.to_load_path("spritesheet_loader")
-require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
-require SpriteKit.to_load_path("serializer")
+# require SpriteKit.to_load_path("primitives")
+# require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
+# require SpriteKit.to_load_path("serializer")
 
 module SpriteKit
   class Canvas
-    attr_accessor :camera, :hover_rect, :current_sprite
+    attr_accessor :camera, :hover_rect, :current_sprite, :world_mouse
 
-    def initialize(sprite_directory: "sprites")
-      @camera = ::SpriteKit::Camera.new
+    def initialize(camera:, sprite_directory: "sprites")
+      @camera = camera
       @spritesheet_loader = SpriteKit::SpritesheetLoader.new
       @spritesheets = @spritesheet_loader.load_directory(sprite_directory)
-      @primitives = Primitives.new
+
+      # max_width of elements to load. Wraps downward if greater than 2000px
       @max_width = 2000
+
+      # Determines how big a selection box should be.
       @rect_size = { w: 16, h: 16 }
 
       @hover_rect = nil
@@ -60,8 +63,6 @@ module SpriteKit
 
     def calc(args)
       calc_camera(args)
-
-      @world_mouse = Camera.to_world_space(@camera, args.inputs.mouse)
     end
 
     def render(args)
@@ -181,14 +182,10 @@ module SpriteKit
             })
 
             if args.inputs.mouse.click
-              # TODO: handle -source_x
-              # source_x = (@hover_rect.x - spritesheet_rect.x).clamp(0, spritesheet_rect.w - rect_size.w)
-              # source_y = (@hover_rect.y - spritesheet_rect.y - rect_size.h).clamp(0, spritesheet_rect.h - rect_size.h)
               source_x = (@hover_rect.x - spritesheet_rect.x)
               source_y = (@hover_rect.y - spritesheet_rect.y)
 
               # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
-
               source_w = (rect_size.w).clamp(0, spritesheet.w - source_x)
               # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
               # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
@@ -197,18 +194,31 @@ module SpriteKit
               # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
               # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
 
-              @current_sprite = {
-                w: rect_size.w,
-                h: rect_size.h,
-                source_x: source_x,
-                source_y: source_y,
-                source_w: source_w,
-                source_h: source_h,
-                path: spritesheet_rect.path
-              }
+
+              if args.inputs.keyboard.key_down_or_held?(:shift)
+                if !@current_sprite_start
+                  @current_sprite = nil
+                  @current_sprite_start = {
+                  }
+                else
+                  @current_sprite_start = nil
+                  @current_sprite = {
+                  }
+                end
+              else
+                @current_sprite = {
+                  w: rect_size.w,
+                  h: rect_size.h,
+                  source_x: source_x,
+                  source_y: source_y,
+                  source_w: source_w,
+                  source_h: source_h,
+                  path: spritesheet_rect.path
+                }
+              end
             end
 
-            @hover_rect_screen = Camera.to_screen_space(@camera, @hover_rect)
+            @hover_rect_screen = @camera.to_screen_space(@hover_rect)
 
             label_size = 20
             label = {
