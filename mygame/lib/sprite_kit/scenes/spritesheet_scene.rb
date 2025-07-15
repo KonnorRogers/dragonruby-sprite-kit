@@ -20,6 +20,10 @@ module SpriteKit
         @tickables.each { |tickable| tickable.world_mouse = @world_mouse }
         @canvas.tick(args)
         @nodeset_drawer.tick(args)
+        args.outputs.primitives << args.gtk.framerate_diagnostics_primitives.map.with_index do |primitive, index|
+          primitive.x = args.grid.w - 500 + primitive.x
+          primitive
+        end
       end
     end
   end

@@ -194,7 +194,6 @@ module SpriteKit
               # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
               # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
 
-
               if args.inputs.keyboard.key_down_or_held?(:shift)
                 if !@current_sprite_start
                   @current_sprite = nil
