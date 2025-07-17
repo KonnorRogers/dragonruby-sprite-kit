@@ -18,15 +18,21 @@ module SpriteKit
       @scale = 2
     end
 
-    class << self
-      def viewport
-        {
-          x: OFFSET_X,
-          y: OFFSET_Y,
-          w: 1500,
-          h: 1500
-        }
-      end
+    def to_rect
+      viewport.merge({ x: @x, y: @y })
+    end
+
+    def self.viewport
+      {
+        x: OFFSET_X,
+        y: OFFSET_Y,
+        w: WORLD_SIZE,
+        h: WORLD_SIZE
+      }
+    end
+
+    def viewport
+      self.class.viewport
     end
 
     # @param {#x, #y, #w, #h, #scale} camera

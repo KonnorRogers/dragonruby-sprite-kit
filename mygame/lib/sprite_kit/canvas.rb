@@ -6,7 +6,7 @@ require SpriteKit.to_load_path("spritesheet_loader")
 
 module SpriteKit
   class Canvas
-    attr_accessor :camera, :hover_rect, :current_sprite, :world_mouse
+    attr_accessor :camera, :hover_rect, :current_sprite, :world_mouse, :draw_buffer, :viewport_boundary
 
     def initialize(camera:, sprite_directory: "sprites")
       @camera = camera
@@ -26,12 +26,20 @@ module SpriteKit
       @show_grid = false
       @files = []
       @camera_path = :scene
+
+      # Set prior to tick
+      @draw_buffer = nil
+
+
+      # used to calculate where clicks are registered.
+      @viewport_boundary = nil
     end
 
-    def camera_render_target
-      rt = @outputs[@camera_path]
-      @outputs[@camera_path].w = 1500
-      @outputs[@camera_path].h = 1500
+    def camera_render_target(args)
+      rt = args.outputs[@camera_path]
+      viewport = @camera.viewport
+      args.outputs[@camera_path].w = viewport.w
+      args.outputs[@camera_path].h = viewport.h
       rt
     end
 
@@ -40,10 +48,6 @@ module SpriteKit
     end
 
     def tick(args)
-      @args = args
-      @state = args.state
-      @outputs = args.outputs
-      @inputs = args.inputs
       input(args)
       calc(args)
       render(args)
@@ -72,10 +76,8 @@ module SpriteKit
       render_current_sprite(args)
 
       if @hover_rect_screen
-        camera_render_target.sprites << @hover_rect_screen
+        @draw_buffer[@camera_path] << @hover_rect_screen
       end
-
-      args.outputs.debug << @current_sprite.to_s
     end
 
     def move_camera(args)
@@ -116,8 +118,8 @@ module SpriteKit
     end
 
     def render_camera(args)
-      args.outputs.sprites << { **Camera.viewport, path: @camera_path }
-      args.outputs.debug << "Scale: #{@camera.scale}"
+      camera_render_target(args)
+      @draw_buffer.primitives << { **@camera.viewport, path: @camera_path }
     end
 
     def render_sprite_canvas(args)
@@ -157,10 +159,17 @@ module SpriteKit
 
         current_row << spritesheet_rect
 
-        if Camera.intersect_viewport?(@camera, spritesheet_rect)
-          spritesheet_target = Camera.to_screen_space(@camera, spritesheet_rect)
+        if @camera.intersect_viewport?(spritesheet_rect)
+          spritesheet_target = @camera.to_screen_space(spritesheet_rect)
 
-          if Geometry.intersect_rect?(@world_mouse, spritesheet_rect)
+          viewport_boundary = @viewport_boundary || {
+            x: 0,
+            y: 0,
+            h: args.grid.h,
+            w: args.grid.w
+          }
+
+          if Geometry.intersect_rect?(args.inputs.mouse, viewport_boundary) && Geometry.intersect_rect?(@world_mouse, spritesheet_rect)
             rect_size = {
               w: @rect_size.w,
               h: @rect_size.h,
@@ -175,6 +184,7 @@ module SpriteKit
               x: hover_rect_x,
               y: hover_rect_y,
               path: :pixel,
+              primitive_marker: :sprite,
               r: 255,
               g: 0,
               b: 0,
@@ -245,13 +255,13 @@ module SpriteKit
               g: 0,
               a: 255
             })
-            camera_render_target.primitives << [
+            @draw_buffer[@camera_path].concat([
               label_background,
               label,
-            ]
+            ])
           end
 
-          camera_render_target.sprites << spritesheet_target
+          @draw_buffer[@camera_path] << spritesheet_target
         end
       end
     end
@@ -262,10 +272,10 @@ module SpriteKit
         @current_sprite.h = @current_sprite.source_h
         @current_sprite.x = @world_mouse.x - (@current_sprite.w / 2)
         @current_sprite.y = @world_mouse.y - (@current_sprite.h / 2)
-        args.outputs.debug << { x: @camera.x, y: @camera.y }.to_s
+        # args.outputs.debug << { x: @camera.x, y: @camera.y }.to_s
 
-        args.outputs.debug << @current_sprite.to_s
-        camera_render_target.sprites << Camera.to_screen_space(@camera, @current_sprite)
+        # args.outputs.debug << @current_sprite.to_s
+        @draw_buffer[@camera_path].sprites << Camera.to_screen_space(@camera, @current_sprite)
       end
     end
 
@@ -308,7 +318,7 @@ module SpriteKit
         end
 
         # Update the grid with new widths.
-        args.outputs[:grid].sprites << @grid
+        @draw_buffer[:grid] << @grid
       end
 
       @grid_boxes ||= 10.flat_map do |x|
@@ -322,9 +332,9 @@ module SpriteKit
         @hover_rect_screen.h += grid_border_size + 2
       end
 
-      camera_render_target.sprites << @grid_boxes.map do |rect|
+      @draw_buffer[@camera_path].sprites.concat(@grid_boxes.map do |rect|
         Camera.to_screen_space(@camera, rect)
-      end
+      end)
     end
   end
 end

@@ -1,15 +1,28 @@
 module SpriteKit
   class NodesetDrawer
-    attr_accessor :nodesets, :canvas, :camera, :world_mouse, :render_path
+    attr_accessor :nodesets, :canvas, :world_mouse, :render_path, :draw_buffer, :w, :h, :x, :y
 
-    def initialize(canvas:, camera:)
-      @camera = camera
+    def initialize(canvas:)
       @canvas = canvas
       @nodesets = [
         { name: "tab1", nodes: [] },
         { name: "tab2", nodes: [] }
       ]
       @render_path = :nodeset_drawer
+
+      @w = 0
+      @h = 0
+      @y = 0
+      @x = 0
+    end
+
+    def serialize
+      {
+        x: @x,
+        y: @y,
+        w: @w,
+        h: @h,
+      }
     end
 
     def tick(args)
@@ -31,10 +44,9 @@ module SpriteKit
 
     def render(args)
       @render_target = args.outputs[@render_path]
-      # render_target.background_color = { r: 255, g: 255, b: 255, a: 255 }
-      @render_target.background_color = [255, 255, 255]
-      @render_target.w = args.grid.w
-      @render_target.h = (args.grid.h / 4).ceil
+      @render_target.background_color = [255, 255, 255, 255]
+      @render_target.w = @w
+      @render_target.h = @h
 
       node_background = {
         x: 0,
@@ -47,7 +59,7 @@ module SpriteKit
         b: 0,
         a: 64,
       }
-      @render_target.sprites << node_background
+      @draw_buffer[@render_path] << node_background
 
       @tabs = []
       @nodesets.each_with_index do |nodeset, index|
@@ -68,56 +80,50 @@ module SpriteKit
           node.w = 48
         end
       end
-      @render_target.sprites.concat(active_nodes)
-
-      node_buttons = {
-        left_button: {
-          y: @render_target.h / 2,
-          w: 64,
-          h: 64,
-          text: "<"
-        },
-        right_button: {
-          text: ">",
-          w: 64,
-          h: 64,
-          y: @render_target.h / 2,
-        },
-        drop_button: {
-          x: 180,
-          y: @render_target.h / 2,
-          w: 64,
-          h: 64,
-          text: "+"
-        }
-      }
+      @draw_buffer[@render_path].concat(active_nodes)
 
       tab_buttons = {
         left_button: {
-          x: 30,
-          y: @render_target.h,
-          w: 64,
-          h: 64,
           text: "<"
         },
         right_button: {
-          text: ">",
-          x: 120,
-          w: 64,
-          h: 64,
-          y: @render_target.h,
+          text: ">"
         },
         drop_button: {
-          x: 180,
-          y: @render_target.h,
-          w: 64,
-          h: 64,
           text: "+"
         }
       }
 
-      @render_target.labels.concat(tab_buttons.values).concat(node_buttons.values)
-      args.outputs << {
+      node_buttons = {
+        left_button: {
+          text: "<"
+        },
+        right_button: {
+          text: ">",
+        },
+        drop_button: {
+          text: "+"
+        }
+      }
+
+      tab_buttons.values.tap do |buttons|
+        buttons.each_with_index do |hash, index|
+          hash.x = (20 * index)
+          hash.y = @render_target.h
+          hash.primitive_marker = :label
+        end
+      end
+
+      node_buttons.values.tap do |buttons|
+        buttons.each_with_index do |hash, index|
+          hash.x = (20 * index)
+          hash.y = @render_target.h / 2
+          hash.primitive_marker = :label
+        end
+      end
+
+      @draw_buffer[@render_path].concat(tab_buttons.values).concat(node_buttons.values)
+      @draw_buffer.primitives << {
         x: 0,
         y: 0,
         w: @render_target.w,
