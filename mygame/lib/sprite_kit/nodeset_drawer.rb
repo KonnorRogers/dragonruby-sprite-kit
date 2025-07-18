@@ -123,6 +123,23 @@ module SpriteKit
       end
 
       @draw_buffer[@render_path].concat(tab_buttons.values).concat(node_buttons.values)
+
+      mouse = args.inputs.mouse
+      if mouse.intersect_rect?({
+          x: @x,
+          y: @y,
+          w: @w,
+          h: @h - 16
+      })
+        args.outputs.debug << @current_sprite.to_s
+        @draw_buffer[@render_path] << @current_sprite.merge({
+          x: (mouse.x - 32).clamp(0, @w - 64),
+          y: (mouse.y - 32).clamp(0, @h - 64),
+          w: 64,
+          h: 64,
+        })
+      end
+
       @draw_buffer.primitives << {
         x: 0,
         y: 0,
