@@ -5,16 +5,17 @@ module SpriteKit
     class MapEditorScene
       def initialize
         @map_editor = ::SpriteKit::MapEditor.new
+        @camera = ::SpriteKit::Camera.new
       end
 
       def tick(args)
         calc_camera(args)
         move_camera(args)
 
-        args.outputs.sprites << { **Camera.viewport, path: :scene }
+        args.outputs.sprites << { **@camera.viewport, path: :scene }
 
-        args.outputs[:scene].w = 1500
-        args.outputs[:scene].h = 1500
+        args.outputs[:scene].w = @camera.w
+        args.outputs[:scene].h = @camera.h
 
         @map_editor.tick(args)
 

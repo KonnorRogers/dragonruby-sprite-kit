@@ -6,45 +6,36 @@ require SpriteKit.to_load_path("spritesheet_loader")
 
 module SpriteKit
   class Canvas
-    attr_accessor :camera, :hover_rect, :current_sprite, :world_mouse, :draw_buffer, :viewport_boundary
+    attr_accessor :hover_rect, :rect_size, :viewport_boundary
 
-    def initialize(camera:, sprite_directory: "sprites")
-      @camera = camera
+    def initialize(state:, sprite_directory: "sprites")
       @spritesheet_loader = SpriteKit::SpritesheetLoader.new
       @spritesheets = @spritesheet_loader.load_directory(sprite_directory)
 
       # max_width of elements to load. Wraps downward if greater than 2000px
       @max_width = 2000
 
-      # Determines how big a selection box should be.
-      @rect_size = { w: 16, h: 16 }
-
       @hover_rect = nil
       @hover_rect_screen = nil
-      @current_sprite = nil
 
       @show_grid = false
       @files = []
-      @camera_path = :scene
-
-      # Set prior to tick
-      @draw_buffer = nil
-
 
       # used to calculate where clicks are registered.
       @viewport_boundary = nil
+      @state = state
     end
 
     def camera_render_target(args)
-      rt = args.outputs[@camera_path]
-      viewport = @camera.viewport
-      args.outputs[@camera_path].w = viewport.w
-      args.outputs[@camera_path].h = viewport.h
+      rt = args.outputs[@state.camera_path]
+      viewport = @state.camera.viewport
+      args.outputs[@state.camera_path].w = viewport.w
+      args.outputs[@state.camera_path].h = viewport.h
       rt
     end
 
     def camera_speed
-      3 + (12 / @camera.scale)
+      3 + (12 / @state.camera.scale)
     end
 
     def tick(args)
@@ -57,7 +48,7 @@ module SpriteKit
       move_camera(args)
 
       if args.inputs.keyboard.key_down.escape
-        @current_sprite = nil
+        @state.current_sprite = nil
       end
 
       if args.inputs.keyboard.key_down.g
@@ -76,7 +67,7 @@ module SpriteKit
       render_current_sprite(args)
 
       if @hover_rect_screen
-        @draw_buffer[@camera_path] << @hover_rect_screen
+        @state.draw_buffer[@state.camera_path] << @hover_rect_screen
       end
     end
 
@@ -87,39 +78,39 @@ module SpriteKit
 
       # Movement
       if inputs.keyboard.left_arrow
-        @camera.target_x -= speed
+        @state.camera.target_x -= speed
       elsif inputs.keyboard.right_arrow
-        @camera.target_x += speed
+        @state.camera.target_x += speed
       end
 
       if inputs.keyboard.down_arrow
-        @camera.target_y -= speed
+        @state.camera.target_y -= speed
       elsif inputs.keyboard.up_arrow
-        @camera.target_y += speed
+        @state.camera.target_y += speed
       end
 
       # Zoom
       if args.inputs.keyboard.key_down.equal_sign || args.inputs.keyboard.key_down.plus
-        @camera.target_scale += 0.25
+        @state.camera.target_scale += 0.25
       elsif args.inputs.keyboard.key_down.minus
-        @camera.target_scale -= 0.25
-        @camera.target_scale = 0.25 if @camera.target_scale < 0.25
+        @state.camera.target_scale -= 0.25
+        @state.camera.target_scale = 0.25 if @state.camera.target_scale < 0.25
       elsif args.inputs.keyboard.zero
-        @camera.target_scale = 1
+        @state.camera.target_scale = 1
       end
     end
 
     def calc_camera(_args)
       ease = 0.1
-      @camera.scale += (@camera.target_scale - @camera.scale) * ease
+      @state.camera.scale += (@state.camera.target_scale - @state.camera.scale) * ease
 
-      @camera.x += (@camera.target_x - @camera.x) * ease
-      @camera.y += (@camera.target_y - @camera.y) * ease
+      @state.camera.x += (@state.camera.target_x - @state.camera.x) * ease
+      @state.camera.y += (@state.camera.target_y - @state.camera.y) * ease
     end
 
     def render_camera(args)
       camera_render_target(args)
-      @draw_buffer.primitives << { **@camera.viewport, path: @camera_path }
+      @state.draw_buffer.primitives << { **@state.camera.viewport, path: @state.camera_path }
     end
 
     def render_sprite_canvas(args)
@@ -159,8 +150,8 @@ module SpriteKit
 
         current_row << spritesheet_rect
 
-        if @camera.intersect_viewport?(spritesheet_rect)
-          spritesheet_target = @camera.to_screen_space(spritesheet_rect)
+        if @state.camera.intersect_viewport?(spritesheet_rect)
+          spritesheet_target = @state.camera.to_screen_space(spritesheet_rect)
 
           viewport_boundary = @viewport_boundary || {
             x: 0,
@@ -169,18 +160,15 @@ module SpriteKit
             w: args.grid.w
           }
 
-          if Geometry.intersect_rect?(args.inputs.mouse, viewport_boundary) && Geometry.intersect_rect?(@world_mouse, spritesheet_rect)
-            rect_size = {
-              w: @rect_size.w,
-              h: @rect_size.h,
-            }
+          if Geometry.intersect_rect?(args.inputs.mouse, viewport_boundary) && Geometry.intersect_rect?(@state.world_mouse, spritesheet_rect)
+            rect_size = @state.tile_selection_size
 
-            rect_x = (@world_mouse.x).ifloor(rect_size.w)
-            rect_y = (@world_mouse.y).ifloor(rect_size.h)
+            rect_x = (@state.world_mouse.x).ifloor(rect_size.w)
+            rect_y = (@state.world_mouse.y).ifloor(rect_size.h)
             hover_rect_x = rect_x# .clamp(min_x, max_x)
             hover_rect_y = rect_y# .clamp(min_y, max_y)
 
-            @hover_rect = rect_size.merge!({
+            @hover_rect = rect_size.merge({
               x: hover_rect_x,
               y: hover_rect_y,
               path: :pixel,
@@ -191,43 +179,112 @@ module SpriteKit
               a: 128
             })
 
-            if args.inputs.mouse.click
-              source_x = (@hover_rect.x - spritesheet_rect.x)
-              source_y = (@hover_rect.y - spritesheet_rect.y)
+            unclamped_source_x = (@hover_rect.x - spritesheet_rect.x)# .clamp(0, spritesheet.w - rect_size.w)
+            unclamped_source_y = (@hover_rect.y - spritesheet_rect.y)# .clamp(0, spritesheet.h - rect_size.h)
 
-              # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
-              source_w = (rect_size.w).clamp(0, spritesheet.w - source_x)
-              # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
-              # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
+            source_x = unclamped_source_x.clamp(0, spritesheet.w - rect_size.w)
+            source_y = unclamped_source_y.clamp(0, spritesheet.h - rect_size.h)
 
-              source_h = (rect_size.h).clamp(0, spritesheet.h - source_y)
-              # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
-              # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
-
-              if args.inputs.keyboard.key_down_or_held?(:shift)
-                if !@current_sprite_start
-                  @current_sprite = nil
-                  @current_sprite_start = {
-                  }
-                else
-                  @current_sprite_start = nil
-                  @current_sprite = {
-                  }
-                end
-              else
-                @current_sprite = {
-                  w: rect_size.w,
-                  h: rect_size.h,
-                  source_x: source_x,
-                  source_y: source_y,
-                  source_w: source_w,
-                  source_h: source_h,
-                  path: spritesheet_rect.path
-                }
-              end
+            # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
+            source_w = (rect_size.w).clamp(0, spritesheet.w - source_x)
+            if unclamped_source_x < 0
+              source_w += unclamped_source_x
+              @hover_rect.w += unclamped_source_x
+              @hover_rect.x -= unclamped_source_x
+            elsif unclamped_source_x > spritesheet.w - rect_size.w
+              source_x_diff = unclamped_source_x - source_x
+              source_w -= source_x_diff
+              source_x += source_x_diff
+              @hover_rect.w -= source_x_diff
+              # @hover_rect.x -= source_x_diff
             end
 
-            @hover_rect_screen = @camera.to_screen_space(@hover_rect)
+            # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
+            # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
+
+            source_h = (rect_size.h).clamp(0, spritesheet.h - source_y)
+            if unclamped_source_y < 0
+              source_h += unclamped_source_y
+              @hover_rect.h += unclamped_source_y
+              @hover_rect.y -= unclamped_source_y
+            elsif unclamped_source_y > spritesheet.h - rect_size.h
+              source_y_diff = unclamped_source_y - source_y
+              source_h -= source_y_diff
+              source_y += source_y_diff
+              @hover_rect.h -= source_y_diff
+              # @hover_rect.x -= source_x_diff
+            end
+            # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
+            # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
+
+            new_sprite = {
+              spritesheet_rect: spritesheet_rect,
+              w: @hover_rect.w,
+              h: @hover_rect.h,
+              source_x: source_x,
+              source_y: source_y,
+              source_w: source_w,
+              source_h: source_h,
+              path: spritesheet_rect.path
+            }
+
+            if @state.current_sprite && @state.current_sprite.path == new_sprite.path && args.inputs.keyboard.key_down_or_held?(:shift)
+              current_sprite = @state.current_sprite
+
+              if current_sprite.source_x == new_sprite.source_x
+                # no-op
+              elsif current_sprite.source_x > new_sprite.source_x
+                source_x = [current_sprite.source_x, new_sprite.source_x].min
+                source_w = [current_sprite.source_x - new_sprite.source_x + @hover_rect.w, current_sprite.source_w].max
+              else
+                source_x = [current_sprite.source_x, new_sprite.source_x].min
+                source_w = [new_sprite.source_x - current_sprite.source_x + @hover_rect.w, spritesheet_rect.w - source_x].min
+              end
+
+              if current_sprite.source_y == new_sprite.source_y
+                # no-op
+              elsif current_sprite.source_y > new_sprite.source_y
+                source_y = [current_sprite.source_y, new_sprite.source_y].min
+                source_h = [new_sprite.source_y - current_sprite.source_y + @hover_rect.h, spritesheet_rect.h - source_y].max
+              else
+                source_y = [current_sprite.source_y, new_sprite.source_y].min
+                source_h = [new_sprite.source_y - current_sprite.source_y + @hover_rect.h, spritesheet_rect.h - source_y].min
+              end
+
+              new_sprite = new_sprite.merge({
+                source_x: source_x,
+                source_y: source_y,
+                source_w: source_w,
+                source_h: source_h,
+              })
+
+              if args.inputs.mouse.click
+                @virtual_sprite_selection = nil
+              else
+
+                @virtual_sprite_selection = {
+                  x: spritesheet_rect.x + new_sprite.source_x,
+                  y: spritesheet_rect.y + new_sprite.source_y,
+                  w: new_sprite.source_w,
+                  h: new_sprite.source_h,
+                  path: :pixel,
+                  r: 50,
+                  g: 50,
+                  b: 50,
+                  a: 200
+                }
+                # args.outputs.debug << @state.camera.to_screen_space(@virtual_sprite_selection)
+                @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
+              end
+            else
+              @virtual_sprite_selection = nil
+            end
+
+            if args.inputs.mouse.click
+              @state.current_sprite = new_sprite
+            end
+
+            @hover_rect_screen = @state.camera.to_screen_space(@hover_rect)
 
             label_size = 20
             label = {
@@ -255,35 +312,56 @@ module SpriteKit
               g: 0,
               a: 255
             })
-            @draw_buffer[@camera_path].concat([
+            @state.draw_buffer[@state.camera_path].concat([
               label_background,
               label,
             ])
           end
 
-          @draw_buffer[@camera_path] << spritesheet_target
+          @state.draw_buffer[@state.camera_path] << spritesheet_target
         end
+      end
+
+      if @state.current_sprite
+        @current_sprite_selection = {
+          x: @state.current_sprite.spritesheet_rect.x + @state.current_sprite.source_x,
+          y: @state.current_sprite.spritesheet_rect.y + @state.current_sprite.source_y,
+          w: @state.current_sprite.source_w,
+          h: @state.current_sprite.source_h,
+          path: :pixel,
+          r: 50,
+          g: 50,
+          b: 50,
+          a: 128,
+        }
+
+        @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@current_sprite_selection)
       end
     end
 
     def render_current_sprite(args)
-      if @current_sprite
-        @current_sprite.w = @current_sprite.source_w
-        @current_sprite.h = @current_sprite.source_h
-        @current_sprite.x = @world_mouse.x - (@current_sprite.w / 2)
-        @current_sprite.y = @world_mouse.y - (@current_sprite.h / 2)
-        # args.outputs.debug << { x: @camera.x, y: @camera.y }.to_s
+      current_sprite = @state.current_sprite
+      if current_sprite
+        current_sprite.w = current_sprite.source_w
+        current_sprite.h = current_sprite.source_h
+        current_sprite.x = @state.world_mouse.x - (@state.current_sprite.w / 2)
+        current_sprite.y = @state.world_mouse.y - (@state.current_sprite.h / 2)
+        # args.outputs.debug << { x: @state.camera.x, y: @state.camera.y }.to_s
 
         # args.outputs.debug << @current_sprite.to_s
-        @draw_buffer[@camera_path].sprites << Camera.to_screen_space(@camera, @current_sprite)
+        @state.draw_buffer[@state.camera_path].sprites << @state.camera.to_screen_space(@state.current_sprite)
       end
     end
 
     def render_grid_lines(args)
       grid_border_size = 1
-      width = 1280
-      height = 1280
       tile_size = 16
+
+      rows = 80
+      columns = 80
+      width = tile_size * rows
+      height = tile_size * columns
+
       if Kernel.tick_count == 0
         args.outputs[:grid].w = width
         args.outputs[:grid].h = height
@@ -301,11 +379,11 @@ module SpriteKit
         return
       end
 
-      if @camera.scale != @current_scale
-        @current_scale = @camera.scale
+      if @state.camera.scale != @current_scale
+        @current_scale = @state.camera.scale
 
-        if @camera.scale < 1
-          border_size = (grid_border_size / @camera.scale).ceil
+        if @state.camera.scale < 1
+          border_size = (grid_border_size / @state.camera.scale).ceil
         else
           border_size = grid_border_size
         end
@@ -318,7 +396,7 @@ module SpriteKit
         end
 
         # Update the grid with new widths.
-        @draw_buffer[:grid] << @grid
+        @state.draw_buffer[:grid].concat(@grid)
       end
 
       @grid_boxes ||= 10.flat_map do |x|
@@ -332,8 +410,8 @@ module SpriteKit
         @hover_rect_screen.h += grid_border_size + 2
       end
 
-      @draw_buffer[@camera_path].sprites.concat(@grid_boxes.map do |rect|
-        Camera.to_screen_space(@camera, rect)
+      @state.draw_buffer[@state.camera_path].sprites.concat(@grid_boxes.map do |rect|
+        @state.camera.to_screen_space(rect)
       end)
     end
   end

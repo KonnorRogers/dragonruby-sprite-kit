@@ -1,5 +1,4 @@
 require SpriteKit.to_load_path("canvas")
-require SpriteKit.to_load_path("nodeset_drawer")
 require SpriteKit.to_load_path("draw_buffer")
 
 module SpriteKit
@@ -7,37 +6,47 @@ module SpriteKit
     class SpritesheetScene
       def initialize
         @camera = ::SpriteKit::Camera.new
-        @canvas = ::SpriteKit::Canvas.new(camera: @camera)
-        @nodeset_drawer = ::SpriteKit::NodesetDrawer.new(canvas: @canvas)
         @draw_buffer = ::SpriteKit::DrawBuffer.new
 
-        @tickables = [
-          @canvas,
-          @nodeset_drawer
-        ]
+        @state = {
+          draw_buffer: @draw_buffer,
+          camera: @camera,
+          camera_path: :camera,
+          tile_selection_size: { w: 16, h: 16 }
+        }
 
-        @tickables.each { |tickable| tickable.draw_buffer = @draw_buffer }
+        @canvas = ::SpriteKit::Canvas.new(state: @state)
+        @tool_drawer = ::SpriteKit::ToolDrawer.new(state: @state)
       end
 
       def tick(args)
         @draw_buffer.outputs = args.outputs
-        @world_mouse = @camera.to_world_space(args.inputs.mouse)
+        @state.world_mouse = @camera.to_world_space(args.inputs.mouse)
 
-        @nodeset_drawer.h = (args.grid.h / 4).ceil
-        @nodeset_drawer.w = args.grid.w
-
-        @viewport_boundary = {
-          x: 0,
-          y: @nodeset_drawer.h,
-          w: args.grid.w,
-          h: args.grid.h - @nodeset_drawer.h,
+        viewport_boundary = {
+          x: @tool_drawer.w,
+          y: 0,
+          w: args.grid.w - @tool_drawer.w,
+          h: args.grid.h,
         }
-        @canvas.viewport_boundary = @viewport_boundary
+        @canvas.viewport_boundary = viewport_boundary
 
-        @tickables.each do |tickable|
-          tickable.world_mouse = @world_mouse
-          tickable.tick(args)
-        end
+        @canvas.tick(args)
+        @tool_drawer.tick(args)
+
+        @draw_buffer.primitives << @tool_drawer.serialize
+
+        top_layer = {
+          w: 1280,
+          h: 720,
+          x: 0,
+          y: 0,
+          path: :top_layer
+        }
+        args.outputs[:top_layer].w = top_layer.w
+        args.outputs[:top_layer].h = top_layer.h
+        args.outputs[:top_layer].transient!
+        @draw_buffer.primitives << top_layer
 
         @draw_buffer.flush
 
