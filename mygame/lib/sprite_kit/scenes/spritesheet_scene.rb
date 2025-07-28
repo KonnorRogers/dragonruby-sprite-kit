@@ -12,7 +12,12 @@ module SpriteKit
           draw_buffer: @draw_buffer,
           camera: @camera,
           camera_path: :camera,
-          tile_selection_size: { w: 16, h: 16 }
+          # tile_selection: { w: 16, h: 16, row_gap: 0, column_gap: 0 }
+          tile_selection: {
+            w: 12, h: 12,
+            row_gap: 1, column_gap: 1,
+            offset_x: 1, offset_y: 1,
+          }
         }
 
         @canvas = ::SpriteKit::Canvas.new(state: @state)

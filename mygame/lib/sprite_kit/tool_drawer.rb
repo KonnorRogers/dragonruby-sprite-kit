@@ -47,7 +47,11 @@ module SpriteKit
       @render_target.h = @h
 
       text = [
-        "brush: { w: #{@state.tile_selection_size.w}, h: #{@state.tile_selection_size.h} }",
+        "brush: { w: #{@state.tile_selection.w}, h: #{@state.tile_selection.h} }",
+        "row_gap: #{@state.tile_selection.row_gap}",
+        "column_gap: #{@state.tile_selection.column_gap}",
+        "offset_x: #{@state.tile_selection.offset_x}",
+        "offset_y: #{@state.tile_selection.offset_y}",
         ""
       ]
       labels = []
@@ -84,7 +88,7 @@ module SpriteKit
           h: text_height,
           y: path.y - text_height
         })
-        if args.inputs.mouse.intersect_rect?(path_rect)
+        if args.inputs.mouse.intersect_rect?(serialize) && args.inputs.mouse.intersect_rect?(path_rect)
           @state.draw_buffer[:top_layer].concat([
             {
               x: path_rect.x - 4,

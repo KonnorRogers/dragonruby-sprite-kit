@@ -63,7 +63,7 @@ module SpriteKit
     def render(args)
       render_camera(args)
       render_sprite_canvas(args)
-      render_grid_lines(args)
+      # render_grid_lines(args)
       render_current_sprite(args)
 
       if @hover_rect_screen
@@ -161,12 +161,22 @@ module SpriteKit
           }
 
           if Geometry.intersect_rect?(args.inputs.mouse, viewport_boundary) && Geometry.intersect_rect?(@state.world_mouse, spritesheet_rect)
-            rect_size = @state.tile_selection_size
+            rect_size = @state.tile_selection
 
-            rect_x = (@state.world_mouse.x).ifloor(rect_size.w)
-            rect_y = (@state.world_mouse.y).ifloor(rect_size.h)
-            hover_rect_x = rect_x# .clamp(min_x, max_x)
-            hover_rect_y = rect_y# .clamp(min_y, max_y)
+            relative_x = (@state.world_mouse.x - spritesheet_rect.x).clamp(@state.tile_selection.offset_x, spritesheet_rect.w)
+            relative_y = (@state.world_mouse.y - spritesheet_rect.y).clamp(@state.tile_selection.offset_y, spritesheet_rect.h)
+
+            columns = relative_x.idiv(@state.tile_selection.w)
+            column_gap = @state.tile_selection.column_gap
+
+            rows = relative_y.idiv(@state.tile_selection.h)
+            row_gap = @state.tile_selection.row_gap
+
+            rect_x = (relative_x).ifloor(rect_size.w + column_gap)
+            rect_y = (relative_y).ifloor(rect_size.h + row_gap)
+
+            hover_rect_x = rect_x + spritesheet_rect.x + @state.tile_selection.offset_x
+            hover_rect_y = rect_y + spritesheet_rect.y + @state.tile_selection.offset_y
 
             @hover_rect = rect_size.merge({
               x: hover_rect_x,
@@ -182,11 +192,11 @@ module SpriteKit
             unclamped_source_x = (@hover_rect.x - spritesheet_rect.x)# .clamp(0, spritesheet.w - rect_size.w)
             unclamped_source_y = (@hover_rect.y - spritesheet_rect.y)# .clamp(0, spritesheet.h - rect_size.h)
 
-            source_x = unclamped_source_x.clamp(0, spritesheet.w - rect_size.w)
-            source_y = unclamped_source_y.clamp(0, spritesheet.h - rect_size.h)
+            source_x = unclamped_source_x.clamp(@state.tile_selection.offset_x, spritesheet.w - rect_size.w)
+            source_y = unclamped_source_y.clamp(@state.tile_selection.offset_y, spritesheet.h - rect_size.h)
 
             # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
-            source_w = (rect_size.w).clamp(0, spritesheet.w - source_x)
+            source_w = (rect_size.w).clamp(@state.tile_selection.offset_x, spritesheet.w - source_x)
             if unclamped_source_x < 0
               source_w += unclamped_source_x
               @hover_rect.w += unclamped_source_x
@@ -202,7 +212,7 @@ module SpriteKit
             # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
             # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
 
-            source_h = (rect_size.h).clamp(0, spritesheet.h - source_y)
+            source_h = (rect_size.h).clamp(@state.tile_selection.offset_y, spritesheet.h - source_y)
             if unclamped_source_y < 0
               source_h += unclamped_source_y
               @hover_rect.h += unclamped_source_y
@@ -217,6 +227,9 @@ module SpriteKit
             # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
             # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
 
+            source_x -= column_gap
+            source_y -= row_gap
+
             new_sprite = {
               spritesheet_rect: spritesheet_rect,
               w: @hover_rect.w,
@@ -227,6 +240,18 @@ module SpriteKit
               source_h: source_h,
               path: spritesheet_rect.path
             }
+
+            # @hover_rect.x += @state.tile_selection.offset_x + column_gap
+            # @hover_rect.y += @state.tile_selection.offset_y + row_gap
+            # new_sprite.source_x += @state.tile_selection.offset_x + column_gap
+            # new_sprite.source_y += @state.tile_selection.offset_y + row_gap
+
+            # Check to make sure we're not rendering offset gray areas.
+            # if sprite_out_of_bounds?(new_sprite, spritesheet_rect)
+            #   @hover_rect = nil
+            #   new_sprite = nil
+            #   next
+            # end
 
             if @state.current_sprite && @state.current_sprite.path == new_sprite.path && args.inputs.keyboard.key_down_or_held?(:shift)
               current_sprite = @state.current_sprite
@@ -271,7 +296,8 @@ module SpriteKit
                   r: 50,
                   g: 50,
                   b: 50,
-                  a: 200
+                  a: 200,
+                  blendmode_enum: 0,
                 }
                 # args.outputs.debug << @state.camera.to_screen_space(@virtual_sprite_selection)
                 @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
@@ -353,66 +379,75 @@ module SpriteKit
       end
     end
 
-    def render_grid_lines(args)
-      grid_border_size = 1
-      tile_size = 16
+    # def render_grid_lines(args)
+    #   grid_border_size = 1
+    #   tile_size = 16
 
-      rows = 80
-      columns = 80
-      width = tile_size * rows
-      height = tile_size * columns
+    #   rows = 80
+    #   columns = 80
+    #   width = tile_size * rows
+    #   height = tile_size * columns
 
-      if Kernel.tick_count == 0
-        args.outputs[:grid].w = width
-        args.outputs[:grid].h = height
-        args.outputs[:grid].background_color = [0, 0, 0, 0]
-        @grid = []
-        height.idiv(tile_size).each do |x|
-          width.idiv(tile_size).each do |y|
-            @grid << { line_type: :horizontal, x: x * tile_size, y: y * tile_size, w: tile_size, h: grid_border_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel }
-            @grid << { line_type: :vertical, x: x * tile_size, y: y * tile_size, w: grid_border_size, h: tile_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel  }
-          end
-        end
-      end
+    #   if Kernel.tick_count == 0
+    #     args.outputs[:grid].w = width
+    #     args.outputs[:grid].h = height
+    #     args.outputs[:grid].background_color = [0, 0, 0, 0]
+    #     @grid = []
+    #     height.idiv(tile_size).each do |x|
+    #       width.idiv(tile_size).each do |y|
+    #         @grid << { line_type: :horizontal, x: x * tile_size, y: y * tile_size, w: tile_size, h: grid_border_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel }
+    #         @grid << { line_type: :vertical, x: x * tile_size, y: y * tile_size, w: grid_border_size, h: tile_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel  }
+    #       end
+    #     end
+    #   end
 
-      if !@show_grid
-        return
-      end
+    #   if !@show_grid
+    #     return
+    #   end
 
-      if @state.camera.scale != @current_scale
-        @current_scale = @state.camera.scale
+    #   if @state.camera.scale != @current_scale
+    #     @current_scale = @state.camera.scale
 
-        if @state.camera.scale < 1
-          border_size = (grid_border_size / @state.camera.scale).ceil
-        else
-          border_size = grid_border_size
-        end
+    #     if @state.camera.scale < 1
+    #       border_size = (grid_border_size / @state.camera.scale).ceil
+    #     else
+    #       border_size = grid_border_size
+    #     end
 
-        grid_border_size = border_size
+    #     grid_border_size = border_size
 
-        @grid.each do |line|
-          line.w = grid_border_size if line[:line_type] == :vertical
-          line.h = grid_border_size if line[:line_type] == :horizontal
-        end
+    #     @grid.each do |line|
+    #       line.w = grid_border_size if line[:line_type] == :vertical
+    #       line.h = grid_border_size if line[:line_type] == :horizontal
+    #     end
 
-        # Update the grid with new widths.
-        @state.draw_buffer[:grid].concat(@grid)
-      end
+    #     # Update the grid with new widths.
+    #     @state.draw_buffer[:grid].concat(@grid)
+    #   end
 
-      @grid_boxes ||= 10.flat_map do |x|
-        10.map do |y|
-          { x: (x - 5) * 1280, y: (y - 5) * 1280, w: 1280, h: 1280, path: :grid, r: 0, b: 0, g: 0, a: 64 }
-        end
-      end
+    #   @grid_boxes ||= 10.flat_map do |x|
+    #     10.map do |y|
+    #       { x: (x - 5) * 1280, y: (y - 5) * 1280, w: 1280, h: 1280, path: :grid, r: 0, b: 0, g: 0, a: 64 }
+    #     end
+    #   end
 
-      if @hover_rect_screen
-        @hover_rect_screen.w += grid_border_size + 2
-        @hover_rect_screen.h += grid_border_size + 2
-      end
+    #   if @hover_rect_screen
+    #     @hover_rect_screen.w += grid_border_size + 2
+    #     @hover_rect_screen.h += grid_border_size + 2
+    #   end
 
-      @state.draw_buffer[@state.camera_path].sprites.concat(@grid_boxes.map do |rect|
-        @state.camera.to_screen_space(rect)
-      end)
+    #   @state.draw_buffer[@state.camera_path].sprites.concat(@grid_boxes.map do |rect|
+    #     @state.camera.to_screen_space(rect)
+    #   end)
+    # end
+
+    def sprite_out_of_bounds?(sprite, rect)
+      return true if sprite.source_x < 0
+      return true if sprite.source_y < 0
+      return true if sprite.source_x + sprite.source_w > rect.w
+      return true if sprite.source_y + sprite.source_h > rect.h
+
+      false
     end
-  end
-end
+  end # Canvas
+end # SpriteKit
