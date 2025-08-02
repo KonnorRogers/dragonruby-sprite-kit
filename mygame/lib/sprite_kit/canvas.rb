@@ -18,7 +18,7 @@ module SpriteKit
       @hover_rect = nil
       @hover_rect_screen = nil
 
-      @show_grid = false
+      # @show_grid = false
       @files = []
 
       # used to calculate where clicks are registered.
@@ -51,9 +51,9 @@ module SpriteKit
         @state.current_sprite = nil
       end
 
-      if args.inputs.keyboard.key_down.g
-        @show_grid = !@show_grid
-      end
+      # if args.inputs.keyboard.key_down.g
+      #   @show_grid = !@show_grid
+      # end
     end
 
     def calc(args)
@@ -116,7 +116,7 @@ module SpriteKit
     def render_sprite_canvas(args)
       x = 0
       y = 0
-      gap = 40
+      gap = 80
       current_width = 0
 
       current_row = []
@@ -227,9 +227,6 @@ module SpriteKit
             # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
             # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
 
-            source_x -= column_gap
-            source_y -= row_gap
-
             new_sprite = {
               spritesheet_rect: spritesheet_rect,
               w: @hover_rect.w,
@@ -269,11 +266,11 @@ module SpriteKit
               if current_sprite.source_y == new_sprite.source_y
                 # no-op
               elsif current_sprite.source_y > new_sprite.source_y
-                source_y = [current_sprite.source_y, new_sprite.source_y].min
-                source_h = [new_sprite.source_y - current_sprite.source_y + @hover_rect.h, spritesheet_rect.h - source_y].max
+                source_y = new_sprite.source_y
+                source_h = current_sprite.source_y - new_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
               else
-                source_y = [current_sprite.source_y, new_sprite.source_y].min
-                source_h = [new_sprite.source_y - current_sprite.source_y + @hover_rect.h, spritesheet_rect.h - source_y].min
+                source_y = current_sprite.source_y
+                source_h = new_sprite.source_y - current_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
               end
 
               new_sprite = new_sprite.merge({
@@ -286,21 +283,20 @@ module SpriteKit
               if args.inputs.mouse.click
                 @virtual_sprite_selection = nil
               else
-
                 @virtual_sprite_selection = {
                   x: spritesheet_rect.x + new_sprite.source_x,
                   y: spritesheet_rect.y + new_sprite.source_y,
                   w: new_sprite.source_w,
                   h: new_sprite.source_h,
                   path: :pixel,
-                  r: 50,
-                  g: 50,
-                  b: 50,
-                  a: 200,
-                  blendmode_enum: 0,
+                  r: 255,
+                  g: 255,
+                  b: 255,
+                  a: 64,
+                  # blendmode_enum: 0,
                 }
                 # args.outputs.debug << @state.camera.to_screen_space(@virtual_sprite_selection)
-                @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
+                # @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
               end
             else
               @virtual_sprite_selection = nil
@@ -308,6 +304,7 @@ module SpriteKit
 
             if args.inputs.mouse.click
               @state.current_sprite = new_sprite
+              @state.current_sprite.spritesheet = spritesheet_rect
             end
 
             @hover_rect_screen = @state.camera.to_screen_space(@hover_rect)
@@ -345,13 +342,16 @@ module SpriteKit
           end
 
           @state.draw_buffer[@state.camera_path] << spritesheet_target
+          if @virtual_sprite_selection
+            @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
+          end
         end
       end
 
       if @state.current_sprite
         @current_sprite_selection = {
-          x: @state.current_sprite.spritesheet_rect.x + @state.current_sprite.source_x,
-          y: @state.current_sprite.spritesheet_rect.y + @state.current_sprite.source_y,
+          x: @state.current_sprite.spritesheet.x + @state.current_sprite.source_x,
+          y: @state.current_sprite.spritesheet.y + @state.current_sprite.source_y,
           w: @state.current_sprite.source_w,
           h: @state.current_sprite.source_h,
           path: :pixel,

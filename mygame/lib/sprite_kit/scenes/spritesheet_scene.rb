@@ -1,5 +1,6 @@
-require SpriteKit.to_load_path("canvas")
-require SpriteKit.to_load_path("draw_buffer")
+require SpriteKit.to_load_path("canvas.rb")
+require SpriteKit.to_load_path("tool_drawer.rb")
+require SpriteKit.to_load_path("draw_buffer.rb")
 
 module SpriteKit
   module Scenes
@@ -17,7 +18,8 @@ module SpriteKit
             w: 12, h: 12,
             row_gap: 1, column_gap: 1,
             offset_x: 1, offset_y: 1,
-          }
+          },
+          current_sprite: nil
         }
 
         @canvas = ::SpriteKit::Canvas.new(state: @state)
