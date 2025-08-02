@@ -1,0 +1,27 @@
+devid=amirrajan
+devtitle=Amir Rajan
+gameid=thelittleprobe
+gametitle=The Little Probe
+version=1.0
+icon=metadata/icon.png
+
+# Below configurations requires a Pro license.
+
+# HD mode enabled
+hd=true
+
+# High DPI enabled
+highdpi=true
+
+# Letterbox removed (All Screen Mode)
+hd_letterbox=false
+
+# Uncomment these lines to see what the game looks like with all screen mode
+# hd_max_scale=0
+# hd_max_scale=100
+# hd_max_scale=125
+# hd_max_scale=150
+# hd_max_scale=200
+# hd_max_scale=250
+# hd_max_scale=300
+# hd_max_scale=400

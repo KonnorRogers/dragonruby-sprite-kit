@@ -1,0 +1,7 @@
+#!/bin/sh
+cd "`dirname "$0"`"
+
+cd ..
+cd ..
+cd ..
+exec ./dragonruby samples/04_physics_and_collisions/14_hookes_law_coulombs_law --replay replay.txt $1 $2

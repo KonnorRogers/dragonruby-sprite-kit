@@ -32,7 +32,7 @@ find "$source_dir" -maxdepth 1 -print0 | while IFS= read -r -d $'\0' filename; d
     # continue
     # fi
 
-    if [ "$base_filename" != "mygame" ] && [ "$base_filename" != "samples" ]; then
+    if [ "$base_filename" != "app" ] && [ "$base_filename" != "mygame" ] && [ "$base_filename" != "samples" ]; then
       cp -R "$filename" .
       echo "Copying: "$base_filename" ..."
     fi
