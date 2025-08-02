@@ -1,3 +1,0 @@
-webserver.enabled=true
-webserver.port=9001
-webserver.remote_clients=false

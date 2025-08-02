@@ -1,7 +1,0 @@
-#!/bin/sh
-cd "`dirname "$0"`"
-
-cd ..
-cd ..
-cd ..
-exec ./dragonruby samples/08_tweening_lerping_easing_functions/09_tower_of_hanoi
