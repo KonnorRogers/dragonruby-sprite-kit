@@ -1,8 +1,5 @@
 require "lib/sprite_kit.rb"
 
-def boot(args)
-end
-
 def tick(args)
   args.outputs.debug << "Simulation FPS: #{args.gtk.current_framerate_calc.round.to_s}"
 
