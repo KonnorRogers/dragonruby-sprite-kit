@@ -22,7 +22,12 @@ module SpriteKit
       @files = []
 
       # used to calculate where clicks are registered.
-      @viewport_boundary = nil
+      @viewport_boundary = {
+        x: 0,
+        y: 0,
+        h: Grid.h,
+        w: Grid.w
+      }
       @state = state
     end
 
@@ -140,213 +145,206 @@ module SpriteKit
           end
         end
 
-        spritesheet_rect = {
+        spritesheet.merge!({
           x: x,
           y: y - spritesheet.file_height,
           w: spritesheet.file_width,
           h: spritesheet.file_height,
           path: spritesheet.path
+        })
+
+        current_row << spritesheet
+      end
+
+      visible_spritesheets = @state.camera.find_all_intersect_viewport(@spritesheets)
+
+      visible_spritesheets.each do |spritesheet|
+        spritesheet.spritesheet_screen = @state.camera.to_screen_space(spritesheet)
+        @state.draw_buffer[@state.camera_path] << spritesheet.spritesheet_screen
+      end
+
+      Geometry.find_all_intersect_rect(@state.world_mouse, visible_spritesheets).each do |spritesheet|
+        spritesheet_screen = spritesheet.spritesheet_screen
+        rect_size = @state.tile_selection
+
+        relative_x = (@state.world_mouse.x - spritesheet.x).clamp(@state.tile_selection.offset_x, spritesheet.w)
+        relative_y = (@state.world_mouse.y - spritesheet.y).clamp(@state.tile_selection.offset_y, spritesheet.h)
+
+        column_gap = @state.tile_selection.column_gap
+
+        row_gap = @state.tile_selection.row_gap
+
+        rect_x = (relative_x).ifloor(rect_size.w + column_gap)
+        rect_y = (relative_y).ifloor(rect_size.h + row_gap)
+
+        hover_rect_x = rect_x + spritesheet.x + @state.tile_selection.offset_x
+        hover_rect_y = rect_y + spritesheet.y + @state.tile_selection.offset_y
+
+        @hover_rect = rect_size.merge({
+          x: hover_rect_x,
+          y: hover_rect_y,
+          path: :pixel,
+          primitive_marker: :sprite,
+          r: 255,
+          g: 0,
+          b: 0,
+          a: 128
+        })
+
+        unclamped_source_x = (@hover_rect.x - spritesheet.x)# .clamp(0, spritesheet.w - rect_size.w)
+        unclamped_source_y = (@hover_rect.y - spritesheet.y)# .clamp(0, spritesheet.h - rect_size.h)
+
+        source_x = unclamped_source_x.clamp(@state.tile_selection.offset_x, spritesheet.w - rect_size.w)
+        source_y = unclamped_source_y.clamp(@state.tile_selection.offset_y, spritesheet.h - rect_size.h)
+
+        # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
+        source_w = (rect_size.w).clamp(@state.tile_selection.offset_x, spritesheet.w - source_x)
+        if unclamped_source_x < 0
+          source_w += unclamped_source_x
+          @hover_rect.w += unclamped_source_x
+          @hover_rect.x -= unclamped_source_x
+        elsif unclamped_source_x > spritesheet.w - rect_size.w
+          source_x_diff = unclamped_source_x - source_x
+          source_w -= source_x_diff
+          source_x += source_x_diff
+          @hover_rect.w -= source_x_diff
+          # @hover_rect.x -= source_x_diff
+        end
+
+        # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
+        # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
+
+        source_h = (rect_size.h).clamp(@state.tile_selection.offset_y, spritesheet.h - source_y)
+        if unclamped_source_y < 0
+          source_h += unclamped_source_y
+          @hover_rect.h += unclamped_source_y
+          @hover_rect.y -= unclamped_source_y
+        elsif unclamped_source_y > spritesheet.h - rect_size.h
+          source_y_diff = unclamped_source_y - source_y
+          source_h -= source_y_diff
+          source_y += source_y_diff
+          @hover_rect.h -= source_y_diff
+          # @hover_rect.x -= source_x_diff
+        end
+        # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
+        # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
+
+        new_sprite = {
+          spritesheet: spritesheet,
+          w: @hover_rect.w,
+          h: @hover_rect.h,
+          source_x: source_x,
+          source_y: source_y,
+          source_w: source_w,
+          source_h: source_h,
+          path: spritesheet.path
         }
 
-        current_row << spritesheet_rect
+        # @hover_rect.x += @state.tile_selection.offset_x + column_gap
+        # @hover_rect.y += @state.tile_selection.offset_y + row_gap
+        # new_sprite.source_x += @state.tile_selection.offset_x + column_gap
+        # new_sprite.source_y += @state.tile_selection.offset_y + row_gap
 
-        if @state.camera.intersect_viewport?(spritesheet_rect)
-          spritesheet_target = @state.camera.to_screen_space(spritesheet_rect)
+        # Check to make sure we're not rendering offset gray areas.
+        # if sprite_out_of_bounds?(new_sprite, spritesheet)
+        #   @hover_rect = nil
+        #   new_sprite = nil
+        #   next
+        # end
 
-          viewport_boundary = @viewport_boundary || {
-            x: 0,
-            y: 0,
-            h: args.grid.h,
-            w: args.grid.w
-          }
+        if @state.current_sprite && @state.current_sprite.path == new_sprite.path && args.inputs.keyboard.key_down_or_held?(:shift)
+          current_sprite = @state.current_sprite
 
-          if Geometry.intersect_rect?(args.inputs.mouse, viewport_boundary) && Geometry.intersect_rect?(@state.world_mouse, spritesheet_rect)
-            rect_size = @state.tile_selection
+          if current_sprite.source_x == new_sprite.source_x
+            # no-op
+          elsif current_sprite.source_x > new_sprite.source_x
+            source_x = [current_sprite.source_x, new_sprite.source_x].min
+            source_w = [current_sprite.source_x - new_sprite.source_x + @hover_rect.w, current_sprite.source_w].max
+          else
+            source_x = [current_sprite.source_x, new_sprite.source_x].min
+            source_w = [new_sprite.source_x - current_sprite.source_x + @hover_rect.w, spritesheet.w - source_x].min
+          end
 
-            relative_x = (@state.world_mouse.x - spritesheet_rect.x).clamp(@state.tile_selection.offset_x, spritesheet_rect.w)
-            relative_y = (@state.world_mouse.y - spritesheet_rect.y).clamp(@state.tile_selection.offset_y, spritesheet_rect.h)
+          if current_sprite.source_y == new_sprite.source_y
+            # no-op
+          elsif current_sprite.source_y > new_sprite.source_y
+            source_y = new_sprite.source_y
+            source_h = current_sprite.source_y - new_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
+          else
+            source_y = current_sprite.source_y
+            source_h = new_sprite.source_y - current_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
+          end
 
-            columns = relative_x.idiv(@state.tile_selection.w)
-            column_gap = @state.tile_selection.column_gap
+          new_sprite = new_sprite.merge({
+            source_x: source_x,
+            source_y: source_y,
+            source_w: source_w,
+            source_h: source_h,
+          })
 
-            rows = relative_y.idiv(@state.tile_selection.h)
-            row_gap = @state.tile_selection.row_gap
-
-            rect_x = (relative_x).ifloor(rect_size.w + column_gap)
-            rect_y = (relative_y).ifloor(rect_size.h + row_gap)
-
-            hover_rect_x = rect_x + spritesheet_rect.x + @state.tile_selection.offset_x
-            hover_rect_y = rect_y + spritesheet_rect.y + @state.tile_selection.offset_y
-
-            @hover_rect = rect_size.merge({
-              x: hover_rect_x,
-              y: hover_rect_y,
+          if args.inputs.mouse.click
+            @virtual_sprite_selection = nil
+          else
+            @virtual_sprite_selection = {
+              x: spritesheet.x + new_sprite.source_x,
+              y: spritesheet.y + new_sprite.source_y,
+              w: new_sprite.source_w,
+              h: new_sprite.source_h,
               path: :pixel,
-              primitive_marker: :sprite,
               r: 255,
-              g: 0,
-              b: 0,
-              a: 128
-            })
-
-            unclamped_source_x = (@hover_rect.x - spritesheet_rect.x)# .clamp(0, spritesheet.w - rect_size.w)
-            unclamped_source_y = (@hover_rect.y - spritesheet_rect.y)# .clamp(0, spritesheet.h - rect_size.h)
-
-            source_x = unclamped_source_x.clamp(@state.tile_selection.offset_x, spritesheet.w - rect_size.w)
-            source_y = unclamped_source_y.clamp(@state.tile_selection.offset_y, spritesheet.h - rect_size.h)
-
-            # source_w and source_h need to be "clamped" because otherwise you get weird scaling.
-            source_w = (rect_size.w).clamp(@state.tile_selection.offset_x, spritesheet.w - source_x)
-            if unclamped_source_x < 0
-              source_w += unclamped_source_x
-              @hover_rect.w += unclamped_source_x
-              @hover_rect.x -= unclamped_source_x
-            elsif unclamped_source_x > spritesheet.w - rect_size.w
-              source_x_diff = unclamped_source_x - source_x
-              source_w -= source_x_diff
-              source_x += source_x_diff
-              @hover_rect.w -= source_x_diff
-              # @hover_rect.x -= source_x_diff
-            end
-
-            # w = 16, source_x = 72 = 88px, but file max is 80. need to chop 8px.
-            # w = 16, source_x = 0 = 16px, file max is 80. use 16px.
-
-            source_h = (rect_size.h).clamp(@state.tile_selection.offset_y, spritesheet.h - source_y)
-            if unclamped_source_y < 0
-              source_h += unclamped_source_y
-              @hover_rect.h += unclamped_source_y
-              @hover_rect.y -= unclamped_source_y
-            elsif unclamped_source_y > spritesheet.h - rect_size.h
-              source_y_diff = unclamped_source_y - source_y
-              source_h -= source_y_diff
-              source_y += source_y_diff
-              @hover_rect.h -= source_y_diff
-              # @hover_rect.x -= source_x_diff
-            end
-            # h = 16, source_y = 72 = 88px, but file max is 80px. need to chop 8px.
-            # h = 16, source_x = 0 = 16px, file max is 80. use 16px.
-
-            new_sprite = {
-              spritesheet_rect: spritesheet_rect,
-              w: @hover_rect.w,
-              h: @hover_rect.h,
-              source_x: source_x,
-              source_y: source_y,
-              source_w: source_w,
-              source_h: source_h,
-              path: spritesheet_rect.path
-            }
-
-            # @hover_rect.x += @state.tile_selection.offset_x + column_gap
-            # @hover_rect.y += @state.tile_selection.offset_y + row_gap
-            # new_sprite.source_x += @state.tile_selection.offset_x + column_gap
-            # new_sprite.source_y += @state.tile_selection.offset_y + row_gap
-
-            # Check to make sure we're not rendering offset gray areas.
-            # if sprite_out_of_bounds?(new_sprite, spritesheet_rect)
-            #   @hover_rect = nil
-            #   new_sprite = nil
-            #   next
-            # end
-
-            if @state.current_sprite && @state.current_sprite.path == new_sprite.path && args.inputs.keyboard.key_down_or_held?(:shift)
-              current_sprite = @state.current_sprite
-
-              if current_sprite.source_x == new_sprite.source_x
-                # no-op
-              elsif current_sprite.source_x > new_sprite.source_x
-                source_x = [current_sprite.source_x, new_sprite.source_x].min
-                source_w = [current_sprite.source_x - new_sprite.source_x + @hover_rect.w, current_sprite.source_w].max
-              else
-                source_x = [current_sprite.source_x, new_sprite.source_x].min
-                source_w = [new_sprite.source_x - current_sprite.source_x + @hover_rect.w, spritesheet_rect.w - source_x].min
-              end
-
-              if current_sprite.source_y == new_sprite.source_y
-                # no-op
-              elsif current_sprite.source_y > new_sprite.source_y
-                source_y = new_sprite.source_y
-                source_h = current_sprite.source_y - new_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
-              else
-                source_y = current_sprite.source_y
-                source_h = new_sprite.source_y - current_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
-              end
-
-              new_sprite = new_sprite.merge({
-                source_x: source_x,
-                source_y: source_y,
-                source_w: source_w,
-                source_h: source_h,
-              })
-
-              if args.inputs.mouse.click
-                @virtual_sprite_selection = nil
-              else
-                @virtual_sprite_selection = {
-                  x: spritesheet_rect.x + new_sprite.source_x,
-                  y: spritesheet_rect.y + new_sprite.source_y,
-                  w: new_sprite.source_w,
-                  h: new_sprite.source_h,
-                  path: :pixel,
-                  r: 255,
-                  g: 255,
-                  b: 255,
-                  a: 64,
-                  # blendmode_enum: 0,
-                }
-                # args.outputs.debug << @state.camera.to_screen_space(@virtual_sprite_selection)
-                # @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
-              end
-            else
-              @virtual_sprite_selection = nil
-            end
-
-            if args.inputs.mouse.click
-              @state.current_sprite = new_sprite
-              @state.current_sprite.spritesheet = spritesheet_rect
-            end
-
-            @hover_rect_screen = @state.camera.to_screen_space(@hover_rect)
-
-            label_size = 20
-            label = {
-              x: spritesheet_target.x + (spritesheet_target.w / 2),
-              y: spritesheet_target.y + spritesheet_target.h + label_size,
-              text: "#{spritesheet.path}",
-              primitive_marker: :label,
-              size_px: label_size,
-              r: 255,
-              b: 255,
               g: 255,
-              a: 255,
-              anchor_x: 0.5,
-              anchor_y: 0.5,
+              b: 255,
+              a: 64,
+              # blendmode_enum: 0,
             }
-            label_w, label_h = GTK.calcstringbox(label.text, size_px: label_size)
-            label_background = label.merge({
-              w: label_w + 16,
-              h: label_h + 8,
-              anchor_x: 0.5,
-              anchor_y: 0.5,
-              primitive_marker: :solid,
-              r: 0,
-              b: 0,
-              g: 0,
-              a: 255
-            })
-            @state.draw_buffer[@state.camera_path].concat([
-              label_background,
-              label,
-            ])
           end
-
-          @state.draw_buffer[@state.camera_path] << spritesheet_target
-          if @virtual_sprite_selection
-            @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
-          end
+        else
+          @virtual_sprite_selection = nil
         end
+
+        if args.inputs.mouse.click
+          @state.current_sprite = new_sprite
+          @state.current_sprite.spritesheet = spritesheet
+        end
+
+        @hover_rect_screen = @state.camera.to_screen_space(@hover_rect)
+
+        label_size = 20
+        label = {
+          x: spritesheet_screen.x + (spritesheet_screen.w / 2),
+          y: spritesheet_screen.y + spritesheet_screen.h + label_size,
+          text: "#{spritesheet.path}",
+          primitive_marker: :label,
+          size_px: label_size,
+          r: 255,
+          b: 255,
+          g: 255,
+          a: 255,
+          anchor_x: 0.5,
+          anchor_y: 0.5,
+        }
+        label_w, label_h = GTK.calcstringbox(label.text, size_px: label_size)
+        label_background = label.merge({
+          w: label_w + 16,
+          h: label_h + 8,
+          anchor_x: 0.5,
+          anchor_y: 0.5,
+          primitive_marker: :solid,
+          r: 0,
+          b: 0,
+          g: 0,
+          a: 255
+        })
+        @state.draw_buffer[@state.camera_path].concat([
+          label_background,
+          label,
+        ])
       end
+
+      if @virtual_sprite_selection
+        @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@virtual_sprite_selection)
+      end
+
 
       if @state.current_sprite
         @current_sprite_selection = {

@@ -2,59 +2,62 @@ module SpriteKit
   class Primitives
     attr_accessor :created_buttons
 
-    def self.cache
-      @cache ||= {}
-    end
-
     def self.button(
-      args,
-      id: nil,
       text: nil,
       w: nil,
       h: nil,
+      x: nil,
+      y: nil,
       size_enum: nil,
       font: nil,
-      path: nil
+      padding: 0,
+      border_width: 0
     )
-      if !id
-        id = GTK.create_uuid.to_s.to_sym
-      else
-        id = id.to_sym
+      if w == nil && h == nil
+        w, h = StringCache.get(text, size_enum: size_enum || 0, font: font || nil)
+        w += (border_width * 2) + padding.left + padding.right
+        h += (border_width * 2) + padding.top + padding.bottom
       end
 
-      path = (path || ("SpriteKit::Button__" + id.to_s)).to_sym
-
-      # render_targets only need to be created once, we use the the id to determine if the texture
-      # has already been created
-      cached_button = self.cache[id]
-      return cached_button if cached_button
-
-      if w.nil? && h.nil?
-        w, h = GTK.calcstringbox(text, size_enum: size_enum || 0, font: font || nil)
+      if !padding
+        padding = 0
       end
 
-      # if the render_target hasn't been created, then generate it and store it in the created_buttons cache
-      self.cache[id] = {
-        created_at: Kernel.tick_count,
-        id: id,
+      if padding.is_a?(Numeric)
+        padding = {
+          top: padding,
+          right: padding,
+          bottom: padding,
+          left: padding
+        }
+      end
+
+      rect = {
         w: w,
         h: h,
-        text: text,
-        path: path,
+        x: 0,
+        y: 0,
+        primitive_marker: :sprite,
       }
 
-      # define the w/h of the texture
-      args.outputs[path].w = w
-      args.outputs[path].h = h
-
-      # create a border
-      borders = self.borders({x: 0, y: 0, w: w, h: h }).values
-      args.outputs[path].sprites.concat(borders)
-
       # create a label centered vertically and horizontally within the texture
-      args.outputs[path].labels << { x: w / 2, y: h / 2, text: text, vertical_alignment_enum: 1, alignment_enum: 1 }
+      label = {
+        x: x + border_width + padding.left,
+        y: y + border_width + padding.bottom,
+        text: text,
+        size_enum: size_enum,
+        anchor_x: 0,
+        anchor_y: 0
+      }.label!
 
-      self.cache[id]
+      primitives = [
+        label,
+        *Primitives.borders(rect, border_width: border_width, padding: padding).values
+      ]
+
+      rect.primitives = primitives
+
+      rect
     end
 
     def self.borders(rect, padding: nil, border_width: 1, color: { r: 0, b: 0, g: 0, a: 255 })
@@ -68,12 +71,12 @@ module SpriteKit
       end
 
       if padding.is_a?(Hash)
-        rect = rect.merge({
-          x: rect.x - padding.left,
-          y: rect.y - padding.bottom,
-          w: rect.w + padding.left + padding.right,
-          h: rect.h + padding.top + padding.bottom
-        })
+        # rect = rect.merge({
+        #   x: rect.x + padding.left,
+        #   y: rect.y + padding.bottom,
+        #   w: rect.w + padding.left + padding.right,
+        #   h: rect.h + padding.top + padding.bottom
+        # })
       end
 
       {
@@ -81,13 +84,13 @@ module SpriteKit
           # top
           x: rect.x,
           w: rect.w,
-          y: rect.y + rect.h,
+          y: rect.y + rect.h - border_width,
           h: border_width,
           **color,
         },
         right: {
           # right
-          x: rect.x + rect.w - border_width,
+          x: rect.x + rect.w - border_width - 1,
           w: border_width,
           y: rect.y,
           h: rect.h,

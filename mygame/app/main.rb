@@ -1,5 +1,8 @@
 require "lib/sprite_kit.rb"
 
+def boot(args)
+end
+
 def tick(args)
   args.outputs.debug << "Simulation FPS: #{args.gtk.current_framerate_calc.round.to_s}"
 
@@ -11,6 +14,7 @@ def tick(args)
   args.state.current_scene ||= :map_editor_scene
 
   current_scene = args.state.current_scene
+
   args.state.scenes[current_scene].tick(args)
 
   # make sure that the current_scene flag wasn't set mid tick

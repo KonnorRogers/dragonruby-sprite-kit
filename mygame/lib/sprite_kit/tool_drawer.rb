@@ -1,5 +1,4 @@
-require SpriteKit.to_load_path(File.join("ui", "button.rb"))
-
+require SpriteKit.to_load_path("string_cache")
 module SpriteKit
   class ToolDrawer
     attr_accessor :state, :render_path, :w, :h, :x, :y
@@ -15,6 +14,59 @@ module SpriteKit
       @y = 0
       @h = Grid.h
       @w = (Grid.w / 5).ceil
+
+      @counters = {
+        tile_selection_w: {
+          label: proc { { id: :tile_selection_w, text: "  w: #{@state.tile_selection.w}" } },
+          increment: proc { @state.tile_selection.w += 1 },
+          decrement: proc { @state.tile_selection.w -= 1 }
+        },
+        tile_selection_h: {
+          label: proc { { id: :tile_selection_h, text: "  h: #{@state.tile_selection.h}" } },
+          increment: proc { @state.tile_selection.h += 1 },
+          decrement: proc { @state.tile_selection.h -= 1 }
+        },
+        row_gap: {
+          label: proc { { id: :row_gap, text: "row_gap: #{@state.tile_selection.row_gap}" } },
+          increment: proc { @state.tile_selection.row_gap += 1 },
+          decrement: proc { @state.tile_selection.row_gap -= 1 }
+        },
+        column_gap: {
+          label: proc { { id: :column_gap, text: "column_gap: #{@state.tile_selection.column_gap}" } },
+          increment: proc { @state.tile_selection.column_gap += 1 },
+          decrement: proc { @state.tile_selection.column_gap -= 1 }
+        },
+        offset_x: {
+          label: proc { { id: :offset_x, text: "offset_x: #{@state.tile_selection.offset_x}" } },
+          increment: proc { @state.tile_selection.offset_x += 1 },
+          decrement: proc { @state.tile_selection.offset_x -= 1 }
+        },
+        offset_y: {
+          label: proc { { id: :offset_y, text: "offset_y: #{@state.tile_selection.offset_y}" } },
+          increment: proc { @state.tile_selection.offset_y += 1 },
+          decrement: proc { @state.tile_selection.offset_y -= 1 }
+        },
+        source_x: {
+          label: proc { { id: :source_x, text: "source_x: #{@state.current_sprite.source_x}" } },
+          increment: proc { @state.current_sprite.source_x += 1 },
+          decrement: proc { @state.current_sprite.source_x -= 1 }
+        },
+        source_y: {
+          label: proc { { id: :source_y, text: "source_y: #{@state.current_sprite.source_y}" } },
+          increment: proc { @state.current_sprite.source_y += 1 },
+          decrement: proc { @state.current_sprite.source_y -= 1 }
+        },
+        source_w: {
+          label: proc { { id: :source_w, text: "source_w: #{@state.current_sprite.source_w}" } },
+          increment: proc { @state.current_sprite.source_w += 1 },
+          decrement: proc { @state.current_sprite.source_w -= 1 }
+        },
+        source_h: {
+          label: proc { { id: :source_h, text: "source_h: #{@state.current_sprite.source_h}" } },
+          increment: proc { @state.current_sprite.source_h += 1 },
+          decrement: proc { @state.current_sprite.source_h -= 1 }
+        }
+      }
     end
 
     def serialize
@@ -48,89 +100,29 @@ module SpriteKit
       @render_target.w = @w
       @render_target.h = @h
 
-      counters = {
-        tile_selection_w: {
-          label: { text: "  w: #{@state.tile_selection.w}" },
-          increment: proc { @state.tile_selection.w += 1 },
-          decrement: proc { @state.tile_selection.w -= 1 }
-        },
-        tile_selection_h: {
-          label: { text: "  h: #{@state.tile_selection.h}" },
-          increment: proc { @state.tile_selection.h += 1 },
-          decrement: proc { @state.tile_selection.h -= 1 }
-        },
-        row_gap: {
-          label: { text: "row_gap: #{@state.tile_selection.row_gap}" },
-          increment: proc { @state.tile_selection.row_gap += 1 },
-          decrement: proc { @state.tile_selection.row_gap -= 1 }
-        },
-        column_gap: {
-          label: { text: "column_gap: #{@state.tile_selection.column_gap}" },
-          increment: proc { @state.tile_selection.column_gap += 1 },
-          decrement: proc { @state.tile_selection.column_gap -= 1 }
-        },
-        offset_x: {
-          label: { text: "offset_x: #{@state.tile_selection.offset_x}" },
-          increment: proc { @state.tile_selection.offset_x += 1 },
-          decrement: proc { @state.tile_selection.offset_x -= 1 }
-        },
-        offset_y: {
-          label: { text: "offset_y: #{@state.tile_selection.offset_y}" },
-          increment: proc { @state.tile_selection.offset_y += 1 },
-          decrement: proc { @state.tile_selection.offset_y -= 1 }
-        }
-      }
-
       text = [
         { text: "brush: { " },
-        counters.tile_selection_w.label,
-        counters.tile_selection_h.label,
+        @counters.tile_selection_w.label.call,
+        @counters.tile_selection_h.label.call,
         { text: "}" } ,
-        counters.offset_x.label,
-        counters.offset_y.label,
-        counters.column_gap.label,
-        counters.row_gap.label,
-        { text: "" }
+        @counters.offset_x.label.call,
+        @counters.offset_y.label.call,
+        @counters.column_gap.label.call,
+        @counters.row_gap.label.call,
       ]
 
-      current_sprite = @state.current_sprite
-      if current_sprite
-        counters.merge!({
-          source_x: {
-            label: { text: "source_x: #{current_sprite.source_x}" },
-            increment: proc { @state.tile_selection.source_x += 1 },
-            decrement: proc { @state.tile_selection.source_x -= 1 }
-          },
-          source_y: {
-            label: { text: "source_y: #{current_sprite.source_y}" },
-            increment: proc { @state.tile_selection.source_y += 1 },
-            decrement: proc { @state.tile_selection.source_y -= 1 }
-          },
-          source_w: {
-            label: { text: "source_w: #{current_sprite.source_w}" },
-            increment: proc { @state.tile_selection.source_w += 1 },
-            decrement: proc { @state.tile_selection.source_w -= 1 }
-          },
-          source_h: {
-            label: { text: "source_h: #{current_sprite.source_h}" },
-            increment: proc { @state.tile_selection.source_h += 1 },
-            decrement: proc { @state.tile_selection.source_h -= 1 }
-          },
-        })
-        text.concat([
-          counters.source_x.label,
-          counters.source_y.label,
-          counters.source_w.label,
-          counters.source_h.label,
-          { text: "path: #{current_sprite.path}" }
-        ])
-
-        spritesheet = current_sprite.spritesheet
+      if @state.current_sprite
         text.concat([
           { text: "" },
+          @counters.source_x.label.call,
+          @counters.source_y.label.call,
+          @counters.source_w.label.call,
+          @counters.source_h.label.call,
+          { text: "path: #{@state.current_sprite.path}" },
+          { text: "" },
           { text: "Spritesheet Properties:" },
-          { text: "w: #{spritesheet.w}" },
-          { text: "h: #{spritesheet.h}" },
+          { text: "w: #{@state.current_sprite.spritesheet.w}" },
+          { text: "h: #{@state.current_sprite.spritesheet.h}" },
         ])
       end
 
@@ -138,31 +130,71 @@ module SpriteKit
         label.x = 20
         label.y = @h - 40
         label.primitive_marker = :label
-        label.anchor_y = 0.5 + index * 1.5
+        label.anchor_y = 0.5 + index * 1.75
       end
 
       counter_buttons = []
-      counters.each do |key, counter|
-        label = counter.label
+      @counters.each do |key, counter|
+        hash = text.find { |hash| hash[:id] == key }
 
-        label_w, label_h = GTK.calcstringbox(label.text)
-        anchored_label = { x: label.x, y: label.y, w: label_w, h: label_h }.anchor_rect(label.anchor_x || 0, label.anchor_y || 0)
+        next if !hash
+
+        label_w, label_h = SpriteKit::StringCache.get(hash.text)
+
+        anchored_label = { x: hash.x, y: hash.y, w: label_w, h: label_h }
+        anchored_label = anchored_label.anchor_rect(hash&.anchor_x || 0, hash&.anchor_y || 0)
         row_gap = 8
         btn_x = anchored_label.x + row_gap + label_w
         btn_y = anchored_label.y
 
-        increment_button = ::SpriteKit::UI::Button.new(args: args, id: key.to_s + "__increment", label: { text: "blah" }, x: btn_x, y: btn_y, padding: 0)
-        # increment_button = Primitives.button(args, id: key.to_s + "__increment", text: "blah")
-        increment_button.x = btn_x
-        increment_button.y = btn_y
+        gap = 20
+        decrement_button = {
+          x: btn_x + gap,
+          y: btn_y,
+          w: 16,
+          h: 16,
+          path: SpriteKit.to_load_path("sprites/minus-sprite.png")
+        }
 
+        gap = 20
+        increment_button = decrement_button.merge({
+          x: decrement_button.x + decrement_button.w + gap,
+          y: decrement_button.y,
+          path: SpriteKit.to_load_path("sprites/plus-sprite.png")
+        })
 
         counter_buttons << increment_button
-        # if args.inputs.mouse.intersect_rect?(increment_button)
-        # end
-        # if args.inputs.mouse.intersect_rect?(increment_button)
-        # end
+        counter_buttons << decrement_button
+
+        if args.inputs.mouse.click || args.inputs.mouse.buttons.left.held
+          if args.inputs.mouse.intersect_rect?(increment_button)
+            if args.inputs.mouse.click
+              counter.increment.call
+            elsif args.inputs.mouse.buttons.left.held
+              start_tick = args.inputs.mouse.buttons.left.click_at
+              current_tick = Kernel.tick_count
+
+              diff = (current_tick - (start_tick + 75))
+              if diff > 0 && diff % 4 == 0
+                counter.increment.call
+              end
+            end
+          elsif args.inputs.mouse.intersect_rect?(decrement_button)
+            if args.inputs.mouse.click
+              counter.decrement.call
+            elsif args.inputs.mouse.buttons.left.held
+              start_tick = args.inputs.mouse.buttons.left.click_at
+              current_tick = Kernel.tick_count
+
+              diff = (current_tick - (start_tick + 75))
+              if diff > 0 && diff % 4 == 0
+                counter.decrement.call
+              end
+            end
+          end
+        end
       end
+
       @state.draw_buffer[@render_path]
         .concat(text)
         .concat(counter_buttons)
@@ -208,6 +240,7 @@ module SpriteKit
       #     ])
       #   end
       # end
+      @state.draw_buffer.primitives << self.serialize
     end
   end
 end

@@ -41,8 +41,6 @@ module SpriteKit
         @canvas.tick(args)
         @tool_drawer.tick(args)
 
-        @draw_buffer.primitives << @tool_drawer.serialize
-
         top_layer = {
           w: 1280,
           h: 720,
