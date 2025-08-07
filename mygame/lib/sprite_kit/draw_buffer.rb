@@ -7,7 +7,8 @@ module SpriteKit
     class RenderTargetArgumentError < StandardError; end
 
     def initialize
-      clear
+      @primitives = []
+      @render_targets = {}
     end
 
     def [](key)
@@ -36,11 +37,13 @@ module SpriteKit
     # Clears arrays / hashes without rendering.
     def clear
       # force nil to allow GC to run
-      @primitives = nil
-      @render_targets = nil
-      @outputs = nil
-      @primitives = []
-      @render_targets = {}
+      # @primitives = nil
+      # @render_targets = nil
+      # @primitives = []
+      # @render_targets = {}
+
+      @render_targets.clear
+      @primitives.clear
     end
   end
 end

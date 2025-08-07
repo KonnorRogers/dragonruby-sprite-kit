@@ -163,6 +163,10 @@ module SpriteKit
         @state.draw_buffer[@state.camera_path] << spritesheet.spritesheet_screen
       end
 
+      if !args.inputs.mouse.intersect_rect?(@viewport_boundary)
+        return
+      end
+
       Geometry.find_all_intersect_rect(@state.world_mouse, visible_spritesheets).each do |spritesheet|
         spritesheet_screen = spritesheet.spritesheet_screen
         rect_size = @state.tile_selection
@@ -240,18 +244,6 @@ module SpriteKit
           path: spritesheet.path
         }
 
-        # @hover_rect.x += @state.tile_selection.offset_x + column_gap
-        # @hover_rect.y += @state.tile_selection.offset_y + row_gap
-        # new_sprite.source_x += @state.tile_selection.offset_x + column_gap
-        # new_sprite.source_y += @state.tile_selection.offset_y + row_gap
-
-        # Check to make sure we're not rendering offset gray areas.
-        # if sprite_out_of_bounds?(new_sprite, spritesheet)
-        #   @hover_rect = nil
-        #   new_sprite = nil
-        #   next
-        # end
-
         if @state.current_sprite && @state.current_sprite.path == new_sprite.path && args.inputs.keyboard.key_down_or_held?(:shift)
           current_sprite = @state.current_sprite
 
@@ -275,12 +267,18 @@ module SpriteKit
             source_h = new_sprite.source_y - current_sprite.source_y + [new_sprite.source_h, current_sprite.source_h].min
           end
 
+          # rect_x = (relative_x).ifloor(rect_size.w + column_gap)
+          # rect_y = (relative_y).ifloor(rect_size.h + row_gap)
+          # puts "Rows: #{rows}, Columns: #{columns}"
+
           new_sprite = new_sprite.merge({
             source_x: source_x,
             source_y: source_y,
             source_w: source_w,
             source_h: source_h,
           })
+
+          new_sprite.prefab = generate_prefab(new_sprite)
 
           if args.inputs.mouse.click
             @virtual_sprite_selection = nil
@@ -372,7 +370,15 @@ module SpriteKit
         current_sprite.y = @state.world_mouse.y - (@state.current_sprite.h / 2)
         # args.outputs.debug << { x: @state.camera.x, y: @state.camera.y }.to_s
 
-        # args.outputs.debug << @current_sprite.to_s
+        # prefab stuff.
+        args.outputs.debug << "columns: #{current_sprite.columns}, rows: #{current_sprite.rows}"
+        if @state.current_sprite.prefab && @state.current_sprite.prefab.length > 0
+          prefab = render_prefab(@state.current_sprite)
+          @state.draw_buffer[@state.camera_path].sprites.concat(prefab)
+        else
+          @state.draw_buffer[@state.camera_path].sprites << @state.camera.to_screen_space(@state.current_sprite)
+        end
+
         @state.draw_buffer[@state.camera_path].sprites << @state.camera.to_screen_space(@state.current_sprite)
       end
     end
@@ -446,6 +452,56 @@ module SpriteKit
       return true if sprite.source_y + sprite.source_h > rect.h
 
       false
+    end
+
+    def generate_prefab(sprite)
+      prefab = []
+
+      rect_size = @state.tile_selection
+      column_gap = @state.tile_selection.column_gap
+      row_gap = @state.tile_selection.row_gap
+
+      # TODO: account for offset.
+
+      columns = (sprite.source_w + column_gap).idiv(rect_size.w + column_gap)
+      rows = (sprite.source_h + row_gap).idiv(rect_size.h + row_gap)
+
+      sprite.columns = columns
+      sprite.rows = rows
+
+      columns.times do |column|
+        rows.times do |row|
+          # column_gap = column == 0 ? 0 : column_gap
+          # row_gap = row == 0 ? 0 : row_gap
+          offset_x = column * column_gap
+          offset_y = row * row_gap
+          prefab << {
+            source_x: sprite.source_x + (column * rect_size.w) + offset_x,
+            source_y: sprite.source_y + (row * rect_size.h) + offset_y,
+            source_w: rect_size.w,
+            source_h: rect_size.h,
+            path: sprite.path,
+            offset_x: offset_x,
+            offset_y: offset_y,
+          }
+        end
+      end
+
+      prefab
+    end
+
+    def render_prefab(current_sprite)
+      starting_sprite = current_sprite.prefab[0]
+
+      starting_x = current_sprite.source_x
+      starting_y = current_sprite.source_y
+      current_sprite.prefab.map do |sprite|
+        sprite.x = (current_sprite.x + sprite.source_x)
+        sprite.y = (current_sprite.y + sprite.source_y)
+        sprite.w = sprite.source_w
+        sprite.h = sprite.source_h
+        @state.camera.to_screen_space(sprite)
+      end
     end
   end # Canvas
 end # SpriteKit

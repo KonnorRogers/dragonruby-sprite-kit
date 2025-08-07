@@ -32,11 +32,19 @@ module SpriteKit
     end
 
     # down and dirty to_json. Just hashes, numbers, symbols, strings, array, and nil.
-    def self.to_json(hash, spacer = "  ", depth = 1)
+    def self.to_json(object, spacer = "  ", depth = 1)
       strs = []
 
-      hash.each do |k, v|
-        strs << "#{spacer * depth}\"#{k}\": #{to_json_value(v, spacer, depth)}"
+      if object.is_a?(Array)
+        object.each do |v|
+          strs << to_json_value(v, spacer, depth)
+        end
+      elsif Object.is_a?(Hash)
+        object.each do |k, v|
+          strs << "#{spacer * depth}\"#{k}\": #{to_json_value(v, spacer, depth)}"
+        end
+      else
+        raise "Only hashes and arrays are supported."
       end
 
       "{\n" + strs.join(",\n") + "\n}"
