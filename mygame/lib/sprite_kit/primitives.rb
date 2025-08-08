@@ -13,12 +13,6 @@ module SpriteKit
       padding: 0,
       border_width: 0
     )
-      if w == nil && h == nil
-        w, h = StringCache.get(text, size_enum: size_enum || 0, font: font || nil)
-        w += (border_width * 2) + padding.left + padding.right
-        h += (border_width * 2) + padding.top + padding.bottom
-      end
-
       if !padding
         padding = 0
       end
@@ -30,6 +24,12 @@ module SpriteKit
           bottom: padding,
           left: padding
         }
+      end
+
+      if w == nil && h == nil
+        w, h = GTK.calcstringbox(text, size_enum: size_enum || 0, font: font || nil)
+        w += (border_width * 2) + padding.left + padding.right
+        h += (border_width * 2) + padding.top + padding.bottom
       end
 
       rect = {
@@ -52,7 +52,7 @@ module SpriteKit
 
       primitives = [
         label,
-        *Primitives.borders(rect, border_width: border_width, padding: padding).values
+        *Primitives.borders(rect, border_width: border_width, padding: 0).values
       ]
 
       rect.primitives = primitives
@@ -82,34 +82,34 @@ module SpriteKit
       {
         top: {
           # top
-          x: rect.x,
-          w: rect.w,
-          y: rect.y + rect.h - border_width,
+          x: rect.x - padding.left,
+          w: rect.w + padding.left + padding.right,
+          y: rect.y + rect.h + padding.top - border_width,
           h: border_width,
           **color,
         },
         right: {
           # right
-          x: rect.x + rect.w - border_width - 1,
+          x: rect.x + rect.w + padding.right - border_width,
           w: border_width,
-          y: rect.y,
-          h: rect.h,
+          y: rect.y - padding.bottom,
+          h: rect.h + padding.bottom + padding.top,
           **color,
         },
         bottom: {
           # bottom
-          x: rect.x,
-          w: rect.w,
-          y: rect.y,
+          x: rect.x - padding.left,
+          w: rect.w + padding.left + padding.right,
+          y: rect.y - padding.bottom,
           h: border_width,
           **color,
         },
         left: {
           # left
-          x: rect.x,
+          x: rect.x - padding.left,
           w: border_width,
-          y: rect.y,
-          h: rect.h,
+          y: rect.y - padding.bottom,
+          h: rect.h + padding.top + padding.bottom,
           **color,
         }
       }.each_value do |hash|

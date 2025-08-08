@@ -1,4 +1,4 @@
-require SpriteKit.to_load_path("string_cache")
+require SpriteKit.to_load_path("sprite_methods")
 module SpriteKit
   class ToolDrawer
     attr_accessor :state, :render_path, :w, :h, :x, :y
@@ -7,13 +7,27 @@ module SpriteKit
       @tools = [
         :sprite,
       ]
-      @render_path = :tool_drawer
+      # @render_path = :tool_drawer
       @state = state
 
       @x = 0
       @y = 0
       @h = Grid.h
       @w = (Grid.w / 5).ceil
+
+      @gap_button = {
+        id: :gap,
+        label: proc { { id: :gap, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
+        handle_click: proc {
+          current_sprite = @state.current_sprite
+
+          if current_sprite.prefab
+            current_sprite.prefab = nil
+          else
+            current_sprite.prefab = SpriteKit::SpriteMethods.generate_prefab(current_sprite, @state)
+          end
+        }
+      }
 
       @counters = {
         tile_selection_w: {
@@ -75,7 +89,13 @@ module SpriteKit
         y: @y,
         w: @w,
         h: @h,
-        path: @render_path
+        primitive_marker: :sprite,
+        path: :pixel,
+        r: 255,
+        b: 255,
+        g: 255,
+        a: 255
+        # path: @render_path
       }
     end
 
@@ -95,10 +115,12 @@ module SpriteKit
     end
 
     def render(args)
-      @render_target = args.outputs[@render_path]
-      @render_target.background_color = { r: 255, g: 255, b: 255, a: 255 }
-      @render_target.w = @w
-      @render_target.h = @h
+
+      @state.draw_buffer.primitives << self.serialize
+      # @render_target = args.outputs[@render_path]
+      # @render_target.background_color = { r: 255, g: 255, b: 255, a: 255 }
+      # @render_target.w = @w
+      # @render_target.h = @h
 
       text = [
         { text: "brush: { " },
@@ -113,7 +135,7 @@ module SpriteKit
 
       if @state.current_sprite
         text.concat([
-          { text: "" },
+          @gap_button.label.call,
           @counters.source_x.label.call,
           @counters.source_y.label.call,
           @counters.source_w.label.call,
@@ -134,12 +156,26 @@ module SpriteKit
       end
 
       counter_buttons = []
+
+      gap_button_label = text.find { |hash| hash[:id] == @gap_button.id }
+      if gap_button_label
+        label_w, label_h = GTK.calcstringbox(gap_button_label.text)
+        gap_button_label.w = label_w
+        gap_button_label.h = label_h
+        anchored_label = gap_button_label.anchor_rect(gap_button_label&.anchor_x || 0, gap_button_label&.anchor_y || 0)
+
+        gap_button_label.primitives = Primitives.borders(anchored_label, padding: 8).values
+        if args.inputs.mouse.intersect_rect?(gap_button_label) && args.inputs.click
+          @gap_button.handle_click.call
+        end
+      end
+
       @counters.each do |key, counter|
         hash = text.find { |hash| hash[:id] == key }
 
         next if !hash
 
-        label_w, label_h = SpriteKit::StringCache.get(hash.text)
+        label_w, label_h = GTK.calcstringbox(hash.text)
 
         anchored_label = { x: hash.x, y: hash.y, w: label_w, h: label_h }
         anchored_label = anchored_label.anchor_rect(hash&.anchor_x || 0, hash&.anchor_y || 0)
@@ -150,7 +186,7 @@ module SpriteKit
         gap = 20
         decrement_button = {
           x: btn_x + gap,
-          y: btn_y,
+          y: btn_y + 5,
           w: 16,
           h: 16,
           path: SpriteKit.to_load_path("sprites/minus-sprite.png")
@@ -195,9 +231,13 @@ module SpriteKit
         end
       end
 
-      @state.draw_buffer[@render_path]
+
+      @state.draw_buffer#[@render_path]
+        .primitives
+        .concat(gap_button_label&.primitives || [])
         .concat(text)
         .concat(counter_buttons)
+
 
       # need this top-layer
       # path = labels[-5]
@@ -240,7 +280,6 @@ module SpriteKit
       #     ])
       #   end
       # end
-      @state.draw_buffer.primitives << self.serialize
     end
   end
 end
