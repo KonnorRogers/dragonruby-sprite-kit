@@ -1,4 +1,7 @@
 require SpriteKit.to_load_path("sprite_methods")
+require SpriteKit.to_load_path("string_helper")
+
+
 module SpriteKit
   class ToolDrawer
     attr_accessor :state, :render_path, :w, :h, :x, :y
@@ -7,7 +10,6 @@ module SpriteKit
       @tools = [
         :sprite,
       ]
-      # @render_path = :tool_drawer
       @state = state
 
       @x = 0
@@ -95,7 +97,6 @@ module SpriteKit
         b: 255,
         g: 255,
         a: 255
-        # path: @render_path
       }
     end
 
@@ -115,12 +116,10 @@ module SpriteKit
     end
 
     def render(args)
-
       @state.draw_buffer.primitives << self.serialize
-      # @render_target = args.outputs[@render_path]
-      # @render_target.background_color = { r: 255, g: 255, b: 255, a: 255 }
-      # @render_target.w = @w
-      # @render_target.h = @h
+
+      label_offset_x = 20
+      label_offset_y = 40
 
       text = [
         { text: "brush: { " },
@@ -140,7 +139,7 @@ module SpriteKit
           @counters.source_y.label.call,
           @counters.source_w.label.call,
           @counters.source_h.label.call,
-          { text: "path: #{@state.current_sprite.path}" },
+          { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - label_offset_x - 5) },
           { text: "" },
           { text: "Spritesheet Properties:" },
           { text: "w: #{@state.current_sprite.spritesheet.w}" },
@@ -148,23 +147,25 @@ module SpriteKit
         ])
       end
 
+      prev_y = 0
+      label_gap = 14
       text.each_with_index do |label, index|
-        label.x = 20
-        label.y = @h - 40
+        label_w, label_h = GTK.calcstringbox(label.text)
+        label.w = label_w
+        label.h = label_h
+        label.x = label_offset_x
+        label.y = @h - label_offset_y - prev_y - label_h - (label_gap * index)
         label.primitive_marker = :label
-        label.anchor_y = 0.5 + index * 1.75
+        label.anchor_y = 0
+        prev_y += label_h
       end
 
+      label_offset_x = 20
       counter_buttons = []
 
       gap_button_label = text.find { |hash| hash[:id] == @gap_button.id }
       if gap_button_label
-        label_w, label_h = GTK.calcstringbox(gap_button_label.text)
-        gap_button_label.w = label_w
-        gap_button_label.h = label_h
-        anchored_label = gap_button_label.anchor_rect(gap_button_label&.anchor_x || 0, gap_button_label&.anchor_y || 0)
-
-        gap_button_label.primitives = Primitives.borders(anchored_label, padding: 8).values
+        gap_button_label.primitives = Primitives.borders(gap_button_label, padding: 8).values
         if args.inputs.mouse.intersect_rect?(gap_button_label) && args.inputs.click
           @gap_button.handle_click.call
         end
@@ -175,13 +176,9 @@ module SpriteKit
 
         next if !hash
 
-        label_w, label_h = GTK.calcstringbox(hash.text)
-
-        anchored_label = { x: hash.x, y: hash.y, w: label_w, h: label_h }
-        anchored_label = anchored_label.anchor_rect(hash&.anchor_x || 0, hash&.anchor_y || 0)
         row_gap = 8
-        btn_x = anchored_label.x + row_gap + label_w
-        btn_y = anchored_label.y
+        btn_x = hash.x + row_gap + hash.w
+        btn_y = hash.y
 
         gap = 20
         decrement_button = {
@@ -230,7 +227,6 @@ module SpriteKit
           end
         end
       end
-
 
       @state.draw_buffer#[@render_path]
         .primitives
