@@ -319,6 +319,7 @@ module SpriteKit
           a: 255,
           anchor_x: 0.5,
           anchor_y: 0.5,
+          scale_quality_enum: 2
         }
         label_w, label_h = GTK.calcstringbox(label.text, size_px: label_size)
         label_background = label.merge({
@@ -330,7 +331,7 @@ module SpriteKit
           r: 0,
           b: 0,
           g: 0,
-          a: 255
+          a: 255,
         })
         @state.draw_buffer[@state.camera_path].concat([
           label_background,

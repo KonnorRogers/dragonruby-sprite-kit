@@ -1,6 +1,43 @@
-
 module SpriteKit
   module SpriteMethods
+    def self.serialize_sprite(sprite, format = :ruby)
+      raise "Unable to serialize #{sprite}, no format given." if !format
+
+      begin
+        if format == :ruby
+          SpriteMethods.ruby_serialize_sprite(sprite)
+        elsif format == :json
+          ## TODO: Use the JSON serializer
+        end
+      rescue
+        raise "Unable to serialize #{sprite} with format: #{format}"
+      end
+    end
+
+    def self.ruby_serialize_sprite(sprite)
+      has_prefab = sprite.prefab && sprite.prefab.length > 0
+      prefab_or_path = nil
+      if has_prefab
+        prefab_or_path = "# Prefabs are quite large and memory intensive and don't share well. It is usually better to split the prefab into multiple distinct sprites.\n"
+
+        prefab_or_path += "  prefab: [\n"
+        prefab_or_path += sprite.prefab.map do |prefab_sprite|
+          ruby_serialize_sprite(prefab_sprite)
+        end.join(",\n") + "\n"
+      else
+        prefab_or_path = "path: \\\"#{sprite.path}\\\""
+      end
+<<~RUBY
+{
+  source_x: #{sprite.source_x},
+  source_y: #{sprite.source_y},
+  source_h: #{sprite.source_h},
+  source_w: #{sprite.source_w},
+  #{prefab_or_path}
+}
+RUBY
+    end
+
     def self.generate_prefab(sprite, state)
       prefab = []
 

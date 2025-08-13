@@ -10,6 +10,7 @@ module SpriteKit
       @tools = [
         :sprite,
       ]
+      @render_path = :tool_drawer
       @state = state
 
       @x = 0
@@ -17,18 +18,31 @@ module SpriteKit
       @h = Grid.h
       @w = (Grid.w / 5).ceil
 
-      @gap_button = {
-        id: :gap,
-        label: proc { { id: :gap, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
-        handle_click: proc {
-          current_sprite = @state.current_sprite
+      @buttons = {
+        gap_button: {
+          id: :gap,
+          label: proc { { id: :gap, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
+          handle_click: proc {
+            current_sprite = @state.current_sprite
 
-          if current_sprite.prefab
-            current_sprite.prefab = nil
-          else
-            current_sprite.prefab = SpriteKit::SpriteMethods.generate_prefab(current_sprite, @state)
-          end
+            if current_sprite.prefab
+              current_sprite.prefab = nil
+            else
+              current_sprite.prefab = SpriteKit::SpriteMethods.generate_prefab(current_sprite, @state)
+            end
+          }
+        },
+        copy_to_clipboard: {
+          id: :copy_to_clipboard,
+          label: proc { { id: :copy_to_clipboard, text: "Copy to clipboard" } },
+          handle_click: proc {
+            str = SpriteMethods.serialize_sprite(@state.current_sprite, :ruby)
+            GTK.exec("echo \"#{str}\" | pbcopy")
+          }
         }
+        # save_format: {
+        #   label: proc { { id: :save_format, text: "Copy to clipboard" } },
+        # }
       }
 
       @counters = {
@@ -81,7 +95,7 @@ module SpriteKit
           label: proc { { id: :source_h, text: "source_h: #{@state.current_sprite.source_h}" } },
           increment: proc { @state.current_sprite.source_h += 1 },
           decrement: proc { @state.current_sprite.source_h -= 1 }
-        }
+        },
       }
     end
 
@@ -92,11 +106,8 @@ module SpriteKit
         w: @w,
         h: @h,
         primitive_marker: :sprite,
-        path: :pixel,
-        r: 255,
-        b: 255,
-        g: 255,
-        a: 255
+        scale_quality_enum: 2,
+        path: @render_path
       }
     end
 
@@ -117,6 +128,11 @@ module SpriteKit
 
     def render(args)
       @state.draw_buffer.primitives << self.serialize
+      render_target = args.outputs[@render_path]
+      render_target.background_color = [255, 255, 255, 255]
+      render_target.w = @w
+      render_target.h = @h
+
 
       label_offset_x = 20
       label_offset_y = 40
@@ -134,13 +150,13 @@ module SpriteKit
 
       if @state.current_sprite
         text.concat([
-          @gap_button.label.call,
+          @buttons.gap_button.label.call,
           @counters.source_x.label.call,
           @counters.source_y.label.call,
           @counters.source_w.label.call,
           @counters.source_h.label.call,
           { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - label_offset_x - 5) },
-          { text: "" },
+          @buttons.copy_to_clipboard.label.call,
           { text: "Spritesheet Properties:" },
           { text: "w: #{@state.current_sprite.spritesheet.w}" },
           { text: "h: #{@state.current_sprite.spritesheet.h}" },
@@ -162,12 +178,15 @@ module SpriteKit
 
       label_offset_x = 20
       counter_buttons = []
+      button_borders = []
 
-      gap_button_label = text.find { |hash| hash[:id] == @gap_button.id }
-      if gap_button_label
-        gap_button_label.primitives = Primitives.borders(gap_button_label, padding: 8).values
-        if args.inputs.mouse.intersect_rect?(gap_button_label) && args.inputs.click
-          @gap_button.handle_click.call
+      @buttons.each do |key, button|
+        label = text.find { |hash| hash[:id] == button.id }
+        if label
+          button_borders.concat(Primitives.borders(label, padding: 8).values)
+          if args.inputs.click && args.inputs.mouse.intersect_rect?(label)
+            button.handle_click.call
+          end
         end
       end
 
@@ -228,9 +247,8 @@ module SpriteKit
         end
       end
 
-      @state.draw_buffer#[@render_path]
-        .primitives
-        .concat(gap_button_label&.primitives || [])
+      @state.draw_buffer[@render_path]
+        .concat(button_borders)
         .concat(text)
         .concat(counter_buttons)
 

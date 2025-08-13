@@ -7,10 +7,6 @@ def tick(args)
     map_editor_scene: SpriteKit::Scenes::SpritesheetScene.new
   }
 
-  if Kernel.tick_count == 0
-    return
-  end
-
   # initialize the scene to scene 1
   args.state.current_scene ||= :map_editor_scene
 
