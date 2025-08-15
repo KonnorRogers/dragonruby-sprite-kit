@@ -30,16 +30,10 @@ jobs:
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./yard-docs
           destination_dir: tags/${{ github.ref_name }}
           keep_files: true  # This preserves existing files
-
-  create_release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - name: "Set env vars"
         run: |
           TAG_NAME=${{ github.ref_name }}
@@ -50,6 +44,7 @@ jobs:
           rm -rf ./sprite_kit
           rm -rf ./sprite_kit.zip
           mkdir -p ./sprite_kit
+          cp -R ./yard-docs ./sprite_kit/docs
           zip -r ./sprite_kit.zip ./sprite_kit
       - name: "Create latest release"
         if: github.ref_name == 'main'
