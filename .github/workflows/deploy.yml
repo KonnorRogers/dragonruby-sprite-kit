@@ -11,7 +11,7 @@ on:
 permissions:
   contents: read
   id-token: write
-  pages: write
+  # pages: write
 
 env:
   GH_TOKEN: ${{ github.token }}
@@ -52,7 +52,7 @@ jobs:
       - name: "Create latest release"
         if: github.ref_name == 'main'
         run: |
-          gh release delete development --yes || true
+          # gh release delete development --yes || echo ""
           git push -u origin development || true
           gh release create development --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
       - name: "Create Tag Release"
