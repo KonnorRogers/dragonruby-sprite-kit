@@ -2,7 +2,7 @@
 
 require SpriteKit.to_load_path("canvas.rb")
 require SpriteKit.to_load_path("tool_drawer.rb")
-# require SpriteKit.to_load_path("draw_buffer.rb")
+require SpriteKit.to_load_path("draw_buffer.rb")
 
 module SpriteKit
   module Scenes
@@ -15,7 +15,6 @@ module SpriteKit
           draw_buffer: @draw_buffer,
           camera: @camera,
           camera_path: :camera,
-          # tile_selection: { w: 16, h: 16, row_gap: 0, column_gap: 0 }
           tile_selection: {
             w: 12, h: 12,
             row_gap: 1, column_gap: 1,

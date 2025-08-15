@@ -20,3 +20,7 @@
 /mygame/errors
 /samples
 .DS_Store
+
+/yard-docs
+/.yardoc
+

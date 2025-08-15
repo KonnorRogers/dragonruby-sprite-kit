@@ -33,7 +33,7 @@ module SpriteKit
     end
 
     # @param [String] name - The name of the tilesheet
-    # @path [String] path - The file path of the tilesheet
+    # @param [String] path - The file path of the tilesheet
     def load_file(name:, path:)
       file_width, file_height = $gtk.calcspritebox(path)
 
