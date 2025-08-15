@@ -24,6 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4' # Not needed with a .ruby-version, .tool-versions or mise.toml
       - run: gem install yard
       - name: Build
         run: bash ./scripts/build-docs.sh
