@@ -1,5 +1,0 @@
-# itch.io manifest...
-[[actions]]
-name = "launch"
-path = "dragonruby-macos/dragonruby"
-
