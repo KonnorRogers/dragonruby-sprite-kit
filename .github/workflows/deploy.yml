@@ -13,16 +13,11 @@ permissions:
   id-token: write
   # pages: write
 
-env:
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
-    # Deploy to the github-pages environment
-    # environment:
-    #   name: github-pages
-    #   url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +30,7 @@ jobs:
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
+
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./yard-docs
           destination_dir: tags/${{ github.ref_name }}
@@ -51,9 +47,14 @@ jobs:
           echo "SUBJECT='Release for $TAG_NAME'"
       - name: "Create latest release"
         if: github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create development --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
+
       - name: "Create Tag Release"
         if: github.ref_name != 'main'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create $TAG_NAME --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
