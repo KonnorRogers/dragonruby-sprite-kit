@@ -1,16 +1,17 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+      - 'v*.*.*'
 
 permissions:
+  contents: read
   id-token: write
   pages: write
-
 
 jobs:
   deploy_docs:
@@ -27,7 +28,7 @@ jobs:
       - name: Build
         run: bash ./scripts/build-docs.sh
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./yard-docs
@@ -43,6 +44,13 @@ jobs:
           TAG_NAME=${{ github.ref_name }}
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "SUBJECT='Release for $TAG_NAME'"
-      - name: "Create Release"
+      - name: "Create latest release"
+        if: github.ref_name == "main"
+        run: |
+          gh release delete development --yes || true
+          git push origin development || true
+          gh release create development --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
+      - name: "Create Tag Release"
+        if: github.ref_name != "main"
         run: |
           gh release create $TAG_NAME --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
