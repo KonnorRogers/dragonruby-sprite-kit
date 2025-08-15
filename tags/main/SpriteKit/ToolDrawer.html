@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: SpriteKit::ToolDrawer
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "SpriteKit::ToolDrawer";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span>
+     &raquo; 
+    <span class="title">ToolDrawer</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: SpriteKit::ToolDrawer
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">SpriteKit::ToolDrawer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>mygame/lib/sprite_kit/tool_drawer.rb</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#h-instance_method" title="#h (instance method)">#<strong>h</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute h.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render_path-instance_method" title="#render_path (instance method)">#<strong>render_path</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute render_path.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#state-instance_method" title="#state (instance method)">#<strong>state</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute state.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#w-instance_method" title="#w (instance method)">#<strong>w</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute w.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#x-instance_method" title="#x (instance method)">#<strong>x</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute x.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#y-instance_method" title="#y (instance method)">#<strong>y</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute y.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#calc-instance_method" title="#calc (instance method)">#<strong>calc</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(state:)  &#x21d2; ToolDrawer </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of ToolDrawer.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#input-instance_method" title="#input (instance method)">#<strong>input</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render-instance_method" title="#render (instance method)">#<strong>render</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#serialize-instance_method" title="#serialize (instance method)">#<strong>serialize</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tick-instance_method" title="#tick (instance method)">#<strong>tick</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(state:)  &#x21d2; <tt><span class='object_link'><a href="" title="SpriteKit::ToolDrawer (class)">ToolDrawer</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of ToolDrawer.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 9</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>state:</span><span class='rparen'>)</span>
+  <span class='ivar'>@tools</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='symbol'>:sprite</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+  <span class='ivar'>@render_path</span> <span class='op'>=</span> <span class='symbol'>:tool_drawer</span>
+  <span class='ivar'>@state</span> <span class='op'>=</span> <span class='id identifier rubyid_state'>state</span>
+
+  <span class='ivar'>@x</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@y</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@h</span> <span class='op'>=</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span>
+  <span class='ivar'>@w</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>/</span> <span class='int'>5</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_ceil'>ceil</span>
+
+  <span class='ivar'>@buttons</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>gap_button:</span> <span class='lbrace'>{</span>
+      <span class='label'>id:</span> <span class='symbol'>:gap</span><span class='comma'>,</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:gap</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='lparen'>(</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_prefab'>prefab</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Add gap</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Remove Gap</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>handle_click:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
+        <span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
+
+        <span class='kw'>if</span> <span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_prefab'>prefab</span>
+          <span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_prefab'>prefab</span> <span class='op'>=</span> <span class='kw'>nil</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_prefab'>prefab</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteMethods.html" title="SpriteKit::SpriteMethods (module)">SpriteMethods</a></span></span><span class='period'>.</span><span class='id identifier rubyid_generate_prefab'><span class='object_link'><a href="SpriteMethods.html#generate_prefab-class_method" title="SpriteKit::SpriteMethods.generate_prefab (method)">generate_prefab</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='comma'>,</span> <span class='ivar'>@state</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>copy_to_clipboard:</span> <span class='lbrace'>{</span>
+      <span class='label'>id:</span> <span class='symbol'>:copy_to_clipboard</span><span class='comma'>,</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:copy_to_clipboard</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Copy to clipboard</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>handle_click:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
+        <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SpriteMethods.html" title="SpriteKit::SpriteMethods (module)">SpriteMethods</a></span></span><span class='period'>.</span><span class='id identifier rubyid_serialize_sprite'><span class='object_link'><a href="SpriteMethods.html#serialize_sprite-class_method" title="SpriteKit::SpriteMethods.serialize_sprite (method)">serialize_sprite</a></span></span><span class='lparen'>(</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='comma'>,</span> <span class='symbol'>:ruby</span><span class='rparen'>)</span>
+        <span class='const'>GTK</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_str'>str</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; | pbcopy</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+    <span class='comment'># save_format: {
+</span>    <span class='comment'>#   label: proc { { id: :save_format, text: &quot;Copy to clipboard&quot; } },
+</span>    <span class='comment'># }
+</span>  <span class='rbrace'>}</span>
+
+  <span class='ivar'>@counters</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>tile_selection_w:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:tile_selection_w</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  w: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>tile_selection_h:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:tile_selection_h</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  h: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>row_gap:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:row_gap</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>row_gap: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_row_gap'>row_gap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_row_gap'>row_gap</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_row_gap'>row_gap</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>column_gap:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:column_gap</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>column_gap: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_column_gap'>column_gap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_column_gap'>column_gap</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_column_gap'>column_gap</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>offset_x:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:offset_x</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>offset_x: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>offset_y:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:offset_y</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>offset_y: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection'>tile_selection</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>source_x:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:source_x</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source_x: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>source_y:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:source_y</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source_y: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_y'>source_y</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_y'>source_y</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_y'>source_y</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>source_w:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:source_w</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source_w: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_w'>source_w</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_w'>source_w</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_w'>source_w</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>source_h:</span> <span class='lbrace'>{</span>
+      <span class='label'>label:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='lbrace'>{</span> <span class='label'>id:</span> <span class='symbol'>:source_h</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source_h: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_h'>source_h</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>increment:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_h'>source_h</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>decrement:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_h'>source_h</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="h=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="h-instance_method">
+  
+    #<strong>h</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute h.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_h'>h</span>
+  <span class='ivar'>@h</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="render_path=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="render_path-instance_method">
+  
+    #<strong>render_path</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute render_path.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render_path'>render_path</span>
+  <span class='ivar'>@render_path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="state=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="state-instance_method">
+  
+    #<strong>state</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute state.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
+  <span class='ivar'>@state</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="w=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="w-instance_method">
+  
+    #<strong>w</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute w.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_w'>w</span>
+  <span class='ivar'>@w</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="x=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="x-instance_method">
+  
+    #<strong>x</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute x.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_x'>x</span>
+  <span class='ivar'>@x</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="y=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="y-instance_method">
+  
+    #<strong>y</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute y.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+7
+8
+9</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 7</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_y'>y</span>
+  <span class='ivar'>@y</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="calc-instance_method">
+  
+    #<strong>calc</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_calc'>calc</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="input-instance_method">
+  
+    #<strong>input</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='comment'># if @render_target &amp;&amp; @current_sprite &amp;&amp; args.inputs.click &amp;&amp; @world_mouse.intersect_rect?(@render_path)
+</span>  <span class='comment'>#   @world_mouse
+</span>  <span class='comment'># end
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render-instance_method">
+  
+    #<strong>render</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 129</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='period'>.</span><span class='id identifier rubyid_primitives'>primitives</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_serialize'>serialize</span>
+  <span class='id identifier rubyid_render_target'>render_target</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span><span class='lbracket'>[</span><span class='ivar'>@render_path</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_render_target'>render_target</span><span class='period'>.</span><span class='id identifier rubyid_background_color'>background_color</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>255</span><span class='comma'>,</span> <span class='int'>255</span><span class='comma'>,</span> <span class='int'>255</span><span class='comma'>,</span> <span class='int'>255</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_render_target'>render_target</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='ivar'>@w</span>
+  <span class='id identifier rubyid_render_target'>render_target</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='ivar'>@h</span>
+
+
+  <span class='id identifier rubyid_label_offset_x'>label_offset_x</span> <span class='op'>=</span> <span class='int'>20</span>
+  <span class='id identifier rubyid_label_offset_y'>label_offset_y</span> <span class='op'>=</span> <span class='int'>40</span>
+
+  <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brush: { </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection_w'>tile_selection_w</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_tile_selection_h'>tile_selection_h</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_column_gap'>column_gap</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+    <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_row_gap'>row_gap</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
+    <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='lbracket'>[</span>
+      <span class='ivar'>@buttons</span><span class='period'>.</span><span class='id identifier rubyid_gap_button'>gap_button</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_source_y'>source_y</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_source_w'>source_w</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_source_h'>source_h</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='const'><span class='object_link'><a href="../StringHelper.html" title="StringHelper (module)">StringHelper</a></span></span><span class='period'>.</span><span class='id identifier rubyid_truncate'><span class='object_link'><a href="../StringHelper.html#truncate-class_method" title="StringHelper.truncate (method)">truncate</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>max_width:</span> <span class='ivar'>@w</span> <span class='op'>-</span> <span class='id identifier rubyid_label_offset_x'>label_offset_x</span> <span class='op'>-</span> <span class='int'>5</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='ivar'>@buttons</span><span class='period'>.</span><span class='id identifier rubyid_copy_to_clipboard'>copy_to_clipboard</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Spritesheet Properties:</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet'>spritesheet</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span> <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>h: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet'>spritesheet</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_prev_y'>prev_y</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_label_gap'>label_gap</span> <span class='op'>=</span> <span class='int'>14</span>
+  <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
+    <span class='id identifier rubyid_label_w'>label_w</span><span class='comma'>,</span> <span class='id identifier rubyid_label_h'>label_h</span> <span class='op'>=</span> <span class='const'>GTK</span><span class='period'>.</span><span class='id identifier rubyid_calcstringbox'>calcstringbox</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_label_w'>label_w</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_label_h'>label_h</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_label_offset_x'>label_offset_x</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='ivar'>@h</span> <span class='op'>-</span> <span class='id identifier rubyid_label_offset_y'>label_offset_y</span> <span class='op'>-</span> <span class='id identifier rubyid_prev_y'>prev_y</span> <span class='op'>-</span> <span class='id identifier rubyid_label_h'>label_h</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_label_gap'>label_gap</span> <span class='op'>*</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_primitive_marker'>primitive_marker</span> <span class='op'>=</span> <span class='symbol'>:label</span>
+    <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_anchor_y'>anchor_y</span> <span class='op'>=</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_prev_y'>prev_y</span> <span class='op'>+=</span> <span class='id identifier rubyid_label_h'>label_h</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_label_offset_x'>label_offset_x</span> <span class='op'>=</span> <span class='int'>20</span>
+  <span class='id identifier rubyid_counter_buttons'>counter_buttons</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_button_borders'>button_borders</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='ivar'>@buttons</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_button'>button</span><span class='op'>|</span>
+    <span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_button'>button</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='rbrace'>}</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_label'>label</span>
+      <span class='id identifier rubyid_button_borders'>button_borders</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Primitives.html" title="SpriteKit::Primitives (class)">Primitives</a></span></span><span class='period'>.</span><span class='id identifier rubyid_borders'><span class='object_link'><a href="Primitives.html#borders-class_method" title="SpriteKit::Primitives.borders (method)">borders</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='label'>padding:</span> <span class='int'>8</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_button'>button</span><span class='period'>.</span><span class='id identifier rubyid_handle_click'>handle_click</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@counters</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_counter'>counter</span><span class='op'>|</span>
+    <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_key'>key</span> <span class='rbrace'>}</span>
+
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_hash'>hash</span>
+
+    <span class='id identifier rubyid_row_gap'>row_gap</span> <span class='op'>=</span> <span class='int'>8</span>
+    <span class='id identifier rubyid_btn_x'>btn_x</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>+</span> <span class='id identifier rubyid_row_gap'>row_gap</span> <span class='op'>+</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span>
+    <span class='id identifier rubyid_btn_y'>btn_y</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span>
+
+    <span class='id identifier rubyid_gap'>gap</span> <span class='op'>=</span> <span class='int'>20</span>
+    <span class='id identifier rubyid_decrement_button'>decrement_button</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='label'>x:</span> <span class='id identifier rubyid_btn_x'>btn_x</span> <span class='op'>+</span> <span class='id identifier rubyid_gap'>gap</span><span class='comma'>,</span>
+      <span class='label'>y:</span> <span class='id identifier rubyid_btn_y'>btn_y</span> <span class='op'>+</span> <span class='int'>5</span><span class='comma'>,</span>
+      <span class='label'>w:</span> <span class='int'>16</span><span class='comma'>,</span>
+      <span class='label'>h:</span> <span class='int'>16</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='const'><span class='object_link'><a href="../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_load_path'><span class='object_link'><a href="../SpriteKit.html#to_load_path-class_method" title="SpriteKit.to_load_path (method)">to_load_path</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sprites/minus-sprite.png</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_gap'>gap</span> <span class='op'>=</span> <span class='int'>20</span>
+    <span class='id identifier rubyid_increment_button'>increment_button</span> <span class='op'>=</span> <span class='id identifier rubyid_decrement_button'>decrement_button</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+      <span class='label'>x:</span> <span class='id identifier rubyid_decrement_button'>decrement_button</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>+</span> <span class='id identifier rubyid_decrement_button'>decrement_button</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>+</span> <span class='id identifier rubyid_gap'>gap</span><span class='comma'>,</span>
+      <span class='label'>y:</span> <span class='id identifier rubyid_decrement_button'>decrement_button</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='const'><span class='object_link'><a href="../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_load_path'><span class='object_link'><a href="../SpriteKit.html#to_load_path-class_method" title="SpriteKit.to_load_path (method)">to_load_path</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sprites/plus-sprite.png</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_counter_buttons'>counter_buttons</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_increment_button'>increment_button</span>
+    <span class='id identifier rubyid_counter_buttons'>counter_buttons</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_decrement_button'>decrement_button</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_buttons'>buttons</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_held'>held</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='id identifier rubyid_increment_button'>increment_button</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
+          <span class='id identifier rubyid_counter'>counter</span><span class='period'>.</span><span class='id identifier rubyid_increment'>increment</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_buttons'>buttons</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_held'>held</span>
+          <span class='id identifier rubyid_start_tick'>start_tick</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_buttons'>buttons</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_click_at'>click_at</span>
+          <span class='id identifier rubyid_current_tick'>current_tick</span> <span class='op'>=</span> <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_tick_count'>tick_count</span>
+
+          <span class='id identifier rubyid_diff'>diff</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_tick'>current_tick</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_start_tick'>start_tick</span> <span class='op'>+</span> <span class='int'>75</span><span class='rparen'>)</span><span class='rparen'>)</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_diff'>diff</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_diff'>diff</span> <span class='op'>%</span> <span class='int'>4</span> <span class='op'>==</span> <span class='int'>0</span>
+            <span class='id identifier rubyid_counter'>counter</span><span class='period'>.</span><span class='id identifier rubyid_increment'>increment</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='id identifier rubyid_decrement_button'>decrement_button</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
+          <span class='id identifier rubyid_counter'>counter</span><span class='period'>.</span><span class='id identifier rubyid_decrement'>decrement</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_buttons'>buttons</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_held'>held</span>
+          <span class='id identifier rubyid_start_tick'>start_tick</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_buttons'>buttons</span><span class='period'>.</span><span class='id identifier rubyid_left'>left</span><span class='period'>.</span><span class='id identifier rubyid_click_at'>click_at</span>
+          <span class='id identifier rubyid_current_tick'>current_tick</span> <span class='op'>=</span> <span class='const'>Kernel</span><span class='period'>.</span><span class='id identifier rubyid_tick_count'>tick_count</span>
+
+          <span class='id identifier rubyid_diff'>diff</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_current_tick'>current_tick</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_start_tick'>start_tick</span> <span class='op'>+</span> <span class='int'>75</span><span class='rparen'>)</span><span class='rparen'>)</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_diff'>diff</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_diff'>diff</span> <span class='op'>%</span> <span class='int'>4</span> <span class='op'>==</span> <span class='int'>0</span>
+            <span class='id identifier rubyid_counter'>counter</span><span class='period'>.</span><span class='id identifier rubyid_decrement'>decrement</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@render_path</span><span class='rbracket'>]</span>
+    <span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_button_borders'>button_borders</span><span class='rparen'>)</span>
+    <span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+    <span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_counter_buttons'>counter_buttons</span><span class='rparen'>)</span>
+
+
+  <span class='comment'># need this top-layer
+</span>  <span class='comment'># path = labels[-5]
+</span>  <span class='comment'># if path &amp;&amp; current_sprite
+</span>  <span class='comment'>#   text_width, text_height = GTK.calcstringbox(path.text)
+</span>  <span class='comment'>#   path_rect = path.merge({
+</span>  <span class='comment'>#     w: text_width,
+</span>  <span class='comment'>#     h: text_height,
+</span>  <span class='comment'>#   })
+</span>  <span class='comment'>#   if args.inputs.mouse.intersect_rect?(serialize) &amp;&amp; args.inputs.mouse.intersect_rect?(path_rect)
+</span>  <span class='comment'>#     solid = {
+</span>  <span class='comment'>#         x: path_rect.x,
+</span>  <span class='comment'>#         y: path_rect.y,
+</span>  <span class='comment'>#         w: path_rect.w,
+</span>  <span class='comment'>#         h: path_rect.h,
+</span>  <span class='comment'>#         r: 0,
+</span>  <span class='comment'>#         b: 0,
+</span>  <span class='comment'>#         g: 0,
+</span>  <span class='comment'>#         a: 255,
+</span>  <span class='comment'>#         primitive_marker: :solid
+</span>  <span class='comment'>#     }.anchor_rect(path_rect.anchor_x || 0, path_rect.anchor_y || 0)
+</span>  <span class='comment'>#     solid.x -= 4
+</span>  <span class='comment'>#     solid.y -= 4
+</span>  <span class='comment'>#     solid.w += 8
+</span>  <span class='comment'>#     solid.h += 8
+</span>
+  <span class='comment'>#     @state.draw_buffer[:top_layer].concat([
+</span>  <span class='comment'>#       solid,
+</span>  <span class='comment'>#       {
+</span>  <span class='comment'>#         x: path_rect.x,
+</span>  <span class='comment'>#         y: path_rect.y,
+</span>  <span class='comment'>#         text: path_rect.text,
+</span>  <span class='comment'>#         primitive_marker: :label,
+</span>  <span class='comment'>#         anchor_y: path_rect.anchor_y,
+</span>  <span class='comment'>#         r: 255,
+</span>  <span class='comment'>#         g: 255,
+</span>  <span class='comment'>#         b: 255,
+</span>  <span class='comment'>#         a: 255,
+</span>  <span class='comment'>#       }.label!,
+</span>  <span class='comment'>#     ])
+</span>  <span class='comment'>#   end
+</span>  <span class='comment'># end
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="serialize-instance_method">
+  
+    #<strong>serialize</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_serialize'>serialize</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>x:</span> <span class='ivar'>@x</span><span class='comma'>,</span>
+    <span class='label'>y:</span> <span class='ivar'>@y</span><span class='comma'>,</span>
+    <span class='label'>w:</span> <span class='ivar'>@w</span><span class='comma'>,</span>
+    <span class='label'>h:</span> <span class='ivar'>@h</span><span class='comma'>,</span>
+    <span class='label'>primitive_marker:</span> <span class='symbol'>:sprite</span><span class='comma'>,</span>
+    <span class='label'>scale_quality_enum:</span> <span class='int'>2</span><span class='comma'>,</span>
+    <span class='label'>path:</span> <span class='ivar'>@render_path</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tick-instance_method">
+  
+    #<strong>tick</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tool_drawer.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_calc'>calc</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Fri Aug 15 05:02:00 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.5).
+</div>
+
+    </div>
+  </body>
+</html>
