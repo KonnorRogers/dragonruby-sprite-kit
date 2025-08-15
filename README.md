@@ -16,7 +16,7 @@ Sprite Kit is built for DragonRuby with the intent of you extending it. Its desi
 
 npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite-kit
 
-## TODO: Download a zip from releases
+## Download a zip from releases
 
 ## Working with Spritesheets
 
