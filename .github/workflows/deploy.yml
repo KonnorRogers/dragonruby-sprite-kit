@@ -53,7 +53,7 @@ jobs:
         if: github.ref_name == 'main'
         run: |
           gh release delete development --yes || true
-          git push origin development || true
+          git push -u origin development || true
           gh release create development --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
       - name: "Create Tag Release"
         if: github.ref_name != 'main'
