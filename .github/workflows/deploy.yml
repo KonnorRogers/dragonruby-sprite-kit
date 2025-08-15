@@ -45,6 +45,12 @@ jobs:
           TAG_NAME=${{ github.ref_name }}
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "SUBJECT='Release for $TAG_NAME'"
+      - name: "Create release archive"
+        run: |
+          rm -rf ./sprite_kit
+          rm -rf ./sprite_kit.zip
+          mkdir -p ./sprite_kit
+          zip -r ./sprite_kit.zip ./sprite_kit
       - name: "Create latest release"
         if: github.ref_name == 'main'
         env:
@@ -57,4 +63,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create $TAG_NAME --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./mygame/lib/*
+          gh release create $TAG_NAME --title "$SUBJECT" --generate-notes --target $GITHUB_SHA ./sprite_kit.zip
