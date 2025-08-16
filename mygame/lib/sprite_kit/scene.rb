@@ -26,6 +26,7 @@ module SpriteKit
         y: 0,
         path: :top_layer,
       }
+      @draw_buffer.outputs = @outputs
 
       input
       calc
