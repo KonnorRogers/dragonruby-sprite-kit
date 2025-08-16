@@ -1,35 +1,27 @@
 require "lib/sprite_kit.rb"
 
+class Game
+  def initialize
+    @scene_manager = SpriteKit::SceneManager.new(
+      current_scene: :main_scene,
+      scenes: {
+        main_scene: SpriteKit::Scenes::SpritesheetScene,
+      }
+    )
+  end
+
+  def tick(args)
+    @scene_manager.tick(args)
+  end
+end
+
 def tick(args)
-  args.outputs.debug << "Simulation FPS: #{args.gtk.current_framerate_calc.round.to_s}"
+  $game ||= Game.new
+  $game.tick(args)
+end
 
-  args.state.scenes ||= {
-    map_editor_scene: SpriteKit::Scenes::SpritesheetScene.new
-  }
-
-  # initialize the scene to scene 1
-  args.state.current_scene ||= :map_editor_scene
-
-  current_scene = args.state.current_scene
-
-  args.state.scenes[current_scene].tick(args)
-
-  # make sure that the current_scene flag wasn't set mid tick
-  if args.state.current_scene != current_scene
-    raise "Scene was changed incorrectly. Set args.state.next_scene to change scenes."
-  end
-
-  if args.inputs.keyboard.key_down.r
-    if !(args.state.text_fields && args.state.text_fields.any? { |input| input.focussed? })
-      $gtk.reset
-    end
-  end
-
-  # if next scene was set/requested, then transition the current scene to the next scene
-  if args.state.next_scene
-    args.state.current_scene = args.state.next_scene
-    args.state.next_scene = nil
-  end
+def reset
+  $game = nil
 end
 
 $gtk.reset

@@ -1,8 +1,8 @@
 # Simple helper for making sprites complete with a "serialize" method.
 module SpriteKit
-  attr_sprite
-
   class Sprite
+    attr_sprite
+
     def initialize(**kwargs)
       kwargs.each do |kwarg, value|
         instance_variable_set("@#{kwarg}", value)

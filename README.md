@@ -47,17 +47,15 @@ If you would like, DragonRuby Sprite Kit also ships with Scene Manager and Scene
 class MainScene < SpriteKit::Scene
   def render
     draw_buffer.primitives << {
-      x: 0,
-      y: 0,
-      w: Grid.w / 2,
-      h: Grid.h / 2,
+      x: Grid.w / 2,
+      y: Grid.h / 2,
       text: "Hello World"
     }.label!
   end
 end
 
 class Game
-  def initialize(args)
+  def initialize
     @scene_manager = SpriteKit::SceneManager.new(
       current_scene: :main_scene,
       scenes: {
@@ -72,7 +70,7 @@ class Game
 end
 
 def tick(args)
-  $game ||= Game.new(args)
+  $game ||= Game.new
   $game.tick(args)
 end
 
