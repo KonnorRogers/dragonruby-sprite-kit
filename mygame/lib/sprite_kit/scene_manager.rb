@@ -19,7 +19,7 @@ module SpriteKit
         raise "Scene was changed incorrectly. Set @next_scene or scene.next_scene to change scenes."
       end
 
-      if @next_scene != @current_scene
+      if @next_scene && @next_scene != @current_scene
         @current_scene = @scenes[@next_scene].new(self)
         @next_scene = nil
       end
