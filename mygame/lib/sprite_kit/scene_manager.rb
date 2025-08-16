@@ -13,7 +13,7 @@ module SpriteKit
 
     def tick(args)
       scene_before_tick = @current_scene
-      @current_scene.tick(args)
+      @ticking_scene.tick(args)
 
       if scene_before_tick != @current_scene
         raise "Scene was changed incorrectly. Set @next_scene or scene.next_scene to change scenes."
