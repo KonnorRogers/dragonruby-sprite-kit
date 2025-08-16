@@ -220,7 +220,7 @@
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_scene_manager'>scene_manager</span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_scene_manager'>scene_manager</span><span class='rparen'>)</span>
+  <span class='ivar'>@scene_manager</span> <span class='op'>=</span> <span class='id identifier rubyid_scene_manager'>scene_manager</span>
   <span class='ivar'>@camera</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Camera.html" title="SpriteKit::Camera (class)">Camera</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Camera.html#initialize-instance_method" title="SpriteKit::Camera#initialize (method)">new</a></span></span>
   <span class='ivar'>@draw_buffer</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../DrawBuffer.html" title="SpriteKit::DrawBuffer (class)">DrawBuffer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../DrawBuffer.html#initialize-instance_method" title="SpriteKit::DrawBuffer#initialize (method)">new</a></span></span>
 
@@ -353,7 +353,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 16 18:02:20 2025 by
+  Generated on Sat Aug 16 18:45:42 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
