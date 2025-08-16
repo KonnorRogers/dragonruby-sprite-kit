@@ -55,9 +55,9 @@ module SpriteKit
 
     def draw
       render_top_layer
-      gtk.warn_array_primitives!
+      GTK.warn_array_primitives!
 
-      gtk.framerate_diagnostics_primitives.map.with_index do |primitive, index|
+      GTK.framerate_diagnostics_primitives.map.with_index do |primitive, index|
         primitive.y = 1 + index * 16
       end
 
