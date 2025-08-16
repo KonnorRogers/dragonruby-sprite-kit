@@ -20,7 +20,8 @@ module SpriteKit
       end
 
       if @next_scene && @next_scene != @current_scene
-        @current_scene = @scenes[@next_scene].new(self)
+        @current_scene = @next_scene
+        @ticking_scene = @scenes[@next_scene].new(self)
         @next_scene = nil
       end
     end
