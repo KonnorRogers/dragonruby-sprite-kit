@@ -2,6 +2,7 @@ module SpriteKit
   class SceneManager
     attr_writer :next_scene
     attr_reader :current_scene
+    attr_accessor :scenes
 
     def initialize(scenes:, current_scene:)
       @scenes = scenes
