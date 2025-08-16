@@ -164,6 +164,33 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scenes-instance_method" title="#scenes (instance method)">#<strong>scenes</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute scenes.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -257,14 +284,14 @@
       <pre class="lines">
 
 
-6
 7
 8
 9
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene_manager.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene_manager.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>scenes:</span><span class='comma'>,</span> <span class='label'>current_scene:</span><span class='rparen'>)</span>
   <span class='ivar'>@scenes</span> <span class='op'>=</span> <span class='id identifier rubyid_scenes'>scenes</span>
@@ -387,6 +414,49 @@
 </table>
 </div>
     
+      
+      <span id="scenes=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scenes-instance_method">
+  
+    #<strong>scenes</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute scenes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene_manager.rb', line 5</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scenes'>scenes</span>
+  <span class='ivar'>@scenes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
@@ -409,7 +479,6 @@
       <pre class="lines">
 
 
-12
 13
 14
 15
@@ -418,10 +487,11 @@
 18
 19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene_manager.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene_manager.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_scene_before_tick'>scene_before_tick</span> <span class='op'>=</span> <span class='ivar'>@current_scene</span>
@@ -443,7 +513,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 16 07:08:00 2025 by
+  Generated on Sat Aug 16 18:02:20 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
