@@ -349,6 +349,33 @@
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#top_layer-instance_method" title="#top_layer (instance method)">#<strong>top_layer</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute top_layer.</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -961,6 +988,49 @@
 </table>
 </div>
     
+      
+      <span id="top_layer=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="top_layer-instance_method">
+  
+    #<strong>top_layer</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute top_layer.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scene.rb', line 5</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_top_layer'>top_layer</span>
+  <span class='ivar'>@top_layer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
@@ -1133,7 +1203,7 @@
   <span class='ivar'>@outputs</span><span class='lbracket'>[</span><span class='symbol'>:top_layer</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='ivar'>@top_layer</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span>
   <span class='ivar'>@outputs</span><span class='lbracket'>[</span><span class='symbol'>:top_layer</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='ivar'>@top_layer</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span>
   <span class='ivar'>@outputs</span><span class='lbracket'>[</span><span class='symbol'>:top_layer</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_transient!'>transient!</span>
-  <span class='ivar'>@draw_buffer</span><span class='period'>.</span><span class='id identifier rubyid_primitives'>primitives</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_top_layer'>top_layer</span>
+  <span class='ivar'>@draw_buffer</span><span class='period'>.</span><span class='id identifier rubyid_primitives'>primitives</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@top_layer</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1197,7 +1267,7 @@
     <span class='label'>h:</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span>
     <span class='label'>x:</span> <span class='int'>0</span><span class='comma'>,</span>
     <span class='label'>y:</span> <span class='int'>0</span><span class='comma'>,</span>
-    <span class='label'>path:</span> <span class='symbol'>:top_layer</span>
+    <span class='label'>path:</span> <span class='symbol'>:top_layer</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_input'>input</span>
@@ -1215,7 +1285,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 16 06:14:25 2025 by
+  Generated on Sat Aug 16 06:46:42 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
