@@ -109,33 +109,6 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#files-instance_method" title="#files (instance method)">#<strong>files</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute files.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#hover_rect-instance_method" title="#hover_rect (instance method)">#<strong>hover_rect</strong>  &#x21d2; Object </a>
     
 
@@ -652,8 +625,7 @@
 29
 30
 31
-32
-33</pre>
+32</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 12</span>
@@ -669,8 +641,7 @@
   <span class='ivar'>@hover_rect_screen</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
   <span class='comment'># @show_grid = false
-</span>  <span class='ivar'>@files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-
+</span>
   <span class='comment'># used to calculate where clicks are registered.
 </span>  <span class='ivar'>@viewport_boundary</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>x:</span> <span class='int'>0</span><span class='comma'>,</span>
@@ -691,52 +662,9 @@
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="files=-instance_method"></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="files-instance_method">
-  
-    #<strong>files</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>Returns the value of attribute files.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-10
-11
-12</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 10</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_files'>files</span>
-  <span class='ivar'>@files</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
       <span id="hover_rect=-instance_method"></span>
-      <div class="method_details ">
-  <h3 class="signature " id="hover_rect-instance_method">
+      <div class="method_details first">
+  <h3 class="signature first" id="hover_rect-instance_method">
   
     #<strong>hover_rect</strong>  &#x21d2; <tt>Object</tt> 
   
@@ -1013,12 +941,12 @@
       <pre class="lines">
 
 
+64
 65
-66
-67</pre>
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calc'>calc</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_calc_camera'>calc_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1043,16 +971,16 @@
       <pre class="lines">
 
 
+108
 109
 110
 111
 112
 113
-114
-115</pre>
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calc_camera'>calc_camera</span><span class='lparen'>(</span><span class='id identifier rubyid__args'>_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ease'>ease</span> <span class='op'>=</span> <span class='float'>0.1</span>
@@ -1081,16 +1009,16 @@
       <pre class="lines">
 
 
+34
 35
 36
 37
 38
 39
-40
-41</pre>
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_camera_render_target'>camera_render_target</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rt'>rt</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span>
@@ -1119,12 +1047,12 @@
       <pre class="lines">
 
 
+42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_camera_speed'>camera_speed</span>
   <span class='int'>3</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='int'>12</span> <span class='op'>/</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span><span class='rparen'>)</span>
@@ -1149,6 +1077,7 @@
       <pre class="lines">
 
 
+52
 53
 54
 55
@@ -1158,11 +1087,10 @@
 59
 60
 61
-62
-63</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_move_camera'>move_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1195,6 +1123,7 @@
       <pre class="lines">
 
 
+79
 80
 81
 82
@@ -1221,11 +1150,10 @@
 103
 104
 105
-106
-107</pre>
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_camera'>move_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_inputs'>inputs</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span>
@@ -1275,6 +1203,7 @@
       <pre class="lines">
 
 
+68
 69
 70
 71
@@ -1283,11 +1212,10 @@
 74
 75
 76
-77
-78</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_render_camera'>render_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1319,13 +1247,13 @@
       <pre class="lines">
 
 
+116
 117
 118
-119
-120</pre>
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_camera'>render_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_camera_render_target'>camera_render_target</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1351,6 +1279,7 @@
       <pre class="lines">
 
 
+363
 364
 365
 366
@@ -1371,11 +1300,10 @@
 381
 382
 383
-384
-385</pre>
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 364</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 363</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_current_sprite'>render_current_sprite</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
@@ -1419,6 +1347,7 @@
       <pre class="lines">
 
 
+121
 122
 123
 124
@@ -1658,11 +1587,10 @@
 358
 359
 360
-361
-362</pre>
+361</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_sprite_canvas'>render_sprite_canvas</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -1955,17 +1883,17 @@ end)
       <pre class="lines">
 
 
+448
 449
 450
 451
 452
 453
 454
-455
-456</pre>
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 449</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 448</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sprite_out_of_bounds?'>sprite_out_of_bounds?</span><span class='lparen'>(</span><span class='id identifier rubyid_sprite'>sprite</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_sprite'>sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span> <span class='op'>&lt;</span> <span class='int'>0</span>
@@ -1995,14 +1923,14 @@ end)
       <pre class="lines">
 
 
+46
 47
 48
 49
-50
-51</pre>
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -2019,7 +1947,7 @@ end)
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 16 19:50:04 2025 by
+  Generated on Sat Aug 16 19:52:15 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
