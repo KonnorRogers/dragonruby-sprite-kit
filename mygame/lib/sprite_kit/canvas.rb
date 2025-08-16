@@ -7,7 +7,7 @@ require SpriteKit.to_load_path("sprite_methods")
 
 module SpriteKit
   class Canvas
-    attr_accessor :hover_rect, :rect_size, :viewport_boundary, :spritesheets, :files, :max_width, :state
+    attr_accessor :hover_rect, :rect_size, :viewport_boundary, :spritesheets, :max_width, :state
 
     def initialize(state:, sprite_directory: "sprites")
       @spritesheet_loader = SpriteKit::SpritesheetLoader.new
@@ -20,7 +20,6 @@ module SpriteKit
       @hover_rect_screen = nil
 
       # @show_grid = false
-      @files = []
 
       # used to calculate where clicks are registered.
       @viewport_boundary = {
