@@ -7,7 +7,7 @@ require SpriteKit.to_load_path("sprite_methods")
 
 module SpriteKit
   class Canvas
-    attr_accessor :hover_rect, :rect_size, :viewport_boundary
+    attr_accessor :hover_rect, :rect_size, :viewport_boundary, :spritesheets, :files, :max_width, :state
 
     def initialize(state:, sprite_directory: "sprites")
       @spritesheet_loader = SpriteKit::SpritesheetLoader.new
