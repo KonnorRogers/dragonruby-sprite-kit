@@ -2,7 +2,7 @@ require SpriteKit.to_load_path("draw_buffer")
 
 module SpriteKit
   class Scene
-    attr_accessor :draw_buffer, :outputs, :inputs, :state, :args, :audio, :events, :mouse, :keyboard
+    attr_accessor :draw_buffer, :outputs, :inputs, :state, :args, :audio, :events, :mouse, :keyboard, :top_layer
 
     def initialize(scene_manager)
       @scene_manager = scene_manager
@@ -24,7 +24,7 @@ module SpriteKit
         h: Grid.h,
         x: 0,
         y: 0,
-        path: :top_layer
+        path: :top_layer,
       }
 
       input
@@ -50,7 +50,7 @@ module SpriteKit
       @outputs[:top_layer].w = @top_layer.w
       @outputs[:top_layer].h = @top_layer.h
       @outputs[:top_layer].transient!
-      @draw_buffer.primitives << top_layer
+      @draw_buffer.primitives << @top_layer
     end
 
     def draw
