@@ -70,15 +70,6 @@ module SpriteKit
         }
       end
 
-      if padding.is_a?(Hash)
-        # rect = rect.merge({
-        #   x: rect.x + padding.left,
-        #   y: rect.y + padding.bottom,
-        #   w: rect.w + padding.left + padding.right,
-        #   h: rect.h + padding.top + padding.bottom
-        # })
-      end
-
       {
         top: {
           # top
