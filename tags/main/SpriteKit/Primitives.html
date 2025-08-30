@@ -316,31 +316,27 @@
 114
 115
 116
-117
-118
-119</pre>
+117</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/primitives.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_borders'>borders</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='comma'>,</span> <span class='label'>padding:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>border_width:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>color:</span> <span class='lbrace'>{</span> <span class='label'>r:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>b:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>g:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>a:</span> <span class='int'>255</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_padding'>padding</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_padding'>padding</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_padding'>padding</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_padding'>padding</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_padding'>padding</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_padding'>padding</span> <span class='op'>&gt;=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_padding'>padding</span> <span class='op'>=</span> <span class='lbrace'>{</span>
       <span class='label'>top:</span> <span class='id identifier rubyid_padding'>padding</span><span class='comma'>,</span>
       <span class='label'>right:</span> <span class='id identifier rubyid_padding'>padding</span><span class='comma'>,</span>
       <span class='label'>bottom:</span> <span class='id identifier rubyid_padding'>padding</span><span class='comma'>,</span>
       <span class='label'>left:</span> <span class='id identifier rubyid_padding'>padding</span>
     <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_padding'>padding</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='label'>top:</span> <span class='int'>0</span><span class='comma'>,</span>
+      <span class='label'>left:</span> <span class='int'>0</span><span class='comma'>,</span>
+      <span class='label'>right:</span> <span class='int'>0</span><span class='comma'>,</span>
+      <span class='label'>bottom:</span> <span class='int'>0</span>
+    <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_padding'>padding</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-    <span class='comment'># rect = rect.merge({
-</span>    <span class='comment'>#   x: rect.x + padding.left,
-</span>    <span class='comment'>#   y: rect.y + padding.bottom,
-</span>    <span class='comment'>#   w: rect.w + padding.left + padding.right,
-</span>    <span class='comment'>#   h: rect.h + padding.top + padding.bottom
-</span>    <span class='comment'># })
-</span>  <span class='kw'>end</span>
 
   <span class='lbrace'>{</span>
     <span class='label'>top:</span> <span class='lbrace'>{</span>
@@ -528,7 +524,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 16 19:52:15 2025 by
+  Generated on Sat Aug 30 04:15:41 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
