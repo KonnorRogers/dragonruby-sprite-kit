@@ -77,7 +77,7 @@
 
 <h2 id="label-Using+degit">Using degit</h2>
 
-<p>npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite-kit</p>
+<p><code>npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite_kit</code></p>
 
 <h2 id="label-Download+a+zip+from+releases">Download a zip from releases</h2>
 
@@ -91,10 +91,10 @@
 
 <p>The SpriteCanvas is a scene designed for viewing your sprites. Its a large “infinite” canvas where you can drop spritesheets and see them appear.</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vendor/sprite-kit</span><span class='tstring_end'>&quot;</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vendor/sprite_kit/sprite_kit.rb</span><span class='tstring_end'>&quot;</span></span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_spritesheet_scene'>spritesheet_scene</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'>SpritesheetScene</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_spritesheet_scene'>spritesheet_scene</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/Scenes.html" title="SpriteKit::Scenes (module)">Scenes</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/Scenes/SpritesheetScene.html" title="SpriteKit::Scenes::SpritesheetScene (class)">SpritesheetScene</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SpriteKit/Scenes/SpritesheetScene.html#initialize-instance_method" title="SpriteKit::Scenes::SpritesheetScene#initialize (method)">new</a></span></span>
   <span class='id identifier rubyid_spritesheet_scene'>spritesheet_scene</span><span class='period'>.</span><span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 <span class='kw'>end</span>
 </code></pre>
@@ -146,9 +146,9 @@
 </div></div>
 
       <div id="footer">
-  Generated on Sun Aug 31 03:41:27 2025 by
+  Generated on Thu Nov  6 03:44:29 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.4.5).
+  0.9.37 (ruby-3.4.7).
 </div>
 
     </div>
