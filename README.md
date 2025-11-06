@@ -14,7 +14,7 @@ Sprite Kit is built for DragonRuby with the intent of you extending it. Its desi
 
 ## Using degit
 
-npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite-kit
+`npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite_kit`
 
 ## Download a zip from releases
 
@@ -29,10 +29,10 @@ So lets start with the basics. Not everyone will need a Map Editor. But everyone
 The SpriteCanvas is a scene designed for viewing your sprites. Its a large "infinite" canvas where you can drop spritesheets and see them appear.
 
 ```rb
-require "vendor/sprite-kit"
+require "vendor/sprite_kit/sprite_kit.rb"
 
 def tick(args)
-  spritesheet_scene ||= SpriteKit::SpritesheetScene.new
+  spritesheet_scene ||= SpriteKit::Scenes::SpritesheetScene.new
   spritesheet_scene.tick(args)
 end
 ```
