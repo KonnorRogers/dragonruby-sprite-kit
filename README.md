@@ -32,8 +32,8 @@ The SpriteCanvas is a scene designed for viewing your sprites. Its a large "infi
 require "vendor/sprite_kit/sprite_kit.rb"
 
 def tick(args)
-  spritesheet_scene ||= SpriteKit::Scenes::SpritesheetScene.new
-  spritesheet_scene.tick(args)
+  args.state.spritesheet_scene ||= SpriteKit::Scenes::SpritesheetScene.new
+  args.state.spritesheet_scene.tick(args)
 end
 ```
 

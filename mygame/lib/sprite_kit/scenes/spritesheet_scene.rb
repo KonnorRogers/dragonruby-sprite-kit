@@ -7,7 +7,7 @@ require SpriteKit.to_load_path("draw_buffer.rb")
 module SpriteKit
   module Scenes
     class SpritesheetScene
-      def initialize(scene_manager)
+      def initialize(scene_manager = nil)
         @scene_manager = scene_manager
         @camera = ::SpriteKit::Camera.new
         @draw_buffer = ::SpriteKit::DrawBuffer.new
