@@ -1,3 +1,5 @@
+require SpriteKit.to_load_path("file_cache")
+
 module SpriteKit
   class SpritesheetLoader
     def initialize
@@ -6,6 +8,7 @@ module SpriteKit
         "jpg",
         "png"
       ]
+      @file_cache = SpriteKit::FileCache.new
     end
 
     def load_directory(directory, tile_width: 16, tile_height: 16, spritesheets: [])
