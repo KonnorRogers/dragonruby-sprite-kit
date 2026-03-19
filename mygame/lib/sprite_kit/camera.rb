@@ -141,6 +141,7 @@ module SpriteKit
       rect.y = y
       rect.w = w
       rect.h = h
+      rect
     end
 
     def to_world_space(rect)
