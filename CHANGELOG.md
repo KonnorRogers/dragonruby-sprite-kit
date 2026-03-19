@@ -1,0 +1,2 @@
+- Updated to camera functionality to use the example here: <https://docs.dragonruby.org/#/samples/genre-platformer?id=map-editor-camerarb> with minor tweaks.
+- Added `#to_screen_space!` and `#to_world_space!` mutating methods
