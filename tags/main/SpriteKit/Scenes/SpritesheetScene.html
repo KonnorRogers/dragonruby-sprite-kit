@@ -103,6 +103,173 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#camera-instance_method" title="#camera (instance method)">#<strong>camera</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute camera.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#canvas-instance_method" title="#canvas (instance method)">#<strong>canvas</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute canvas.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#draw_buffer-instance_method" title="#draw_buffer (instance method)">#<strong>draw_buffer</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute draw_buffer.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scene_manager-instance_method" title="#scene_manager (instance method)">#<strong>scene_manager</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute scene_manager.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#state-instance_method" title="#state (instance method)">#<strong>state</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute state.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tool_drawer-instance_method" title="#tool_drawer (instance method)">#<strong>tool_drawer</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute tool_drawer.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -194,8 +361,6 @@
       <pre class="lines">
 
 
-10
-11
 12
 13
 14
@@ -214,10 +379,12 @@
 27
 28
 29
-30</pre>
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_scene_manager'>scene_manager</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@scene_manager</span> <span class='op'>=</span> <span class='id identifier rubyid_scene_manager'>scene_manager</span>
@@ -247,6 +414,269 @@
   
 </div>
 
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="camera=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="camera-instance_method">
+  
+    #<strong>camera</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute camera.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_camera'>camera</span>
+  <span class='ivar'>@camera</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="canvas=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="canvas-instance_method">
+  
+    #<strong>canvas</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute canvas.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_canvas'>canvas</span>
+  <span class='ivar'>@canvas</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="draw_buffer=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="draw_buffer-instance_method">
+  
+    #<strong>draw_buffer</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute draw_buffer.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_draw_buffer'>draw_buffer</span>
+  <span class='ivar'>@draw_buffer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="scene_manager=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scene_manager-instance_method">
+  
+    #<strong>scene_manager</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute scene_manager.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scene_manager'>scene_manager</span>
+  <span class='ivar'>@scene_manager</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="state=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="state-instance_method">
+  
+    #<strong>state</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute state.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
+  <span class='ivar'>@state</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="tool_drawer=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="tool_drawer-instance_method">
+  
+    #<strong>tool_drawer</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute tool_drawer.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tool_drawer'>tool_drawer</span>
+  <span class='ivar'>@tool_drawer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -267,8 +697,6 @@
       <pre class="lines">
 
 
-33
-34
 35
 36
 37
@@ -302,10 +730,12 @@
 65
 66
 67
-68</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span>
@@ -353,7 +783,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Mar 19 05:00:16 2026 by
+  Generated on Thu Apr  2 21:03:48 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-3.4.9).
 </div>
