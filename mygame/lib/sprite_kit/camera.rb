@@ -3,7 +3,7 @@ module SpriteKit
     # SCREEN_WIDTH = 1280
     # SCREEN_HEIGHT = 720
 
-    attr_accessor :x, :y, :target_x, :target_y, :scale, :target_scale
+    attr_accessor :x, :y, :target_x, :target_y, :scale, :target_scale, :path
     attr_writer :w, :h, :offset_x, :offset_y
 
     def initialize(
@@ -11,7 +11,8 @@ module SpriteKit
       target_x: 0, target_y: 0,
       target_scale: 2, scale: 2,
       w: nil, h: nil,
-      offset_x: nil, offset_y: nil
+      offset_x: nil, offset_y: nil,
+      path: nil
     )
       @x = x
       @y = y
@@ -24,6 +25,7 @@ module SpriteKit
       @h = h
       @offset_x = offset_x
       @offset_y = offset_y
+      @path = path
     end
 
     def w
@@ -103,6 +105,8 @@ module SpriteKit
           y: offset_y,
           w: w,
           h: h,
+          path: @path,
+          primitive_marker: :sprite
         }
       end
 
@@ -113,7 +117,9 @@ module SpriteKit
           w: w,
           h: h,
           anchor_x: 0.5,
-          anchor_y: 0.5
+          anchor_y: 0.5,
+          path: @path,
+          primitive_marker: :sprite
         }
       else
         {
@@ -121,6 +127,8 @@ module SpriteKit
           y: offset_y,
           w: w,
           h: h,
+          path: @path,
+          primitive_marker: :sprite
         }
       end
     end
@@ -178,7 +186,7 @@ module SpriteKit
     end
 
     def to_screen_space!(rect)
-      self.class.to_screen_space(self, rect)
+      self.class.to_screen_space!(self, rect)
     end
 
     def viewport_world
@@ -191,6 +199,10 @@ module SpriteKit
 
     def intersect_viewport?(rect)
       viewport_world.intersect_rect?(rect)
+    end
+
+    def to_a
+      viewport.merge!({})
     end
   end
 end
