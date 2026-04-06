@@ -184,6 +184,33 @@
       <li class="public ">
   <span class="summary_signature">
     
+      <a href="#path-instance_method" title="#path (instance method)">#<strong>path</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>SCREEN_WIDTH = 1280 SCREEN_HEIGHT = 720.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#scale-instance_method" title="#scale (instance method)">#<strong>scale</strong>  &#x21d2; Object </a>
     
 
@@ -547,7 +574,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(x: 0, y: 0, target_x: 0, target_y: 0, target_scale: 2, scale: 2, w: nil, h: nil, offset_x: nil, offset_y: nil)  &#x21d2; Camera </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(x: 0, y: 0, target_x: 0, target_y: 0, target_scale: 2, scale: 2, w: nil, h: nil, offset_x: nil, offset_y: nil, path: nil)  &#x21d2; Camera </a>
     
 
     
@@ -574,6 +601,28 @@
   <span class="summary_signature">
     
       <a href="#intersect_viewport%3F-instance_method" title="#intersect_viewport? (instance method)">#<strong>intersect_viewport?</strong>(rect)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_a-instance_method" title="#to_a (instance method)">#<strong>to_a</strong>  &#x21d2; Object </a>
     
 
     
@@ -821,7 +870,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(x: 0, y: 0, target_x: 0, target_y: 0, target_scale: 2, scale: 2, w: nil, h: nil, offset_x: nil, offset_y: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="SpriteKit::Camera (class)">Camera</a></span></tt> 
+    #<strong>initialize</strong>(x: 0, y: 0, target_x: 0, target_y: 0, target_scale: 2, scale: 2, w: nil, h: nil, offset_x: nil, offset_y: nil, path: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="SpriteKit::Camera (class)">Camera</a></span></tt> 
   
 
   
@@ -862,7 +911,9 @@
 24
 25
 26
-27</pre>
+27
+28
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 9</span>
@@ -872,7 +923,8 @@
   <span class='label'>target_x:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>target_y:</span> <span class='int'>0</span><span class='comma'>,</span>
   <span class='label'>target_scale:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>scale:</span> <span class='int'>2</span><span class='comma'>,</span>
   <span class='label'>w:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-  <span class='label'>offset_x:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>offset_y:</span> <span class='kw'>nil</span>
+  <span class='label'>offset_x:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>offset_y:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>path:</span> <span class='kw'>nil</span>
 <span class='rparen'>)</span>
   <span class='ivar'>@x</span> <span class='op'>=</span> <span class='id identifier rubyid_x'>x</span>
   <span class='ivar'>@y</span> <span class='op'>=</span> <span class='id identifier rubyid_y'>y</span>
@@ -885,6 +937,7 @@
   <span class='ivar'>@h</span> <span class='op'>=</span> <span class='id identifier rubyid_h'>h</span>
   <span class='ivar'>@offset_x</span> <span class='op'>=</span> <span class='id identifier rubyid_offset_x'>offset_x</span>
   <span class='ivar'>@offset_y</span> <span class='op'>=</span> <span class='id identifier rubyid_offset_y'>offset_y</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -913,12 +966,12 @@
       <pre class="lines">
 
 
-33
-34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_h'>h</span>
   <span class='ivar'>@h</span> <span class='op'>||</span> <span class='id identifier rubyid_viewport_h'>viewport_h</span>
@@ -945,8 +998,6 @@
       <pre class="lines">
 
 
-73
-74
 75
 76
 77
@@ -956,10 +1007,12 @@
 81
 82
 83
-84</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_offset_x'>offset_x</span>
   <span class='kw'>return</span> <span class='ivar'>@offset_x</span> <span class='kw'>if</span> <span class='ivar'>@offset_x</span>
@@ -995,8 +1048,6 @@
       <pre class="lines">
 
 
-86
-87
 88
 89
 90
@@ -1006,10 +1057,12 @@
 94
 95
 96
-97</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_offset_y'>offset_y</span>
   <span class='kw'>return</span> <span class='ivar'>@offset_x</span> <span class='kw'>if</span> <span class='ivar'>@offset_x</span>
@@ -1022,6 +1075,49 @@
   <span class='kw'>else</span>
     <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_allscreen_y'>allscreen_y</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="path=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="path-instance_method">
+  
+    #<strong>path</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>SCREEN_WIDTH = 1280 SCREEN_HEIGHT = 720</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+6
+7
+8</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 6</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='ivar'>@path</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1217,12 +1313,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_w'>w</span>
   <span class='ivar'>@w</span> <span class='op'>||</span> <span class='id identifier rubyid_viewport_w'>viewport_w</span>
@@ -1375,12 +1471,12 @@
       <pre class="lines">
 
 
-157
-158
-159</pre>
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1440,21 +1536,21 @@
       <pre class="lines">
 
 
-163
-164
-165
-166
-167
-168
-169
-170
 171
 172
 173
-174</pre>
+174
+175
+176
+177
+178
+179
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span>
@@ -1523,12 +1619,12 @@
       <pre class="lines">
 
 
-130
-131
-132</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1553,21 +1649,21 @@
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141
 142
 143
 144
-145</pre>
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
@@ -1607,12 +1703,12 @@
       <pre class="lines">
 
 
-188
-189
-190</pre>
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_all_intersect_viewport'>find_all_intersect_viewport</span><span class='lparen'>(</span><span class='id identifier rubyid_rects'>rects</span><span class='rparen'>)</span>
   <span class='const'>Geometry</span><span class='period'>.</span><span class='id identifier rubyid_find_all_intersect_rect'>find_all_intersect_rect</span><span class='lparen'>(</span><span class='id identifier rubyid_viewport_world'>viewport_world</span><span class='comma'>,</span> <span class='id identifier rubyid_rects'>rects</span><span class='rparen'>)</span>
@@ -1637,14 +1733,14 @@
       <pre class="lines">
 
 
-43
-44
 45
 46
-47</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_half_height'>half_height</span>
   <span class='kw'>return</span> <span class='ivar'>@h</span><span class='period'>.</span><span class='id identifier rubyid_fdiv'>fdiv</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_ceil'>ceil</span> <span class='kw'>if</span> <span class='ivar'>@h</span>
@@ -1671,14 +1767,14 @@
       <pre class="lines">
 
 
-37
-38
 39
 40
-41</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_half_width'>half_width</span>
   <span class='kw'>return</span> <span class='ivar'>@w</span><span class='period'>.</span><span class='id identifier rubyid_fdiv'>fdiv</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_ceil'>ceil</span> <span class='kw'>if</span> <span class='ivar'>@w</span>
@@ -1727,15 +1823,45 @@
       <pre class="lines">
 
 
-192
-193
-194</pre>
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_intersect_viewport?'>intersect_viewport?</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_viewport_world'>viewport_world</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_a-instance_method">
+  
+    #<strong>to_a</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+204
+205
+206</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 204</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='id identifier rubyid_viewport'>viewport</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1757,12 +1883,12 @@
       <pre class="lines">
 
 
-176
-177
-178</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1787,15 +1913,15 @@
       <pre class="lines">
 
 
-180
-181
-182</pre>
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1817,12 +1943,12 @@
       <pre class="lines">
 
 
-147
-148
-149</pre>
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1847,12 +1973,12 @@
       <pre class="lines">
 
 
-151
-152
-153</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1877,8 +2003,6 @@
       <pre class="lines">
 
 
-99
-100
 101
 102
 103
@@ -1904,10 +2028,18 @@
 123
 124
 125
-126</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport'>viewport</span>
   <span class='kw'>if</span> <span class='ivar'>@w</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@h</span>
@@ -1916,6 +2048,8 @@
       <span class='label'>y:</span> <span class='id identifier rubyid_offset_y'>offset_y</span><span class='comma'>,</span>
       <span class='label'>w:</span> <span class='id identifier rubyid_w'>w</span><span class='comma'>,</span>
       <span class='label'>h:</span> <span class='id identifier rubyid_h'>h</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='ivar'>@path</span><span class='comma'>,</span>
+      <span class='label'>primitive_marker:</span> <span class='symbol'>:sprite</span>
     <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
@@ -1926,7 +2060,9 @@
       <span class='label'>w:</span> <span class='id identifier rubyid_w'>w</span><span class='comma'>,</span>
       <span class='label'>h:</span> <span class='id identifier rubyid_h'>h</span><span class='comma'>,</span>
       <span class='label'>anchor_x:</span> <span class='float'>0.5</span><span class='comma'>,</span>
-      <span class='label'>anchor_y:</span> <span class='float'>0.5</span>
+      <span class='label'>anchor_y:</span> <span class='float'>0.5</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='ivar'>@path</span><span class='comma'>,</span>
+      <span class='label'>primitive_marker:</span> <span class='symbol'>:sprite</span>
     <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='lbrace'>{</span>
@@ -1934,6 +2070,8 @@
       <span class='label'>y:</span> <span class='id identifier rubyid_offset_y'>offset_y</span><span class='comma'>,</span>
       <span class='label'>w:</span> <span class='id identifier rubyid_w'>w</span><span class='comma'>,</span>
       <span class='label'>h:</span> <span class='id identifier rubyid_h'>h</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='ivar'>@path</span><span class='comma'>,</span>
+      <span class='label'>primitive_marker:</span> <span class='symbol'>:sprite</span>
     <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1957,12 +2095,12 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_h'>viewport_h</span>
   <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_allscreen_h'>allscreen_h</span>
@@ -1987,16 +2125,16 @@
       <pre class="lines">
 
 
-65
-66
 67
 68
 69
 70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_h_half'>viewport_h_half</span>
   <span class='kw'>if</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_origin_center?'>origin_center?</span>
@@ -2025,12 +2163,12 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_w'>viewport_w</span>
   <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_allscreen_w'>allscreen_w</span>
@@ -2055,16 +2193,16 @@
       <pre class="lines">
 
 
-57
-58
 59
 60
 61
 62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_w_half'>viewport_w_half</span>
   <span class='kw'>if</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_origin_center?'>origin_center?</span>
@@ -2093,12 +2231,12 @@
       <pre class="lines">
 
 
-184
-185
-186</pre>
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_world'>viewport_world</span>
   <span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_viewport'>viewport</span><span class='rparen'>)</span>
@@ -2113,7 +2251,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Apr  2 21:03:48 2026 by
+  Generated on Mon Apr  6 02:47:01 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-3.4.9).
 </div>
