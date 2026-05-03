@@ -6,13 +6,13 @@
 <title>
   Class: SpriteKit::Canvas
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "SpriteKit::Canvas";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,7 +96,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>mygame/lib/sprite_kit/canvas.rb</dd>
+    <dd>mygame/lib/sprite_kit/canvas.rb
+</dd>
   </dl>
   
 </div>
@@ -126,9 +129,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute hover_rect.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute hover_rect.</p></div></span>
   
 </li>
 
@@ -153,9 +154,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute max_width.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute max_width.</p></div></span>
   
 </li>
 
@@ -180,9 +179,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute rect_size.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute rect_size.</p></div></span>
   
 </li>
 
@@ -207,9 +204,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute spritesheets.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute spritesheets.</p></div></span>
   
 </li>
 
@@ -234,9 +229,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute state.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute state.</p></div></span>
   
 </li>
 
@@ -261,9 +254,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute viewport_boundary.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute viewport_boundary.</p></div></span>
   
 </li>
 
@@ -388,9 +379,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>A new instance of Canvas.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>A new instance of Canvas.</p></div></span>
   
 </li>
 
@@ -544,9 +533,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>@<a href="@state.camera_path">state.draw_buffer</a>.sprites.concat(@grid_boxes.map do |rect|     @state.camera.to_screen_space(rect)   end) end.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>@state.draw_<a href="@state.camera_path">buffer</a>.sprites.concat(@grid_boxes.map do |rect|     @state.camera.to_screen_space(rect)   end) end.</p></div></span>
   
 </li>
 
@@ -574,6 +561,7 @@
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -590,9 +578,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns a new instance of Canvas.</p>
-
+    <p>Returns a new instance of Canvas.</p>
 
   </div>
 </div>
@@ -674,9 +660,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute hover_rect.</p>
-
+    <p>Returns the value of attribute hover_rect.</p>
 
   </div>
 </div>
@@ -717,9 +701,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute max_width.</p>
-
+    <p>Returns the value of attribute max_width.</p>
 
   </div>
 </div>
@@ -760,9 +742,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute rect_size.</p>
-
+    <p>Returns the value of attribute rect_size.</p>
 
   </div>
 </div>
@@ -803,9 +783,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute spritesheets.</p>
-
+    <p>Returns the value of attribute spritesheets.</p>
 
   </div>
 </div>
@@ -846,9 +824,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute state.</p>
-
+    <p>Returns the value of attribute state.</p>
 
   </div>
 </div>
@@ -889,9 +865,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute viewport_boundary.</p>
-
+    <p>Returns the value of attribute viewport_boundary.</p>
 
   </div>
 </div>
@@ -1849,15 +1823,10 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>@<a href="@state.camera_path">state.draw_buffer</a>.sprites.concat(@grid_boxes.map do |rect|</p>
-
-<pre class="code ruby"><code class="ruby">  @state.camera.to_screen_space(rect)
+    <p>@state.draw_<a href="@state.camera_path">buffer</a>.sprites.concat(@grid_boxes.map do |rect|
+@state.camera.to_screen_space(rect)
 end)
-</code></pre>
-
-<p>end</p>
-
+end</p>
 
   </div>
 </div>
@@ -1947,9 +1916,9 @@ end)
 </div>
 
       <div id="footer">
-  Generated on Mon Apr  6 02:47:01 2026 by
+  Generated on Sun May  3 14:14:18 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.4.9).
+  0.9.43 (ruby-3.4.9).
 </div>
 
     </div>

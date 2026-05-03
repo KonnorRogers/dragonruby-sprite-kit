@@ -6,13 +6,13 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" />
+  <link rel="stylesheet" href="css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "README";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -57,98 +59,76 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-DragonRuby+Sprite+Kit">DragonRuby Sprite Kit</h1>
-
-<h2 id="label-What+is+this-3F">What is this?</h2>
-
+      <div id="content"><div id='filecontents'><h1 id="DragonRuby_Sprite_Kit">DragonRuby Sprite Kit</h1>
+<h2 id="What_is_this_">What is this?</h2>
 <p>Right now Sprite Kit is a basic utility helper for me with things I want to carry between projects.</p>
-
 <p>Things like</p>
-<ul><li>
-<p>Making spritesheets easier to work with (Most asset packs ship as spritesheets and are annoying to work with)</p>
-</li><li>
-<p>Map editors / Level Editors</p>
-</li><li>
-<p>Who knows what else?</p>
-</li></ul>
-
+<ul>
+<li>Making spritesheets easier to work with (Most asset packs ship as spritesheets and are annoying to work with)</li>
+<li>Map editors / Level Editors</li>
+<li>Who knows what else?</li>
+</ul>
 <p>Sprite Kit is built for DragonRuby with the intent of you extending it. Its designed to take the place of external tools you may use.</p>
-
-<h2 id="label-Using+degit">Using degit</h2>
-
+<h2 id="Using_degit">Using degit</h2>
 <p><code>npx degit konnorrogers/dragonruby-sprite-kit/mygame/lib ./mygame/vendor/sprite_kit</code></p>
-
-<h2 id="label-Download+a+zip+from+releases">Download a zip from releases</h2>
-
-<h2 id="label-Working+with+Spritesheets">Working with Spritesheets</h2>
-
+<h2 id="Download_a_zip_from_releases">Download a zip from releases</h2>
+<h2 id="Working_with_Spritesheets">Working with Spritesheets</h2>
 <p>I personally found working with Spritesheets (images containing multiple assets inside) particularly painful with DragonRuby.</p>
-
 <p>So lets start with the basics. Not everyone will need a Map Editor. But everyone will probably end up working with a spritesheets full of many sprites.</p>
+<h3 id="Rendering_the_Canvas">Rendering the Canvas</h3>
+<p>The SpriteCanvas is a scene designed for viewing your sprites. Its a large &quot;infinite&quot; canvas where you can drop spritesheets and see them appear.</p>
+<pre class="code rb"><code class="rb">require &quot;vendor/sprite_kit/sprite_kit.rb&quot;
 
-<h3 id="label-Rendering+the+Canvas">Rendering the Canvas</h3>
-
-<p>The SpriteCanvas is a scene designed for viewing your sprites. Its a large “infinite” canvas where you can drop spritesheets and see them appear.</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vendor/sprite_kit/sprite_kit.rb</span><span class='tstring_end'>&quot;</span></span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet_scene'>spritesheet_scene</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/Scenes.html" title="SpriteKit::Scenes (module)">Scenes</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/Scenes/SpritesheetScene.html" title="SpriteKit::Scenes::SpritesheetScene (class)">SpritesheetScene</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SpriteKit/Scenes/SpritesheetScene.html#initialize-instance_method" title="SpriteKit::Scenes::SpritesheetScene#initialize (method)">new</a></span></span>
-  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet_scene'>spritesheet_scene</span><span class='period'>.</span><span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-<span class='kw'>end</span>
+def tick(args)
+  args.state.spritesheet_scene ||= SpriteKit::Scenes::SpritesheetScene.new
+  args.state.spritesheet_scene.tick(args)
+end
 </code></pre>
-
 <p>The above will render a canvas for you to select your sprites from a canvas and copy them your clipboard.</p>
-
-<h2 id="label-Scene+Manager">Scene Manager</h2>
-
+<h2 id="Scene_Manager">Scene Manager</h2>
 <p>If you would like, DragonRuby Sprite Kit also ships with Scene Manager and Scenes.</p>
+<pre class="code rb"><code class="rb">class MainScene &lt; SpriteKit::Scene
+  def render
+    draw_buffer.primitives &lt;&lt; {
+      x: Grid.w / 2,
+      y: Grid.h / 2,
+      text: &quot;Hello World&quot;
+    }.label!
+  end
+end
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>MainScene</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/Scene.html" title="SpriteKit::Scene (class)">Scene</a></span></span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span>
-    <span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='period'>.</span><span class='id identifier rubyid_primitives'>primitives</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span>
-      <span class='label'>x:</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span>
-      <span class='label'>y:</span> <span class='const'>Grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span>
-      <span class='label'>text:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hello World</span><span class='tstring_end'>&quot;</span></span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_label!'>label!</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+class Game
+  def initialize
+    @scene_manager = SpriteKit::SceneManager.new(
+      current_scene: :main_scene,
+      scenes: {
+        main_scene: MainScene,
+      }
+    )
+  end
 
-<span class='kw'>class</span> <span class='const'>Game</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
-    <span class='ivar'>@scene_manager</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SpriteKit.html" title="SpriteKit (module)">SpriteKit</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SpriteKit/SceneManager.html" title="SpriteKit::SceneManager (class)">SceneManager</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SpriteKit/SceneManager.html#initialize-instance_method" title="SpriteKit::SceneManager#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-      <span class='label'>current_scene:</span> <span class='symbol'>:main_scene</span><span class='comma'>,</span>
-      <span class='label'>scenes:</span> <span class='lbrace'>{</span>
-        <span class='label'>main_scene:</span> <span class='const'>MainScene</span><span class='comma'>,</span>
-      <span class='rbrace'>}</span>
-    <span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  def tick(args)
+    @scene_manager.tick(args)
+  end
+end
 
-  <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='ivar'>@scene_manager</span><span class='period'>.</span><span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span>
+def tick(args)
+  $game ||= Game.new
+  $game.tick(args)
+end
 
-<span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='gvar'>$game</span> <span class='op'>||=</span> <span class='const'>Game</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='gvar'>$game</span><span class='period'>.</span><span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-<span class='kw'>end</span>
+def reset
+  $game = nil
+end
 
-<span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
-  <span class='gvar'>$game</span> <span class='op'>=</span> <span class='kw'>nil</span>
-<span class='kw'>end</span>
-
-<span class='gvar'>$gtk</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
+$gtk.reset
 </code></pre>
-
-<h2 id="label-Map+Editor+-28Maybe-3F-29">Map Editor (Maybe?)</h2>
-</div></div>
+<h2 id="Map_Editor__Maybe__">Map Editor (Maybe?)</h2></div></div>
 
       <div id="footer">
-  Generated on Mon Apr  6 02:47:01 2026 by
+  Generated on Sun May  3 14:14:18 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.4.9).
+  0.9.43 (ruby-3.4.9).
 </div>
 
     </div>
