@@ -3,13 +3,14 @@
 require SpriteKit.to_load_path("canvas.rb")
 require SpriteKit.to_load_path("tool_drawer.rb")
 require SpriteKit.to_load_path("draw_buffer.rb")
+require SpriteKit.to_load_path("spritesheet_loader")
 
 module SpriteKit
   module Scenes
     class SpritesheetScene
       attr_accessor :camera, :draw_buffer, :scene_manager, :state, :canvas, :tool_drawer
 
-      def initialize(scene_manager = nil)
+      def initialize(scene_manager = nil, sprite_directory: "sprites")
         @scene_manager = scene_manager
         @camera = ::SpriteKit::Camera.new
         @draw_buffer = ::SpriteKit::DrawBuffer.new
@@ -27,7 +28,11 @@ module SpriteKit
           viewport_boundary: nil,
         }
 
-        @canvas = ::SpriteKit::Canvas.new(state: @state)
+        @spritesheet_loader = SpriteKit::SpritesheetLoader.new
+        spritesheets = @spritesheet_loader.load_directory(sprite_directory)
+        @tree = spritesheets.tree
+        @spritesheets = spritesheets.spritesheets
+        @canvas = ::SpriteKit::Canvas.new(state: @state, spritesheets: @spritesheets)
         @tool_drawer = ::SpriteKit::ToolDrawer.new(state: @state)
       end
 
@@ -44,9 +49,12 @@ module SpriteKit
           w: args.grid.w - @tool_drawer.w,
           h: args.grid.h,
         }
-        @canvas.viewport_boundary = @state.viewport_boundary
 
-        @canvas.tick(args)
+        if @canvas
+          @canvas.viewport_boundary = @state.viewport_boundary
+          @canvas.tick(args)
+        end
+
         @tool_drawer.tick(args)
 
         top_layer = {
