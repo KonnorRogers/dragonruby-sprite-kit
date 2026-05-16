@@ -1473,12 +1473,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-165
-166
-167</pre>
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1538,32 +1538,46 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-171
-172
-173
-174
-175
-176
-177
 178
 179
 180
 181
-182</pre>
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_height'>half_height</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_x'>x</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_y'>y</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_w'>w</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_h'>h</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_height'>half_height</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_rect'>rect</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1662,21 +1676,35 @@ SCREEN_HEIGHT = 720</p>
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157
+158
+159
+160</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
-  <span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_height'>half_height</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
-  <span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_width'>half_width</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_offset_x'>offset_x</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_x'>x</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_y'>y</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_w'>w</span>
-  <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_h'>h</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_half_height'>half_height</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span> <span class='op'>-</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_offset_y'>offset_y</span><span class='rparen'>)</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span>
+    <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='id identifier rubyid_rect'>rect</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>/</span> <span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_scale'>scale</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_rect'>rect</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1705,12 +1733,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-196
-197
-198</pre>
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_all_intersect_viewport'>find_all_intersect_viewport</span><span class='lparen'>(</span><span class='id identifier rubyid_rects'>rects</span><span class='rparen'>)</span>
   <span class='const'>Geometry</span><span class='period'>.</span><span class='id identifier rubyid_find_all_intersect_rect'>find_all_intersect_rect</span><span class='lparen'>(</span><span class='id identifier rubyid_viewport_world'>viewport_world</span><span class='comma'>,</span> <span class='id identifier rubyid_rects'>rects</span><span class='rparen'>)</span>
@@ -1825,12 +1853,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-200
-201
-202</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_intersect_viewport?'>intersect_viewport?</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_viewport_world'>viewport_world</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1855,15 +1883,15 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-208
-209
-210
-211
-212
-213</pre>
+222
+223
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset'>reset</span>
   <span class='ivar'>@target_x</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -1891,12 +1919,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-204
-205
-206</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='id identifier rubyid_viewport'>viewport</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -1921,12 +1949,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-184
-185
-186</pre>
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1951,12 +1979,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-188
-189
-190</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -1981,12 +2009,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-155
-156
-157</pre>
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -2011,12 +2039,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-159
-160
-161</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
@@ -2269,12 +2297,12 @@ SCREEN_HEIGHT = 720</p>
       <pre class="lines">
 
 
-192
-193
-194</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/camera.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_viewport_world'>viewport_world</span>
   <span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_viewport'>viewport</span><span class='rparen'>)</span>
@@ -2289,7 +2317,7 @@ SCREEN_HEIGHT = 720</p>
 </div>
 
       <div id="footer">
-  Generated on Sat May 16 22:40:38 2026 by
+  Generated on Sat May 16 22:52:03 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-3.4.9).
 </div>
