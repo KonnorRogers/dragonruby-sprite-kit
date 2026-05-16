@@ -96,9 +96,14 @@ module SpriteKit
             spritesheet = @spritesheets[@state.file_path]
             if spritesheet
               @canvas.spritesheets = [spritesheet]
+              @camera.reset
             else
-              @state.view = :file_tree
+              @state.next_view = :file_tree
             end
+          end
+
+          if @state.next_view == :file_tree
+            @state.current_sprite = nil
           end
 
           @state.view = @state.next_view
