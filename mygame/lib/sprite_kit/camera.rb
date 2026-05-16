@@ -204,5 +204,12 @@ module SpriteKit
     def to_a
       viewport.merge!({})
     end
+
+    def reset
+      @target_x = 0
+      @target_y = 0
+      @x = 0
+      @y = 0
+    end
   end
 end

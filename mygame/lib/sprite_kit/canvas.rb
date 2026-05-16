@@ -1,5 +1,4 @@
 require SpriteKit.to_load_path("camera")
-require SpriteKit.to_load_path("spritesheet_loader")
 # require SpriteKit.to_load_path("primitives")
 # require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
 # require SpriteKit.to_load_path("serializer")
@@ -9,9 +8,8 @@ module SpriteKit
   class Canvas
     attr_accessor :hover_rect, :rect_size, :viewport_boundary, :spritesheets, :max_width, :state
 
-    def initialize(state:, sprite_directory: "sprites")
-      @spritesheet_loader = SpriteKit::SpritesheetLoader.new
-      @spritesheets = @spritesheet_loader.load_directory(sprite_directory)
+    def initialize(state:, spritesheets:)
+      @spritesheets = spritesheets
 
       # max_width of elements to load. Wraps downward if greater than 2000px
       @max_width = 2000
@@ -160,7 +158,9 @@ module SpriteKit
 
       visible_spritesheets.each do |spritesheet|
         spritesheet.spritesheet_screen = @state.camera.to_screen_space(spritesheet)
+
         @state.draw_buffer[@state.camera_path] << spritesheet.spritesheet_screen
+        @state.draw_buffer[@state.camera_path].concat(Primitives.borders(spritesheet.spritesheet_screen).values)
       end
 
       if !args.inputs.mouse.intersect_rect?(@viewport_boundary)
