@@ -22,6 +22,7 @@ module SpriteKit
           camera: @camera,
           camera_path: :camera,
           view: @views[0],
+          views: @views,
           tile_selection: {
             w: 12, h: 12,
             row_gap: 1, column_gap: 1,
@@ -87,6 +88,8 @@ module SpriteKit
           primitive.x = args.grid.w - 500 + primitive.x
           primitive
         end)
+
+        args.outputs.debug << "#{@state.next_view}"
 
         if @state.next_view
           if @state.next_view == :canvas

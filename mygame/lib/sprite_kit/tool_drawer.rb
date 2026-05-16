@@ -126,13 +126,16 @@ module SpriteKit
 
     def input(args)
       if args.inputs.keyboard.key_down.tab
-        @state.next_view = :file_tree
+        idx = @state.views.find_index { |view| @state.view == view }
+        idx += 1
+        idx = 0 if idx >= @state.views.length
+
+        @state.next_view = @state.views[idx]
       end
 
       if @focus && args.inputs.mouse.click && args.inputs.mouse.intersect_rect?(@focus)
         @focus = nil
       end
-
     end
 
     def calc(args)
