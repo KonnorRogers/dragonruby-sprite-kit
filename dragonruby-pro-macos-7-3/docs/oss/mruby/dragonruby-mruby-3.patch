@@ -1,0 +1,40 @@
+commit 83f5c96d8f2b9acf37a6fd0ef9f37ce462c64dac
+Author: Amir Rajan <ar@amirrajan.net>
+Date:   Fri May 10 23:27:55 2024 -0500
+
+    [mRuby] Array#shuffle(!) result distribution
+    
+    https://github.com/mruby/mruby/pull/6227
+    
+    def tick args
+      args.outputs.background_color = [20, 50, 0]
+      args.state.result ||= {}
+    
+      l = %w(a b c d)
+      t = (24 * 16 * 10).times.map{l.shuffle.join}.tally
+    
+      args.state.result.merge!(t) {|k, old_v, new_v| old_v + new_v}
+    
+      if args.tick_count % 100 == 0
+        puts "after #{args.tick_count} ticks: #{args.state.result.sort_by(&:last).to_h}"
+        val = args.state.result.values
+        hi, lo = val.max, val.min
+        puts "ratio of highest and lowest values is #{(hi / lo).round(3)}"
+      end
+    end
+    
+    > check the console output. if the bug is fixed, then the ratio line should approach 1 after a few printings. if it's staying around 5 then the bug is not fixes
+
+diff --git a/mruby/mrbgems/mruby-random/src/random.c b/mruby/mrbgems/mruby-random/src/random.c
+index 934af452c..33d2ea5aa 100644
+--- a/mruby/mrbgems/mruby-random/src/random.c
++++ b/mruby/mrbgems/mruby-random/src/random.c
+@@ -221,7 +221,7 @@ mrb_ary_shuffle_bang(mrb_state *mrb, mrb_value ary)
+       mrb_value tmp;
+ 
+ 
+-      j = mrb_integer(mrb_random_mt_rand(mrb, random, mrb_int_value(mrb, RARRAY_LEN(ary))));
++      j = mrb_integer(mrb_random_mt_rand(mrb, random, mrb_int_value(mrb, i + 1)));
+ 
+       tmp = ptr[i];
+       ptr[i] = ptr[j];

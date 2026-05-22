@@ -1,0 +1,11 @@
+devid=dragonruby
+devtitle=DragonRuby LLC
+gameid=sample-app
+gametitle=Sample App
+version=1.0
+icon=metadata/icon.png
+hd=true
+highdpi=true
+hd_letterbox=false
+orientation=portrait
+ignore_directories=user-data

@@ -15,13 +15,15 @@ class Game
   end
 end
 
-def tick(args)
-  $game ||= Game.new
-  $game.tick(args)
-end
+module Main
+  def tick(args)
+    $game ||= Game.new
+    $game.tick(args)
+  end
 
-def reset
-  $game = nil
+  def reset
+    $game = nil
+  end
 end
 
 $gtk.reset

@@ -89,8 +89,6 @@ module SpriteKit
           primitive
         end)
 
-        args.outputs.debug << "#{@state.next_view}"
-
         if @state.next_view
           if @state.next_view == :canvas
             spritesheet = @spritesheets[@state.file_path]

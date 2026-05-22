@@ -56,52 +56,112 @@ module SpriteKit
         tile_selection_w: {
           label: proc { { id: :tile_selection_w, text: "  w: #{@state.tile_selection.w}" } },
           increment: proc { @state.tile_selection.w += 1 },
-          decrement: proc { @state.tile_selection.w -= 1 }
+          decrement: proc { @state.tile_selection.w -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :w, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :w, keyboard)
+          }
         },
         tile_selection_h: {
           label: proc { { id: :tile_selection_h, text: "  h: #{@state.tile_selection.h}" } },
           increment: proc { @state.tile_selection.h += 1 },
-          decrement: proc { @state.tile_selection.h -= 1 }
+          decrement: proc { @state.tile_selection.h -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :h, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :h, keyboard)
+          }
         },
         row_gap: {
           label: proc { { id: :row_gap, text: "row_gap: #{@state.tile_selection.row_gap}" } },
           increment: proc { @state.tile_selection.row_gap += 1 },
-          decrement: proc { @state.tile_selection.row_gap -= 1 }
+          decrement: proc { @state.tile_selection.row_gap -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :row_gap, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :row_gap, keyboard)
+          }
         },
         column_gap: {
           label: proc { { id: :column_gap, text: "column_gap: #{@state.tile_selection.column_gap}" } },
           increment: proc { @state.tile_selection.column_gap += 1 },
-          decrement: proc { @state.tile_selection.column_gap -= 1 }
+          decrement: proc { @state.tile_selection.column_gap -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :column_gap, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :column_gap, keyboard)
+          }
         },
         offset_x: {
           label: proc { { id: :offset_x, text: "offset_x: #{@state.tile_selection.offset_x}" } },
           increment: proc { @state.tile_selection.offset_x += 1 },
-          decrement: proc { @state.tile_selection.offset_x -= 1 }
+          decrement: proc { @state.tile_selection.offset_x -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :offset_x, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :offset_x, keyboard)
+          }
         },
         offset_y: {
           label: proc { { id: :offset_y, text: "offset_y: #{@state.tile_selection.offset_y}" } },
           increment: proc { @state.tile_selection.offset_y += 1 },
-          decrement: proc { @state.tile_selection.offset_y -= 1 }
+          decrement: proc { @state.tile_selection.offset_y -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :offset_y, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :offset_y, keyboard)
+          }
         },
         source_x: {
           label: proc { { id: :source_x, text: "source_x: #{@state.current_sprite.source_x}" } },
           increment: proc { @state.current_sprite.source_x += 1 },
-          decrement: proc { @state.current_sprite.source_x -= 1 }
+          decrement: proc { @state.current_sprite.source_x -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :source_x, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :source_x, keyboard)
+          }
         },
         source_y: {
           label: proc { { id: :source_y, text: "source_y: #{@state.current_sprite.source_y}" } },
           increment: proc { @state.current_sprite.source_y += 1 },
-          decrement: proc { @state.current_sprite.source_y -= 1 }
+          decrement: proc { @state.current_sprite.source_y -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :source_y, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :source_y, keyboard)
+          }
         },
         source_w: {
           label: proc { { id: :source_w, text: "source_w: #{@state.current_sprite.source_w}" } },
           increment: proc { @state.current_sprite.source_w += 1 },
-          decrement: proc { @state.current_sprite.source_w -= 1 }
+          decrement: proc { @state.current_sprite.source_w -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :source_w, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :source_w, keyboard)
+          }
         },
         source_h: {
           label: proc { { id: :source_h, text: "source_h: #{@state.current_sprite.source_h}" } },
           increment: proc { @state.current_sprite.source_h += 1 },
-          decrement: proc { @state.current_sprite.source_h -= 1 }
+          decrement: proc { @state.current_sprite.source_h -= 1 },
+          handle_text: proc { |text|
+            handle_text(@state.tile_selection, :source_h, text)
+          },
+          handle_keyboard: proc { |keyboard|
+            handle_keyboard(@state.tile_selection, :source_h, keyboard)
+          }
         },
       }
     end
@@ -133,8 +193,17 @@ module SpriteKit
         @state.next_view = @state.views[idx]
       end
 
-      if @focus && args.inputs.mouse.click && args.inputs.mouse.intersect_rect?(@focus)
-        @focus = nil
+      if @focus
+        counter = @counters[@focus.id]
+        if counter
+          text = args.inputs.text
+          if text.length > 0
+            counter.handle_text&.call(text)
+          end
+          counter.handle_keyboard.call(args.inputs.keyboard)
+        end
+      else
+        # DR.stop_text_input
       end
     end
 
@@ -190,6 +259,18 @@ module SpriteKit
         label.primitive_marker = :label
         label.anchor_y = 0
         prev_y += label_h
+      end
+
+      if args.inputs.mouse.click
+        focus = Geometry.find_intersect_rect(args.inputs.mouse, text)
+
+        if focus
+          @focus = focus
+          DR.start_text_input
+        else
+          @focus = nil
+          DR.stop_text_input
+        end
       end
 
       label_offset_x = 20
@@ -269,9 +350,12 @@ module SpriteKit
         .concat(counter_buttons)
 
       if @focus
-        @state.draw_buffer[@render_path].concat(
-          Primitives.borders(@focus, padding: 8).values
-        )
+        @focus = text.find { |obj| obj.id == @focus.id }
+        if @focus
+          @state.draw_buffer[@render_path].concat(
+            Primitives.borders(@focus, padding: 8).values
+          )
+        end
       end
 
 
@@ -316,6 +400,20 @@ module SpriteKit
       #     ])
       #   end
       # end
+    end
+
+    def handle_text(obj, key, text)
+      val = obj.send(key.to_sym)
+      val = "#{val}#{text.join}".to_i
+      obj.send("#{key}=".to_sym, val)
+    end
+
+    def handle_keyboard(obj, key, keyboard)
+      if keyboard.key_down.backspace || keyboard.key_repeat.backspace
+        val = obj.send(key.to_sym).to_s
+        val = val.slice(0, val.length - 1).to_i
+        obj.send("#{key}=".to_sym, val)
+      end
     end
   end
 end
