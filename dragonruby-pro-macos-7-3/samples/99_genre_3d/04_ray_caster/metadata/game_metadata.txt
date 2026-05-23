@@ -1,6 +1,0 @@
-devid=dragonruby
-devtitle=DragonRuby LLC
-gameid=raytracer
-gametitle=Ray Tracer
-version=1.0
-icon=metadata/icon.png

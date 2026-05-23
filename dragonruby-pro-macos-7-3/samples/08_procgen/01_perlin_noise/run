@@ -1,7 +1,0 @@
-#!/bin/sh
-cd "`dirname "$0"`"
-
-cd ..
-cd ..
-cd ..
-exec ./dragonruby samples/08_procgen/01_perlin_noise

@@ -1,7 +1,0 @@
-#!/bin/sh
-cd "`dirname "$0"`"
-
-cd ..
-cd ..
-cd ..
-exec ./dragonruby samples/04_physics_and_collisions/13_verlet_integration --replay replay.txt $1 $2

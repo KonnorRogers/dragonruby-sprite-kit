@@ -27,8 +27,8 @@ module SpriteKit
           }
         },
         gap_button: {
-          id: :gap,
-          label: proc { { id: :gap, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
+          id: :gap_button,
+          label: proc { { id: :gap_button, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
           handle_click: proc {
             current_sprite = @state.current_sprite
 
