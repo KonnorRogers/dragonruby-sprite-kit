@@ -44,7 +44,9 @@ module SpriteKit
           label: proc { { id: :copy_to_clipboard, text: "Copy to clipboard" } },
           handle_click: proc {
             str = SpriteMethods.serialize_sprite(@state.current_sprite, :ruby)
+            str = str.slice(2..-4) + ","
             GTK.exec("echo \"#{str}\" | pbcopy")
+            # DR.misc_ffi.set_clipboard(str)
           }
         },
         # save_format: {
@@ -417,4 +419,5 @@ module SpriteKit
     end
   end
 end
+
 
