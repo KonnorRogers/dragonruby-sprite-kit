@@ -10,8 +10,8 @@ module SpriteKit
       y: nil,
       size_enum: nil,
       font: nil,
-      padding: 0,
-      border_width: 0
+      padding: 8,
+      border_width: 2
     )
       if !padding
         padding = 0
@@ -35,8 +35,8 @@ module SpriteKit
       rect = {
         w: w,
         h: h,
-        x: 0,
-        y: 0,
+        x: x,
+        y: y,
         primitive_marker: :sprite,
       }
 
@@ -117,3 +117,4 @@ module SpriteKit
     end
   end
 end
+
