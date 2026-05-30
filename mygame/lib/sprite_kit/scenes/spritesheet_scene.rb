@@ -23,6 +23,7 @@ module SpriteKit
           camera_path: :camera,
           view: @views[0],
           views: @views,
+          show_grid: false,
           tile_selection: {
             w: 12, h: 12,
             row_gap: 1, column_gap: 1,
@@ -49,6 +50,10 @@ module SpriteKit
       def tick(args)
         @state.outputs = args.outputs
         @state.draw_buffer.outputs = args.outputs
+
+        if args.inputs.keyboard.key_down.g
+          @state.show_grid = !@state.show_grid
+        end
 
         @state.world_mouse = @camera.to_world_space(args.inputs.mouse)
 

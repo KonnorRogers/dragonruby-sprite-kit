@@ -54,9 +54,6 @@ module SpriteKit
         @state.current_sprite = nil
       end
 
-      # if args.inputs.keyboard.key_down.g
-      #   @show_grid = !@show_grid
-      # end
     end
 
     def calc(args)
@@ -65,8 +62,10 @@ module SpriteKit
 
     def render(args)
       render_camera(args)
+      if @state.show_grid
+        @state.draw_buffer[@state.camera_path].concat(render_grid)
+      end
       render_sprite_canvas(args)
-      # render_grid_lines(args)
       render_current_sprite(args)
 
       if @hover_rect_screen
@@ -161,10 +160,6 @@ module SpriteKit
 
         @state.draw_buffer[@state.camera_path] << spritesheet.spritesheet_screen
         @state.draw_buffer[@state.camera_path].concat(Primitives.borders(spritesheet.spritesheet_screen).values)
-      end
-
-      if !args.inputs.mouse.intersect_rect?(@viewport_boundary)
-        return
       end
 
       Geometry.find_all_intersect_rect(@state.world_mouse, visible_spritesheets).each do |spritesheet|
@@ -298,6 +293,10 @@ module SpriteKit
           @virtual_sprite_selection = nil
         end
 
+        if !args.inputs.mouse.intersect_rect?(@viewport_boundary)
+          next
+        end
+
         if args.inputs.mouse.click
           @state.current_sprite = new_sprite
           @state.current_sprite.spritesheet = spritesheet
@@ -356,7 +355,11 @@ module SpriteKit
           a: 128,
         }
 
-        @state.draw_buffer[@state.camera_path] << @state.camera.to_screen_space(@current_sprite_selection)
+        s = @state.camera.to_screen_space(@current_sprite_selection)
+        # make it appear to take the whole grid despite how borders appear.
+        s.w += 1
+        s.h += 1
+        @state.draw_buffer[@state.camera_path] << s
       end
     end
 
@@ -383,67 +386,35 @@ module SpriteKit
       end
     end
 
-    # def render_grid_lines(args)
-    #   grid_border_size = 1
-    #   tile_size = 16
+    def render_grid
+      world = @state.camera.to_world_space!(@state.camera.viewport.dup)
+      tile_size = 32
 
-    #   rows = 80
-    #   columns = 80
-    #   width = tile_size * rows
-    #   height = tile_size * columns
+      min_x = (world.x / tile_size).floor * tile_size
+      min_y = (world.y / tile_size).floor * tile_size
+      max_x = world.x + world.w
+      max_y = world.y + world.h
 
-    #   if Kernel.tick_count == 0
-    #     args.outputs[:grid].w = width
-    #     args.outputs[:grid].h = height
-    #     args.outputs[:grid].background_color = [0, 0, 0, 0]
-    #     @grid = []
-    #     height.idiv(tile_size).each do |x|
-    #       width.idiv(tile_size).each do |y|
-    #         @grid << { line_type: :horizontal, x: x * tile_size, y: y * tile_size, w: tile_size, h: grid_border_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel }
-    #         @grid << { line_type: :vertical, x: x * tile_size, y: y * tile_size, w: grid_border_size, h: tile_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel  }
-    #       end
-    #     end
-    #   end
+      solids = []
 
-    #   if !@show_grid
-    #     return
-    #   end
+      x = min_x
+      while x <= max_x
+        s = { x: x, y: min_y, w: 1, h: max_y - min_y }
+        @state.camera.to_screen_space!(s)
+        solids << { x: s.x, y: s.y, w: 1, h: s.h, r: 255, g: 255, b: 255, a: 255, path: :solid }
+        x += tile_size
+      end
 
-    #   if @state.camera.scale != @current_scale
-    #     @current_scale = @state.camera.scale
+      y = min_y
+      while y <= max_y
+        s = { x: min_x, y: y, w: max_x - min_x, h: 1 }
+        @state.camera.to_screen_space!(s)
+        solids << { x: s.x, y: s.y, w: s.w, h: 1, r: 255, g: 255, b: 255, a: 255, path: :solid }
+        y += tile_size
+      end
 
-    #     if @state.camera.scale < 1
-    #       border_size = (grid_border_size / @state.camera.scale).ceil
-    #     else
-    #       border_size = grid_border_size
-    #     end
-
-    #     grid_border_size = border_size
-
-    #     @grid.each do |line|
-    #       line.w = grid_border_size if line[:line_type] == :vertical
-    #       line.h = grid_border_size if line[:line_type] == :horizontal
-    #     end
-
-    #     # Update the grid with new widths.
-    #     @state.draw_buffer[:grid].concat(@grid)
-    #   end
-
-    #   @grid_boxes ||= 10.flat_map do |x|
-    #     10.map do |y|
-    #       { x: (x - 5) * 1280, y: (y - 5) * 1280, w: 1280, h: 1280, path: :grid, r: 0, b: 0, g: 0, a: 64 }
-    #     end
-    #   end
-
-    #   if @hover_rect_screen
-    #     @hover_rect_screen.w += grid_border_size + 2
-    #     @hover_rect_screen.h += grid_border_size + 2
-    #   end
-
-    #   @state.draw_buffer[@state.camera_path].sprites.concat(@grid_boxes.map do |rect|
-    #     @state.camera.to_screen_space(rect)
-    #   end)
-    # end
+      solids
+    end
 
     def sprite_out_of_bounds?(sprite, rect)
       return true if sprite.source_x < 0
