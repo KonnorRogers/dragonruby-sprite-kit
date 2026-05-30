@@ -6,7 +6,7 @@
 <title>
   Class: SpriteKit::Canvas
   
-    &mdash; Documentation by YARD 0.9.43
+    &mdash; Documentation by YARD 0.9.44
   
 </title>
 
@@ -497,6 +497,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#render_grid-instance_method" title="#render_grid (instance method)">#<strong>render_grid</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#render_sprite_canvas-instance_method" title="#render_sprite_canvas (instance method)">#<strong>render_sprite_canvas</strong>(args)  &#x21d2; Object </a>
     
 
@@ -533,7 +555,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>@state.draw_<a href="@state.camera_path">buffer</a>.sprites.concat(@grid_boxes.map do |rect|     @state.camera.to_screen_space(rect)   end) end.</p></div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -913,12 +935,12 @@
       <pre class="lines">
 
 
-62
-63
-64</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calc'>calc</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_calc_camera'>calc_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -943,16 +965,16 @@
       <pre class="lines">
 
 
+105
 106
 107
 108
 109
 110
-111
-112</pre>
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calc_camera'>calc_camera</span><span class='lparen'>(</span><span class='id identifier rubyid__args'>_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ease'>ease</span> <span class='op'>=</span> <span class='float'>0.1</span>
@@ -1056,10 +1078,7 @@
 54
 55
 56
-57
-58
-59
-60</pre>
+57</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 50</span>
@@ -1071,10 +1090,7 @@
     <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># if args.inputs.keyboard.key_down.g
-</span>  <span class='comment'>#   @show_grid = !@show_grid
-</span>  <span class='comment'># end
-</span><span class='kw'>end</span></pre>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1095,6 +1111,7 @@
       <pre class="lines">
 
 
+76
 77
 78
 79
@@ -1121,11 +1138,10 @@
 100
 101
 102
-103
-104</pre>
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_camera'>move_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_inputs'>inputs</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span>
@@ -1175,6 +1191,9 @@
       <pre class="lines">
 
 
+63
+64
+65
 66
 67
 68
@@ -1183,17 +1202,18 @@
 71
 72
 73
-74
-75</pre>
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_render_camera'>render_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_show_grid'>show_grid</span>
+    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_render_grid'>render_grid</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_render_sprite_canvas'>render_sprite_canvas</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='comment'># render_grid_lines(args)
-</span>  <span class='id identifier rubyid_render_current_sprite'>render_current_sprite</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_render_current_sprite'>render_current_sprite</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='ivar'>@hover_rect_screen</span>
     <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@hover_rect_screen</span>
@@ -1219,13 +1239,13 @@
       <pre class="lines">
 
 
+113
 114
 115
-116
-117</pre>
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_camera'>render_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_camera_render_target'>camera_render_target</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1251,9 +1271,6 @@
       <pre class="lines">
 
 
-363
-364
-365
 366
 367
 368
@@ -1272,10 +1289,13 @@
 381
 382
 383
-384</pre>
+384
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 366</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_current_sprite'>render_current_sprite</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
@@ -1305,6 +1325,88 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="render_grid-instance_method">
+  
+    #<strong>render_grid</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 389</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render_grid'>render_grid</span>
+  <span class='id identifier rubyid_world'>world</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_viewport'>viewport</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tile_size'>tile_size</span> <span class='op'>=</span> <span class='int'>32</span>
+
+  <span class='id identifier rubyid_min_x'>min_x</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_size'>tile_size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_floor'>floor</span> <span class='op'>*</span> <span class='id identifier rubyid_tile_size'>tile_size</span>
+  <span class='id identifier rubyid_min_y'>min_y</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_size'>tile_size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_floor'>floor</span> <span class='op'>*</span> <span class='id identifier rubyid_tile_size'>tile_size</span>
+  <span class='id identifier rubyid_max_x'>max_x</span> <span class='op'>=</span> <span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>+</span> <span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span>
+  <span class='id identifier rubyid_max_y'>max_y</span> <span class='op'>=</span> <span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>+</span> <span class='id identifier rubyid_world'>world</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span>
+
+  <span class='id identifier rubyid_solids'>solids</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='id identifier rubyid_min_x'>min_x</span>
+  <span class='kw'>while</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_max_x'>max_x</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_min_y'>min_y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='id identifier rubyid_max_y'>max_y</span> <span class='op'>-</span> <span class='id identifier rubyid_min_y'>min_y</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_solids'>solids</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='label'>r:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>g:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>b:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>a:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='symbol'>:solid</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_x'>x</span> <span class='op'>+=</span> <span class='id identifier rubyid_tile_size'>tile_size</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_min_y'>min_y</span>
+  <span class='kw'>while</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_max_y'>max_y</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='id identifier rubyid_min_x'>min_x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='id identifier rubyid_max_x'>max_x</span> <span class='op'>-</span> <span class='id identifier rubyid_min_x'>min_x</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='int'>1</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space!'>to_screen_space!</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_solids'>solids</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>r:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>g:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>b:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>a:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='symbol'>:solid</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_y'>y</span> <span class='op'>+=</span> <span class='id identifier rubyid_tile_size'>tile_size</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_solids'>solids</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="render_sprite_canvas-instance_method">
   
     #<strong>render_sprite_canvas</strong>(args)  &#x21d2; <tt>Object</tt> 
@@ -1319,6 +1421,7 @@
       <pre class="lines">
 
 
+118
 119
 120
 121
@@ -1561,10 +1664,13 @@
 358
 359
 360
-361</pre>
+361
+362
+363
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_sprite_canvas'>render_sprite_canvas</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -1611,10 +1717,6 @@
 
     <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_spritesheet'>spritesheet</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet_screen'>spritesheet_screen</span>
     <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Primitives.html" title="SpriteKit::Primitives (class)">Primitives</a></span></span><span class='period'>.</span><span class='id identifier rubyid_borders'><span class='object_link'><a href="Primitives.html#borders-class_method" title="SpriteKit::Primitives.borders (method)">borders</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_spritesheet'>spritesheet</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet_screen'>spritesheet_screen</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='ivar'>@viewport_boundary</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='const'>Geometry</span><span class='period'>.</span><span class='id identifier rubyid_find_all_intersect_rect'>find_all_intersect_rect</span><span class='lparen'>(</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_world_mouse'>world_mouse</span><span class='comma'>,</span> <span class='id identifier rubyid_visible_spritesheets'>visible_spritesheets</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_spritesheet'>spritesheet</span><span class='op'>|</span>
@@ -1748,6 +1850,10 @@
       <span class='ivar'>@virtual_sprite_selection</span> <span class='op'>=</span> <span class='kw'>nil</span>
     <span class='kw'>end</span>
 
+    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_intersect_rect?'>intersect_rect?</span><span class='lparen'>(</span><span class='ivar'>@viewport_boundary</span><span class='rparen'>)</span>
+      <span class='kw'>next</span>
+    <span class='kw'>end</span>
+
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='period'>.</span><span class='id identifier rubyid_click'>click</span>
       <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='id identifier rubyid_new_sprite'>new_sprite</span>
       <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span><span class='period'>.</span><span class='id identifier rubyid_spritesheet'>spritesheet</span> <span class='op'>=</span> <span class='id identifier rubyid_spritesheet'>spritesheet</span>
@@ -1806,7 +1912,11 @@
       <span class='label'>a:</span> <span class='int'>128</span><span class='comma'>,</span>
     <span class='rbrace'>}</span>
 
-    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='ivar'>@current_sprite_selection</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_screen_space'>to_screen_space</span><span class='lparen'>(</span><span class='ivar'>@current_sprite_selection</span><span class='rparen'>)</span>
+    <span class='comment'># make it appear to take the whole grid despite how borders appear.
+</span>    <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>+=</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>+=</span> <span class='int'>1</span>
+    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_s'>s</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1825,10 +1935,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>@state.draw_<a href="@state.camera_path">buffer</a>.sprites.concat(@grid_boxes.map do |rect|
-@state.camera.to_screen_space(rect)
-end)
-end</p>
+    
 
   </div>
 </div>
@@ -1854,17 +1961,17 @@ end</p>
       <pre class="lines">
 
 
-448
-449
-450
-451
-452
-453
-454
-455</pre>
+419
+420
+421
+422
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 448</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 419</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sprite_out_of_bounds?'>sprite_out_of_bounds?</span><span class='lparen'>(</span><span class='id identifier rubyid_sprite'>sprite</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_sprite'>sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span> <span class='op'>&lt;</span> <span class='int'>0</span>
@@ -1918,9 +2025,9 @@ end</p>
 </div>
 
       <div id="footer">
-  Generated on Sun May 24 16:24:14 2026 by
+  Generated on Sat May 30 02:07:52 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.43 (ruby-3.4.9).
+  0.9.44 (ruby-3.4.9).
 </div>
 
     </div>

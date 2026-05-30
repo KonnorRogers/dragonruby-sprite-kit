@@ -6,7 +6,7 @@
 <title>
   Class: SpriteKit::Scenes::SpritesheetScene
   
-    &mdash; Documentation by YARD 0.9.43
+    &mdash; Documentation by YARD 0.9.44
   
 </title>
 
@@ -382,7 +382,8 @@
 44
 45
 46
-47</pre>
+47
+48</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 14</span>
@@ -399,6 +400,7 @@
     <span class='label'>camera_path:</span> <span class='symbol'>:camera</span><span class='comma'>,</span>
     <span class='label'>view:</span> <span class='ivar'>@views</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='label'>views:</span> <span class='ivar'>@views</span><span class='comma'>,</span>
+    <span class='label'>show_grid:</span> <span class='kw'>false</span><span class='comma'>,</span>
     <span class='label'>tile_selection:</span> <span class='lbrace'>{</span>
       <span class='label'>w:</span> <span class='int'>12</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='int'>12</span><span class='comma'>,</span>
       <span class='label'>row_gap:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>column_gap:</span> <span class='int'>1</span><span class='comma'>,</span>
@@ -699,7 +701,6 @@
       <pre class="lines">
 
 
-49
 50
 51
 52
@@ -760,14 +761,23 @@
 107
 108
 109
-110</pre>
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/scenes/spritesheet_scene.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span>
   <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_key_down'>key_down</span><span class='period'>.</span><span class='id identifier rubyid_g'>g</span>
+    <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_show_grid'>show_grid</span> <span class='op'>=</span> <span class='op'>!</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_show_grid'>show_grid</span>
+  <span class='kw'>end</span>
 
   <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_world_mouse'>world_mouse</span> <span class='op'>=</span> <span class='ivar'>@camera</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space'>to_world_space</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span><span class='rparen'>)</span>
 
@@ -837,9 +847,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sun May 24 16:24:15 2026 by
+  Generated on Sat May 30 02:07:52 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.43 (ruby-3.4.9).
+  0.9.44 (ruby-3.4.9).
 </div>
 
     </div>
