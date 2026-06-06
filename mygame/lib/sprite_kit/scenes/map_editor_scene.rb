@@ -3,92 +3,74 @@ require SpriteKit.to_load_path("map_editor")
 module SpriteKit
   module Scenes
     class MapEditorScene
-      def initialize
-        @map_editor = ::SpriteKit::MapEditor.new
+      attr_accessor :camera, :draw_buffer, :scene_manager, :state, :canvas, :tool_drawer
+
+      def initialize(scene_manager = nil)
+        @scene_manager = scene_manager
         @camera = ::SpriteKit::Camera.new
+        @draw_buffer = ::SpriteKit::DrawBuffer.new
+
+        @views = [:map_editor]
+        @state = {
+          draw_buffer: @draw_buffer,
+          camera: @camera,
+          camera_path: :camera,
+          view: @views[0],
+          views: @views,
+          show_grid: false,
+          tile_selection: {
+            w: 12, h: 12,
+            # row_gap: 1, column_gap: 1,
+            # offset_x: 1, offset_y: 1,
+          },
+          current_sprite: nil,
+          viewport_boundary: nil,
+          next_view: nil,
+          file_path: nil,
+          scene_manager: @scene_manager
+        }
+
+        @map_editor = SpriteKit::MapEditor.new(state: @state)
+        @tool_drawer = ::SpriteKit::ToolDrawer.new(state: @state)
       end
 
       def tick(args)
-        calc_camera(args)
-        move_camera(args)
+        @state.outputs = args.outputs
+        @state.draw_buffer.outputs = args.outputs
 
-        args.outputs.sprites << { **@camera.viewport, path: :scene }
-
-        args.outputs[:scene].w = @camera.w
-        args.outputs[:scene].h = @camera.h
-
-        @map_editor.tick(args)
-
-        # Starting map editor box.
-        # start_scale = args.state.start_camera.scale
-        # args.outputs[:scene].borders << Camera.to_screen_space(args.state.camera, {
-        #   x: (Camera::SCREEN_WIDTH / -2) / start_scale,
-        #   y: (Camera::SCREEN_HEIGHT / -2) / start_scale,
-        #   w: Camera::SCREEN_WIDTH / start_scale,
-        #   h: Camera::SCREEN_HEIGHT / start_scale,
-        #   r: 255,
-        #   g: 0,
-        #   b: 0,
-        #   a: 255,
-        #   primitive: :border
-        # })
-      end
-
-      def move_camera(args)
-        inputs = args.inputs
-
-        if args.state.text_fields.any? { |input| input.focussed? }
-          return
+        if args.inputs.keyboard.key_down.g
+          @state.show_grid = !@state.show_grid
         end
 
-        speed = 3 + (3 / args.state.camera.scale)
+        @state.world_mouse = @camera.to_world_space(args.inputs.mouse)
 
-        # Movement
-        if inputs.keyboard.left_arrow
-          args.state.camera.target_x -= speed
-        elsif inputs.keyboard.right_arrow
-          args.state.camera.target_x += speed
+        @state.viewport_boundary = {
+          x: @tool_drawer.w,
+          y: 0,
+          w: args.grid.w - @tool_drawer.w,
+          h: args.grid.h,
+        }
+
+        if @state.view == :map_editor
+          @map_editor.viewport_boundary = @state.viewport_boundary
+          @map_editor.tick(args)
         end
 
-        if inputs.keyboard.down_arrow
-          args.state.camera.target_y -= speed
-        elsif inputs.keyboard.up_arrow
-          args.state.camera.target_y += speed
-        end
+        @tool_drawer.tick(args)
 
-        # Zoom
-        state = args.state
-        if args.inputs.keyboard.key_down.equal_sign || args.inputs.keyboard.key_down.plus
-          state.camera.target_scale += 0.25
-        elsif args.inputs.keyboard.key_down.minus
-          state.camera.target_scale -= 0.25
-          state.camera.target_scale = 0.25 if state.camera.target_scale < 0.25
-        elsif args.inputs.keyboard.zero
-          state.camera.target_scale = 1
-        end
-      end
+        top_layer = {
+          w: 1280,
+          h: 720,
+          x: 0,
+          y: 0,
+          path: :top_layer
+        }
+        args.outputs[:top_layer].w = top_layer.w
+        args.outputs[:top_layer].h = top_layer.h
+        args.outputs[:top_layer].transient!
+        @draw_buffer.primitives << top_layer
 
-      def calc_camera(args)
-        state = args.state
-
-        if !state.camera
-          state.camera = {
-            x: 0,
-            y: 0,
-            target_x: 0,
-            target_y: 0,
-            target_scale: 2,
-            scale: 2
-          }
-
-          args.state.start_camera = { scale: state.camera.scale }
-        end
-
-        ease = 0.1
-        state.camera.scale += (state.camera.target_scale - state.camera.scale) * ease
-
-        state.camera.x += (state.camera.target_x - state.camera.x) * ease
-        state.camera.y += (state.camera.target_y - state.camera.y) * ease
+        @draw_buffer.flush
       end
     end
   end

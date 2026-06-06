@@ -63,7 +63,9 @@ module SpriteKit
     def render(args)
       render_camera(args)
       if @state.show_grid
-        @state.draw_buffer[@state.camera_path].concat(render_grid)
+        @state.draw_buffer[@state.camera_path].concat(
+          render_grid(w: @state.tile_selection.w, h: @state.tile_selection.h)
+        )
       end
       render_sprite_canvas(args)
       render_current_sprite(args)
@@ -386,12 +388,19 @@ module SpriteKit
       end
     end
 
-    def render_grid
-      world = @state.camera.to_world_space!(@state.camera.viewport.dup)
-      tile_size = 32
+    def render_grid(w: 32, h: 32)
+      if w < 1
+        w = 1
+      end
 
-      min_x = (world.x / tile_size).floor * tile_size
-      min_y = (world.y / tile_size).floor * tile_size
+      if h < 1
+        h = 1
+      end
+
+      world = @state.camera.to_world_space!(@state.camera.viewport.dup)
+
+      min_x = (world.x / w).floor * w
+      min_y = (world.y / h).floor * h
       max_x = world.x + world.w
       max_y = world.y + world.h
 
@@ -402,7 +411,7 @@ module SpriteKit
         s = { x: x, y: min_y, w: 1, h: max_y - min_y }
         @state.camera.to_screen_space!(s)
         solids << { x: s.x, y: s.y, w: 1, h: s.h, r: 255, g: 255, b: 255, a: 255, path: :solid }
-        x += tile_size
+        x += w
       end
 
       y = min_y
@@ -410,7 +419,7 @@ module SpriteKit
         s = { x: min_x, y: y, w: max_x - min_x, h: 1 }
         @state.camera.to_screen_space!(s)
         solids << { x: s.x, y: s.y, w: s.w, h: 1, r: 255, g: 255, b: 255, a: 255, path: :solid }
-        y += tile_size
+        y += h
       end
 
       solids
