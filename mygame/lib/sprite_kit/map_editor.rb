@@ -6,7 +6,7 @@ require SpriteKit.to_load_path("sprite_methods")
 
 module SpriteKit
   class MapEditor
-    attr_accessor :hover_rect, :rect_size, :viewport_boundary, :state
+    attr_accessor :hover_rect, :rect_size, :state, :viewport_boundary
 
     def initialize(state:)
       @hover_rect = nil
@@ -57,9 +57,10 @@ module SpriteKit
 
     def render(args)
       render_camera(args)
-
       if @state.show_grid
-        @state.draw_buffer[@state.camera_path].concat(render_grid)
+        @state.draw_buffer[@state.camera_path].concat(
+          render_grid(w: @state.tile_selection.w, h: @state.tile_selection.h)
+        )
       end
 
       if @hover_rect_screen

@@ -5,12 +5,12 @@ module SpriteKit
     class MapEditorScene
       attr_accessor :camera, :draw_buffer, :scene_manager, :state, :canvas, :tool_drawer
 
-      def initialize(scene_manager = nil)
+      def initialize(scene_manager = nil, sprite_directory: "sprites")
         @scene_manager = scene_manager
         @camera = ::SpriteKit::Camera.new
         @draw_buffer = ::SpriteKit::DrawBuffer.new
 
-        @views = [:map_editor]
+        @views = [:map_editor, :file_tree, :canvas]
         @state = {
           draw_buffer: @draw_buffer,
           camera: @camera,
@@ -20,8 +20,8 @@ module SpriteKit
           show_grid: false,
           tile_selection: {
             w: 12, h: 12,
-            # row_gap: 1, column_gap: 1,
-            # offset_x: 1, offset_y: 1,
+            row_gap: 1, column_gap: 1,
+            offset_x: 1, offset_y: 1,
           },
           current_sprite: nil,
           viewport_boundary: nil,
@@ -30,6 +30,15 @@ module SpriteKit
           scene_manager: @scene_manager
         }
 
+        @spritesheet_loader = SpriteKit::SpritesheetLoader.new
+        spritesheets = @spritesheet_loader.load_directory(sprite_directory)
+        @tree = spritesheets.tree
+        @tree_renderer = TreeRenderer.new(@tree, state: @state)
+        @spritesheets = spritesheets.spritesheets
+
+        @state.spritesheets = @spritesheets
+
+        @canvas = ::SpriteKit::Canvas.new(state: @state, spritesheets: [])
         @map_editor = SpriteKit::MapEditor.new(state: @state)
         @tool_drawer = ::SpriteKit::ToolDrawer.new(state: @state)
       end

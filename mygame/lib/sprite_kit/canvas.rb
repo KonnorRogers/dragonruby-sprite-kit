@@ -17,8 +17,6 @@ module SpriteKit
       @hover_rect = nil
       @hover_rect_screen = nil
 
-      # @show_grid = false
-
       # used to calculate where clicks are registered.
       @viewport_boundary = {
         x: 0,
