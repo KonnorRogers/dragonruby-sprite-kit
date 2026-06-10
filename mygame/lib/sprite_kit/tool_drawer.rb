@@ -26,13 +26,6 @@ module SpriteKit
             @state.scene_manager.next_scene = :map_editor_scene
           }
         },
-        sprite_viewer_scene: {
-          id: :sprite_viewer_scene,
-          label: proc { { id: :sprite_viewer_scene, text: "Sprite Viewer" } },
-          handle_click: proc {
-            @state.scene_manager.next_scene = :sprite_viewer_scene
-          }
-        },
         view_file_tree: {
           id: :view_file_tree,
           label: proc { { id: :view_file_tree, text: "View File Tree" } },
@@ -237,39 +230,35 @@ module SpriteKit
       label_offset_x = 20
       label_offset_y = 40
 
-      current_scene = @state.scene_manager.current_scene
-      next_scene = current_scene == :sprite_viewer_scene ? @buttons.map_editor_scene : @buttons.sprite_viewer_scene
       text = [
-        next_scene.label.call,
-        current_scene == :sprite_viewer_scene ? @buttons.view_file_tree.label.call : nil,
+        @buttons.map_editor_scene.label.call,
+        @buttons.view_file_tree.label.call,
         { text: "brush: { " },
         @counters.tile_selection_w.label.call,
         @counters.tile_selection_h.label.call,
         { text: "}" } ,
-      ].compact
+      ]
 
-      if current_scene == :sprite_viewer_scene
+      text.concat([
+        @counters.offset_x.label.call,
+        @counters.offset_y.label.call,
+        @counters.column_gap.label.call,
+        @counters.row_gap.label.call,
+      ])
+
+      if @state.current_sprite
         text.concat([
-          @counters.offset_x.label.call,
-          @counters.offset_y.label.call,
-          @counters.column_gap.label.call,
-          @counters.row_gap.label.call,
+          @buttons.gap_button.label.call,
+          @counters.source_x.label.call,
+          @counters.source_y.label.call,
+          @counters.source_w.label.call,
+          @counters.source_h.label.call,
+          { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - label_offset_x - 5) },
+          @buttons.copy_to_clipboard.label.call,
+          { text: "Spritesheet Properties:" },
+          { text: "w: #{@state.current_sprite.spritesheet.w}" },
+          { text: "h: #{@state.current_sprite.spritesheet.h}" },
         ])
-
-        if @state.current_sprite
-          text.concat([
-            @buttons.gap_button.label.call,
-            @counters.source_x.label.call,
-            @counters.source_y.label.call,
-            @counters.source_w.label.call,
-            @counters.source_h.label.call,
-            { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - label_offset_x - 5) },
-            @buttons.copy_to_clipboard.label.call,
-            { text: "Spritesheet Properties:" },
-            { text: "w: #{@state.current_sprite.spritesheet.w}" },
-            { text: "h: #{@state.current_sprite.spritesheet.h}" },
-          ])
-        end
       end
 
       prev_y = 0
@@ -381,49 +370,6 @@ module SpriteKit
           )
         end
       end
-
-
-      # need this top-layer
-      # path = labels[-5]
-      # if path && current_sprite
-      #   text_width, text_height = GTK.calcstringbox(path.text)
-      #   path_rect = path.merge({
-      #     w: text_width,
-      #     h: text_height,
-      #   })
-      #   if args.inputs.mouse.intersect_rect?(serialize) && args.inputs.mouse.intersect_rect?(path_rect)
-      #     solid = {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         w: path_rect.w,
-      #         h: path_rect.h,
-      #         r: 0,
-      #         b: 0,
-      #         g: 0,
-      #         a: 255,
-      #         primitive_marker: :solid
-      #     }.anchor_rect(path_rect.anchor_x || 0, path_rect.anchor_y || 0)
-      #     solid.x -= 4
-      #     solid.y -= 4
-      #     solid.w += 8
-      #     solid.h += 8
-
-      #     @state.draw_buffer[:top_layer].concat([
-      #       solid,
-      #       {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         text: path_rect.text,
-      #         primitive_marker: :label,
-      #         anchor_y: path_rect.anchor_y,
-      #         r: 255,
-      #         g: 255,
-      #         b: 255,
-      #         a: 255,
-      #       }.label!,
-      #     ])
-      #   end
-      # end
     end
 
     def handle_text(obj, key, text)

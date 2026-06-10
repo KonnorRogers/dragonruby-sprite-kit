@@ -65,7 +65,7 @@ module SpriteKit
           @map_editor.tick(args)
         end
 
-        @tool_drawer.tick(args)
+        # @tool_drawer.tick(args)
 
         top_layer = {
           w: 1280,
