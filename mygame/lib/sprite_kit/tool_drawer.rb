@@ -379,7 +379,7 @@ module SpriteKit
       #         b: 0,
       #         g: 0,
       #         a: 255,
-      #         primitive_marker: :solid
+      #         path: :solid
       #     }.anchor_rect(path_rect.anchor_x || 0, path_rect.anchor_y || 0)
       #     solid.x -= 4
       #     solid.y -= 4
