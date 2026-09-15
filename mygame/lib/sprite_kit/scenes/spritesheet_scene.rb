@@ -33,6 +33,7 @@ module SpriteKit
           viewport_boundary: nil,
           next_view: nil,
           file_path: nil,
+          scene_manager: @scene_manager
         }
 
         @spritesheet_loader = SpriteKit::SpritesheetLoader.new
@@ -88,11 +89,6 @@ module SpriteKit
         @draw_buffer.primitives << top_layer
 
         @draw_buffer.flush
-
-        args.outputs.primitives.concat(args.gtk.framerate_diagnostics_primitives.map do |primitive|
-          primitive.x = args.grid.w - 500 + primitive.x
-          primitive
-        end)
 
         if @state.next_view
           if @state.next_view == :canvas
