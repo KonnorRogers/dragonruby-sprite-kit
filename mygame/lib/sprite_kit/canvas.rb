@@ -325,11 +325,11 @@ module SpriteKit
           h: label_h + 8,
           anchor_x: 0.5,
           anchor_y: 0.5,
-          primitive_marker: :solid,
           r: 0,
           b: 0,
           g: 0,
           a: 255,
+          path: :solid
         })
         @state.draw_buffer[@state.camera_path].concat([
           label_background,

@@ -39,8 +39,9 @@ module SpriteKit
       @primitives << {
         x: offset_x, y: args.grid.h - panel_h,
         w: args.grid.w - offset_x, h: panel_h,
+        path: :solid,
         **COLOR_BG
-      }.solid!
+      }
 
       @rows.each_with_index do |row, i|
         y = args.grid.h - ROW_HEIGHT * (i + 1) + offset_y + @scroll_offset
@@ -180,7 +181,7 @@ module SpriteKit
       # Row background
       if selected || hovered
         bg = selected ? COLOR_SELECTED : COLOR_HOVER
-        primitives << { **hit, **bg }.solid!
+        primitives << { **hit, **bg, path: :solid }
       end
 
       # 3-px accent bar on the left edge for the keyboard-selected row
@@ -188,8 +189,9 @@ module SpriteKit
         primitives << {
           x: offset_x, y: y,
           w: 3, h: ROW_HEIGHT,
-          **COLOR_CURSOR
-        }.solid!
+          **COLOR_CURSOR,
+          path: :solid
+        }
       end
 
       # Mouse click
