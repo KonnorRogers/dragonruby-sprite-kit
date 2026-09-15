@@ -6,7 +6,7 @@
 <title>
   Class: SpriteKit::TreeRenderer
   
-    &mdash; Documentation by YARD 0.9.44
+    &mdash; Documentation by YARD 0.9.45
   
 </title>
 
@@ -359,7 +359,8 @@
 49
 50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tree_renderer.rb', line 26</span>
@@ -380,8 +381,9 @@
   <span class='ivar'>@primitives</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span>
     <span class='label'>x:</span> <span class='id identifier rubyid_offset_x'>offset_x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>-</span> <span class='id identifier rubyid_panel_h'>panel_h</span><span class='comma'>,</span>
     <span class='label'>w:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>-</span> <span class='id identifier rubyid_offset_x'>offset_x</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='id identifier rubyid_panel_h'>panel_h</span><span class='comma'>,</span>
+    <span class='label'>path:</span> <span class='symbol'>:solid</span><span class='comma'>,</span>
     <span class='op'>**</span><span class='const'><span class='object_link'><a href="#COLOR_BG-constant" title="SpriteKit::TreeRenderer::COLOR_BG (constant)">COLOR_BG</a></span></span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_solid!'>solid!</span>
+  <span class='rbrace'>}</span>
 
   <span class='ivar'>@rows</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
     <span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="#ROW_HEIGHT-constant" title="SpriteKit::TreeRenderer::ROW_HEIGHT (constant)">ROW_HEIGHT</a></span></span> <span class='op'>*</span> <span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_offset_y'>offset_y</span> <span class='op'>+</span> <span class='ivar'>@scroll_offset</span>
@@ -401,9 +403,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sat May 30 02:07:52 2026 by
+  Generated on Tue Sep 15 00:58:39 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.9).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>
