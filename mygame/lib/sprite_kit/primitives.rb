@@ -11,7 +11,8 @@ module SpriteKit
       size_enum: nil,
       font: nil,
       padding: 8,
-      border_width: 2
+      border_width: 2,
+      background_color: {}
     )
       if !padding
         padding = 0
@@ -37,6 +38,7 @@ module SpriteKit
         h: h,
         x: x,
         y: y,
+        **background_color,
         primitive_marker: :sprite,
       }
 
