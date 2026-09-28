@@ -19,6 +19,13 @@ module SpriteKit
       @focus = nil
 
       @buttons = {
+        map_editor_scene: {
+          id: :map_editor_scene,
+          label: proc { { id: :map_editor_scene, text: "Map Editor" } },
+          handle_click: proc {
+            @state.scene_manager.next_scene = :map_editor_scene
+          }
+        },
         view_file_tree: {
           id: :view_file_tree,
           label: proc { { id: :view_file_tree, text: "View File Tree" } },
@@ -224,16 +231,20 @@ module SpriteKit
       label_offset_y = 40
 
       text = [
+        @buttons.map_editor_scene.label.call,
         @buttons.view_file_tree.label.call,
         { text: "brush: { " },
         @counters.tile_selection_w.label.call,
         @counters.tile_selection_h.label.call,
         { text: "}" } ,
+      ]
+
+      text.concat([
         @counters.offset_x.label.call,
         @counters.offset_y.label.call,
         @counters.column_gap.label.call,
         @counters.row_gap.label.call,
-      ]
+      ])
 
       if @state.current_sprite
         text.concat([
@@ -359,49 +370,6 @@ module SpriteKit
           )
         end
       end
-
-
-      # need this top-layer
-      # path = labels[-5]
-      # if path && current_sprite
-      #   text_width, text_height = GTK.calcstringbox(path.text)
-      #   path_rect = path.merge({
-      #     w: text_width,
-      #     h: text_height,
-      #   })
-      #   if args.inputs.mouse.intersect_rect?(serialize) && args.inputs.mouse.intersect_rect?(path_rect)
-      #     solid = {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         w: path_rect.w,
-      #         h: path_rect.h,
-      #         r: 0,
-      #         b: 0,
-      #         g: 0,
-      #         a: 255,
-      #         path: :solid
-      #     }.anchor_rect(path_rect.anchor_x || 0, path_rect.anchor_y || 0)
-      #     solid.x -= 4
-      #     solid.y -= 4
-      #     solid.w += 8
-      #     solid.h += 8
-
-      #     @state.draw_buffer[:top_layer].concat([
-      #       solid,
-      #       {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         text: path_rect.text,
-      #         primitive_marker: :label,
-      #         anchor_y: path_rect.anchor_y,
-      #         r: 255,
-      #         g: 255,
-      #         b: 255,
-      #         a: 255,
-      #       }.label!,
-      #     ])
-      #   end
-      # end
     end
 
     def handle_text(obj, key, text)
