@@ -81,4 +81,34 @@ end
 $gtk.reset
 ```
 
-## Map Editor (Maybe?)
+## Map Editor
+
+The `MapEditorScene` combines the spritesheet canvas with a layered tile map editor.
+
+```rb
+require "vendor/sprite_kit/sprite_kit.rb"
+
+def tick(args)
+  args.state.map_editor_scene ||= SpriteKit::Scenes::MapEditorScene.new(nil, sprite_directory: "sprites", map_path: "data/map.json")
+  args.state.map_editor_scene.tick(args)
+end
+```
+
+To add tiles, click **Choose tile** in the panel (or press `Tab`), double click a spritesheet in the file tree, click a tile on the canvas, then press `Enter` to go back to the map and paint with it. `Tab` cycles between the map, the file tree, and the canvas. The grid size is the brush `w` / `h` from the tool drawer, so set it to your tileset's tile size.
+
+- Tools: Paint (`B`), Erase (`E`), Rect fill (`R`), Pick tile (`I`). Right click always erases.
+- Pan with middle mouse or `Space` + drag, zoom with the mouse wheel or `+` / `-` / `0`.
+- Layers: `N` new layer, `V` hide / show, `[` / `]` change layer, or use the layers panel.
+- `Ctrl+Z` / `Ctrl+Shift+Z` to undo / redo. The map saves after every change (and with `Ctrl+S`).
+
+Maps are saved as JSON. Load them into your game with `SpriteKit::Map`:
+
+```rb
+map = SpriteKit::Map.load("data/map.json")
+
+map.layers.each do |layer|
+  args.outputs.sprites.concat(layer.tiles) if layer.visible
+end
+```
+
+Each tile is a plain sprite hash: `{ x:, y:, w:, h:, path:, source_x:, source_y:, source_w:, source_h: }`.

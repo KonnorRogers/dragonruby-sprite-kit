@@ -4,6 +4,7 @@ require SpriteKit.to_load_path("string_helper")
 module SpriteKit
   class ToolDrawer
     attr_accessor :state, :render_path, :w, :h, :x, :y
+    attr_reader :focus
 
     def initialize(state:)
       @tools = [

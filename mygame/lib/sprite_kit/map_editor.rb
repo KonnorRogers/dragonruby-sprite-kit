@@ -1,1134 +1,1069 @@
 require SpriteKit.to_load_path("camera")
+require SpriteKit.to_load_path("map")
 require SpriteKit.to_load_path("primitives")
+require SpriteKit.to_load_path("sprite_methods")
 require SpriteKit.to_load_path("spritesheet_loader")
+require SpriteKit.to_load_path("string_helper")
+require SpriteKit.to_load_path(File.join("ui", "color"))
+require SpriteKit.to_load_path(File.join("ui", "static_palette"))
 require SpriteKit.to_load_path(File.join("ui", "semantic_palette"))
-require SpriteKit.to_load_path("serializer")
 
 module SpriteKit
+  # A tile map editor. Paints `@state.current_sprite` (picked from `SpriteKit::Canvas`) onto layers of a `SpriteKit::Map`.
+  # The grid size is the same as the brush size (`@state.tile_selection.w` / `@state.tile_selection.h`).
+  #
+  # See `SpriteKit::Scenes::MapEditorScene` for wiring it up with a canvas + tool drawer.
   class MapEditor
-    attr :mode, :hovered_tile, :selected_tile, :spritesheet_rect
+    # These keys dont really map to anything.
+    IGNORED_KEYS = [:char, :raw_key]
 
-    TILE_SIZE = 16
-    EDITOR_TILE_SCALE = 2
+    # We dont really expect modifier keys to be used as actual keys.
+    MODIFIER_KEYS = [
+      :control,
+      :control_left,
+      :control_right,
 
-    def initialize
-      @primitives = Primitives.new
+      :shift,
+      :shift_right,
+      :shift_left,
+
+      :meta,
+      :meta_left,
+      :meta_right,
+
+      :alt,
+      :alt_left,
+      :alt_right,
+    ]
+
+    HELP = [
+      "LMB: use tool   RMB: erase",
+      "MMB / Space+drag: pan",
+      "Wheel / +/-/0: zoom",
+      "Ctrl+Z: undo  Ctrl+Shift+Z: redo",
+      "Ctrl+S: save   G: grid",
+      "N: new layer   V: hide layer",
+      "[ / ]: change layer",
+      "Tab: pick tiles / switch view",
+    ]
+
+    PANEL_W = 260
+    STATUS_H = 28
+    ROW_H = 26
+    PADDING = 12
+    MIN_SCALE = 0.25
+    MAX_SCALE = 8
+
+    attr_accessor :state, :camera, :camera_path, :map, :tool, :show_grid, :viewport_boundary
+
+    def initialize(state:, map_path: "data/map.json", camera: ::SpriteKit::Camera.new(path: :map_camera))
+      @state = state
+      @camera = camera
+      @camera_path = camera.path || :map_camera
       @palette = UI::SemanticPalette.new
 
-      # @type [:add, :select, :remove]
-      @mode = :add
+      @map = ::SpriteKit::Map.new(path: map_path, tile_w: @state.tile_selection.w, tile_h: @state.tile_selection.h)
 
-      # @type [:spritesheet, :map]
-      @view = :map
-
-      # Set this to transition between map / spritesheet
-      @next_view = nil
-
-      # @type [Boolean]
-      @show_grid = false
-      @grid_border_size = 0
-
-      @nodesets_file = ""
-
-      @spritesheet_loader = SpriteKit::SpritesheetLoader.new
-      @spritesheets = @spritesheet_loader.load_directory("sprites")
-
-      @nodesets = load_nodesets
-
-      if @nodesets.length < 1
-        create_nodeset
+      # Keep the brush in sync with the grid the map was made with.
+      if @map.load
+        @state.tile_selection.w = @map.tile_w
+        @state.tile_selection.h = @map.tile_h
       end
 
-      @nodesets.each do |nodeset|
-        nodeset.type = :nodeset
-      end
+      # @type [:paint, :erase, :rect, :pick]
+      @tool = :paint
+      @show_grid = true
 
-      @selected_spritesheet_index = 0
-      @current_nodeset_index = 0
-    end
+      # The in-progress brush stroke / rectangle.
+      @stroke = nil
+      @panning = false
+      @saved_at = nil
 
-    def render_tiles(args)
-      return if @view != :map
+      # used to calculate where clicks are registered.
+      @viewport_boundary = {
+        x: 0,
+        y: 0,
+        h: Grid.h,
+        w: Grid.w
+      }
 
-      state = args.state
+      @panel_buttons = []
 
-      tiles = []
-      @layers.each do |layer|
-        tiles_to_render = Camera.find_all_intersect_viewport(state.camera, layer.tiles)
-        tiles.concat(tiles_to_render.map { |m| Camera.to_screen_space(state.camera, m) })
-      end
-      args.outputs[:scene].sprites << tiles
-    end
+      @tools = {
+        paint: {
+          keybindings: [
+            [:b]
+          ],
+          label: "Paint (B)",
+          action: -> { select_tool(:paint) }
+        },
+        erase: {
+          keybindings: [
+            [:e]
+          ],
+          label: "Erase (E)",
+          action: -> { select_tool(:erase) }
+        },
+        rect: {
+          keybindings: [
+            [:r]
+          ],
+          label: "Rect fill (R)",
+          action: -> { select_tool(:rect) }
+        },
+        pick: {
+          keybindings: [
+            [:p]
+          ],
+          label: "Pick tile (P)",
+          action: -> { select_tool(:pick) }
+        },
+      }
 
-    def render_sprite_canvas(args)
-      to_render_target = ->(index) { ("__spritesheet_canvas__#{index}").to_sym }
-
-      args.state.spritesheet_tiles = []
-
-      if !args.state.sprites
-        args.state.spritesheet_target = []
-
-        @spritesheets.each_with_index do |spritesheet, index|
-          render_target = to_render_target.call(index)
-          args.outputs[render_target].w = spritesheet.w
-          args.outputs[render_target].h = spritesheet.h
-          args.outputs[render_target].background_color = [0, 0, 0, 0]
-          args.outputs[render_target].sprites << spritesheet.tiles.map do |sprite|
-            sprite.x = sprite.source_x
-            sprite.y = sprite.source_y
-            sprite.w = sprite.source_w
-            sprite.h = sprite.source_h
-            sprite.dup
-          end
-        end
-      end
-
-      return if @view != :spritesheet
-
-      prev_x = ((Camera::SCREEN_WIDTH / -4)).ifloor(TILE_SIZE)
-
-      y = 0 # (Camera::SCREEN_HEIGHT / -4)
-      gap = TILE_SIZE
-
-      # @rendered_spritesheets = []
-      @spritesheets.each_with_index do |spritesheet, index|
-        render_target = to_render_target.call(index)
-
-        if index > 0
-          prev_x += @spritesheets[index - 1].file_width + gap
-        end
-
-        spritesheet_rect = {
-          x: prev_x,
-          y: y,
-          w: spritesheet.file_width,
-          h: spritesheet.file_height,
-          path: render_target
-        }
-
-        if Camera.intersect_viewport?(args.state.camera, spritesheet_rect)
-          spritesheet_target = Camera.to_screen_space(args.state.camera, spritesheet_rect)
-
-          label = {
-            x: spritesheet_target.x,
-            y: spritesheet_target.y - (8 * args.state.camera.scale).ceil,
-            text: "#{spritesheet.name}",
-            primitive_marker: :label,
-            size_px: (16 * args.state.camera.scale).ceil
+      @hotkeys = {
+        undo_change: {
+          keybindings: [
+            [:ctrl, :z],
+            [:meta, :z]
+          ],
+          action: -> { undo_change }
+        },
+        redo_change: {
+          keybindings: [
+            [:ctrl, :shift, :z],
+            [:meta, :shift, :z]
+          ],
+          action: -> { redo_change }
+        },
+        save: {
+          keybindings: [
+            [:ctrl, :s],
+            [:meta, :s]
+          ],
+          action: -> { save }
+        },
+        show_grid: {
+          keybindings: [
+            [:g]
+          ],
+          action: -> { @show_grid = !@show_grid }
+        },
+        add_layer: {
+          keybindings: [
+            [:n]
+          ],
+          action: -> { add_layer }
+        },
+        toggle_layer_visibility: {
+          keybindings: [
+            [:v]
+          ],
+          action: -> { toggle_layer_visibility(@map.current_layer_index) }
+        },
+        select_previous_layer: {
+          keybindings: [
+            [:open_square_brace]
+          ],
+          action: -> { select_layer(@map.current_layer_index - 1) }
+        },
+        select_next_layer: {
+          keybindings: [
+            [:close_square_brace]
+          ],
+          action: -> { select_layer(@map.current_layer_index + 1) }
+        },
+        clear: {
+          keybindings: [
+            [:escape]
+          ],
+          action: -> {
+            if @stroke
+              @stroke = nil
+            else
+              @state.current_sprite = nil
+            end
           }
-
-          args.state.spritesheet_tiles.concat(spritesheet.tiles.map do |sprite|
-            sprite = sprite.dup
-            sprite.x = spritesheet_rect.x + (sprite.x)
-            sprite.y = spritesheet_rect.y + (sprite.y)
-            sprite
-          end)
-
-          args.outputs[:scene].sprites << [
-            spritesheet_target,
-            @primitives.create_borders(spritesheet_target, border_width: 1, color: {r: 0, b: 0, g: 0, a: 255}).values
-          ]
-          args.outputs[:scene].labels << label
-        end
-      end
+        }
+      }.merge(@tools)
     end
 
     def tick(args)
-      args.state.buttons ||= []
-
-      args.outputs.debug << @view.to_s
-      args.outputs.debug << @mode.to_s
-      args.outputs.debug << @active_tab
-
-      render_menu(args)
-      render_active_tab(args)
-      render_pixel_grid(args)
-      render_tiles(args)
-      render_sprite_canvas(args)
-      load_layers(args) if args.state.tick_count <= 0
-      render_current_nodeset(args)
+      input(args)
       calc(args)
       render(args)
-      handle_nodeset_buttons(args)
-      handle_spritesheet_buttons(args)
-      switch_mode(args)
-      transition_view(args)
-
-      args.outputs.debug << "#{@selected_node}"
-      args.outputs.debug << "#{@select_rect}"
     end
 
-    def transition_view(args)
-      if @next_view && @next_view != @view
-        @view = @next_view
-        @next_view = nil
-        @selected_sprite = nil
-        @selected_node = nil
-        @select_rect = nil
-        args.state.camera.x = 0
-        args.state.camera.target_x = 0
-        args.state.camera.y = 0
-        args.state.camera.target_y = 0
-      end
+    # Only the side panel, for when another view (canvas / file tree) is showing so the brush + layers stay visible.
+    def tick_panel(args)
+      calc_layout(args)
+      build_panel(args)
+      handle_panel_click(args)
+      render_panel(args)
     end
 
-    def render_active_tab(args)
-      if @active_tab == :layer
-        render_layer_tab(args)
-        return
-      end
-    end
-
-    def render_layer_tab(args)
-      sprites = []
-      labels = []
-
-      x_padding = 24
-      y_padding = 24
-      @layers.each_with_index do |layer, index|
-        w, h = $gtk.calcstringbox(layer.name)
-        container = {
-          x: 20,
-          y: 200 - index,
-          h: h + y_padding,
-          w: 380,
-          path: :pixel,
-          **@palette.colors.dig(:neutral, :fill, :loud)
-        }
-
-        label = {
-          x: container.x + x_padding.div(2),
-          y: container.y + container.h - y_padding.div(2),
-          text: layer.name,
-          primitive_marker: :label,
-          **@palette.colors.dig(:neutral, :on, :loud)
-        }
-
-        sprites << container
-        labels << label
-      end
-
-      args.outputs[:editor_menu].sprites.concat(sprites)
-      args.outputs[:editor_menu].labels.concat(labels)
-    end
-
-    def render_menu(args)
-      render_target = :editor_menu
-
-      args.outputs[render_target].w = Camera::SCREEN_WIDTH / 3
-      args.outputs[render_target].h = Camera::SCREEN_HEIGHT
-      args.outputs[render_target].background_color = [0, 255, 255, 255]
-      menu = args.outputs[render_target]
-      args.outputs[render_target].sprites << {x: menu.w - 3, y: 0, h: menu.h, w: 3, r: 0, g: 0, b: 0, a: 255}
-
-      @spritesheet_menu_button = @primitives.create_button(args,
-        id: :spritesheet_menu_button,
-        text: "Spritesheets",
-        background: @palette.colors.dig(:neutral, :fill, :loud),
-        text_color: @palette.colors.dig(:neutral, :on, :loud),
-      ).merge({
-        x: 20,
-        y: 360,
-      })
-
-      @map_menu_button = @primitives.create_button(args,
-        id: :map_menu_button,
-        text: "Map",
-        background: @palette.colors.dig(:neutral, :fill, :loud),
-        text_color: @palette.colors.dig(:neutral, :on, :loud),
-      ).merge({
-        x: @spritesheet_menu_button.x + @spritesheet_menu_button.w + 10,
-        y: @spritesheet_menu_button.y,
-      })
-
-      @layer_menu_button = @primitives.create_button(args,
-        id: :layer_menu_button,
-        text: "Layers",
-        background: @palette.colors.dig(:neutral, :fill, :loud),
-        text_color: @palette.colors.dig(:neutral, :on, :loud),
-      ).merge({
-        x: @spritesheet_menu_button.x,
-        y: @spritesheet_menu_button.y - @spritesheet_menu_button.h - 10,
-      })
-
-      buttons = [@map_menu_button, @spritesheet_menu_button, @layer_menu_button]
-
-      Geometry.find_all_intersect_rect(args.inputs.mouse, buttons).each do |button|
-        button.merge!({
-          **@palette.colors.dig(:neutral, :fill, :normal)
-        })
-      end
-
-      args.state.buttons.concat(buttons)
+    def input(args)
+      calc_layout(args)
 
       mouse = args.inputs.mouse
+      @world_mouse = @camera.to_world_space({ x: mouse.x, y: mouse.y })
+      @hovered_cell = cell_at(@world_mouse)
+      @mouse_over_map = mouse.intersect_rect?(@map_area)
 
-      if mouse.click && mouse.intersect_rect?(@spritesheet_menu_button)
-        @next_view = :spritesheet
+      move_camera(args)
+      handle_pan(args)
+
+      if !@state.text_input_focused
+        HotkeyHandler.handle(args.inputs.keyboard, @hotkeys)
       end
 
-      if mouse.click && mouse.intersect_rect?(@map_menu_button)
-        @next_view = :map
-      end
-
-      if mouse.click && mouse.intersect_rect?(@layer_menu_button)
-        @active_tab = :layer
-      end
-
-      args.outputs[render_target].sprites << buttons
-      @menu = {x: 0, y: 0, w: menu.w, h: menu.h, path: render_target}
-      args.outputs.sprites << @menu
-    end
-
-    def render_pixel_grid(args)
-      grid_border_size = 1
-      width = 1280
-      height = 1280
-      if Kernel.tick_count == 0
-        args.outputs[:grid].w = width
-        args.outputs[:grid].h = height
-        args.outputs[:grid].background_color = [0, 0, 0, 0]
-        @grid = []
-        height.idiv(TILE_SIZE).each do |x|
-          width.idiv(TILE_SIZE).each do |y|
-            @grid << { line_type: :horizontal, x: x * TILE_SIZE, y: y * TILE_SIZE, w: TILE_SIZE, h: grid_border_size, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel }
-            @grid << { line_type: :vertical, x: x * TILE_SIZE, y: y * TILE_SIZE, w: grid_border_size, h: TILE_SIZE, r: 200, g: 200, b: 200, a: 255, primitive_marker: :sprite, path: :pixel }
-          end
-        end
-      end
-
-      if !@show_grid
-        # args.outputs[:grid].sprites.clear
-        return
-      end
-
-      if args.state.camera && args.state.camera.scale != @current_scale
-        @current_scale = args.state.camera.scale
-        # if args.state.camera.scale <= 0.5
-        #   args.outputs[:grid].sprites.clear
-        #   return
-        # end
-
-        if args.state.camera.scale < 1
-          border_size = (grid_border_size / args.state.camera.scale).ceil
-        else
-          border_size = grid_border_size
-        end
-
-        @grid_border_size = border_size
-
-        @grid.each do |line|
-          line.w = @grid_border_size if line[:line_type] == :vertical
-          line.h = @grid_border_size if line[:line_type] == :horizontal
-        end
-
-        # Update the grid with new widths.
-        args.outputs[:grid].sprites << @grid
-      end
-
-      args.state.grid_boxes ||= 10.flat_map do |x|
-        10.map do |y|
-          { x: (x - 5) * 1280, y: (y - 5) * 1280, w: 1280, h: 1280, path: :grid, r: 0, b: 0, g: 0, a: 64 }
-        end
-      end
-
-      args.outputs[:scene].sprites << args.state.grid_boxes.map do |rect|
-        Camera.to_screen_space(args.state.camera, rect)
-      end
-    end
-
-    def handle_nodeset_buttons(args)
-      mouse = args.inputs.mouse
-      return if !mouse.click
-
-      if mouse.intersect_rect?(@add_nodeset_button)
-        create_nodeset
-      end
-
-      if mouse.intersect_rect?(@delete_nodeset_button)
-        delete_nodeset
-      end
-
-      if mouse.intersect_rect?(@previous_nodeset_button)
-        previous_nodeset
-      end
-
-      if mouse.intersect_rect?(@next_nodeset_button)
-        next_nodeset
-      end
-    end
-
-    def handle_spritesheet_buttons(args)
-      mouse = args.inputs.mouse
-      return if !mouse.click
-
-      # if mouse.intersect_rect?(@add_spritesheet_button)
-      #   create_spritesheet
-      # end
-    end
-
-    def calc_hovered_sprite(args)
-      @hovered_sprite = Geometry.find_all_intersect_rect(@mouse_world_rect, args.state.spritesheet_tiles)[-1]
-
-      if @hovered_sprite
-        # mouse = Camera.to_screen_space(args.state.camera, @mouse_world_rect)
-        # @hovered_sprite# .merge({ x: mouse.x, y: mouse.y })
-      end
+      build_panel(args)
+      handle_panel_click(args)
+      handle_mouse(args) if !@panning
     end
 
     def calc(args)
-      inputs = args.inputs
-      mouse = inputs.mouse
-      state = args.state
+      calc_camera(args)
 
-      tile_width = TILE_SIZE
-      tile_height = TILE_SIZE
-
-      world_mouse = Camera.to_world_space state.camera, inputs.mouse
-
-      ifloor_x = world_mouse.x.ifloor(tile_width)
-      ifloor_y = world_mouse.y.ifloor(tile_height)
-
-      @mouse_world_rect = { x: ifloor_x,
-                            y: ifloor_y,
-                            w: tile_width,
-                            h: tile_height }
-
-
-      instructions = [
-        "r to refresh.",
-        "s to select.",
-        "x to remove.",
-        "a to add.",
-        "t to change spritesheet",
-        "mode: '#{@mode}'"
-      ]
-
-      instructions.each_with_index do |text, index|
-        text_width, _ = $gtk.calcstringbox(text)
-        hash = {
-          x: 10.from_right - text_width,
-          y: 80.from_top,
-          text: text
-        }
-
-        if index > 0
-          prev_instruction = instructions[index - 1]
-          _, prev_height = $gtk.calcstringbox(prev_instruction.text)
-          hash[:y] = prev_instruction.y - prev_height
-        end
-
-        instructions[index] = hash
-      end
-
-      args.outputs.labels << instructions
-
-      calc_hovered_sprite(args)
-
-      if @hovered_sprite && !args.inputs.mouse.intersect_rect?(@current_nodeset)
-        # make a new sprite.
-        selected_sprite = @hovered_sprite.merge({})
-
-        if mouse.click
-          # Clear any selected nodes
-          @selected_node = nil
-
-          if @selected_sprite && args.inputs.keyboard.shift
-            sprite = combine_sprites(@selected_sprite, selected_sprite)
-            sprite.x = [@selected_sprite.x, sprite.x].min
-            sprite.y = [@selected_sprite.y, sprite.y].min
-            sprite.w = sprite.source_w
-            sprite.h = sprite.source_h
-            @selected_sprite = sprite
-          else
-            @selected_sprite = selected_sprite
-          end
-        elsif args.inputs.keyboard.shift && @selected_sprite
-          sprites = []
-          sprite = combine_sprites(@selected_sprite, selected_sprite)
-
-          sprite.x = [@selected_sprite.x, sprite.x].min
-          sprite.y = [@selected_sprite.y, sprite.y].min
-          sprite.w = sprite.source_w
-          sprite.h = sprite.source_h
-
-          sprite = Camera.to_screen_space(args.state.camera, sprite.merge({
-            path: :pixel,
-            r: 0, g: 0, b: 0, a: 64
-          }))
-
-          sprites << sprite
-          sprites << @primitives.create_borders(sprite, border_width: 2, color: { r: 0, b: 0, g: 0, a: 200 }).values
-          args.outputs[:scene].sprites << sprites
-        end
-
-      end
-
-      if @selected_sprite
-        @selected_sprite.merge!({
-          w: @selected_sprite.source_w,
-          h: @selected_sprite.source_h
-        })
-
-        selected_sprite = Camera.to_screen_space(args.state.camera, @selected_sprite).merge({ path: :pixel, r: 0, g: 0, b: 0, a: 100 })
-        selected_sprite_borders = @primitives.create_borders(selected_sprite, border_width: 2, color: { r: 100, b: 100, g: 100, a: 255 }).values
-        args.outputs[:scene].sprites << [selected_sprite, selected_sprite_borders]
-      end
-
-      # Must come before "@mode" changes
-      calc_nodes(args)
-
-      if @mode == :remove && (mouse.click || (mouse.held && mouse.moved))
-        @should_save = true
-        intersecting_tiles = Geometry.find_all_intersect_rect(@mouse_world_rect, @layers[@current_layer].tiles)
-        intersecting_tiles.each { |t| @layers[@current_layer].tiles.delete(t) }
-      elsif @mode == :select
-        handle_box_select(args)
-      # TODO: Change to "@selected_node"
-      elsif @selected_node && (mouse.click || (mouse.held && mouse.moved))
-        if @mode == :add
-          @should_save = true
-          intersecting_tiles = args.state.geometry.find_all_intersect_rect(@selected_node, @layers[@current_layer].tiles)
-          intersecting_tiles.each { |t| @layers[@current_layer].tiles.delete(t) }
-          @layers[@current_layer].tiles << @selected_node.copy
-        end
-      end
-
-      # Purposely delay saving until `mouse.up` because other wise the editor lags a lot.
-      if mouse.up && @should_save
-        @should_save = false
-        save_tiles(args)
-      end
-    end
-
-    def switch_mode(args)
-      if args.state.text_fields.any? { |input| input.focussed? }
-        return
-      end
-
-      if args.inputs.keyboard.key_down.n
-        @current_nodeset_index += 1
-
-        if @current_nodeset_index > @nodesets.length - 1
-          @current_nodeset_index = 0
-        end
-      end
-
-      if args.inputs.keyboard.x
-        @mode = :remove
-        @selected_sprite = nil
-        @selected_node = nil
-      end
-
-      if args.inputs.keyboard.s
-        reset_select
-        @mode = :select
-        @selected_sprite = nil
-        @selected_node = nil
-      end
-
-      if args.inputs.keyboard.a
-        reset_select
-        @mode = :add
-      end
-
-      if args.inputs.mouse.click && @hovered_sprite
-        @mode = :add
-      end
-
-      if args.inputs.keyboard.key_down.g
-        @show_grid = !@show_grid
-      end
-
-      if args.inputs.keyboard.key_down.escape
-        reset_select
-        @selected_node = nil
-        @selected_sprite = nil
-        @mode = :add
-      end
+      @map.tile_w = grid_w
+      @map.tile_h = grid_h
     end
 
     def render(args)
-      outputs = args.outputs
-      state = args.state
-
-      # Render actual spritesheet
-      sprites = []
-
-      scene_sprites = []
-
-      if @mode == :remove
-        hovered_tile = @layers[@current_layer].tiles.find { |t| t.intersect_rect?(@mouse_world_rect) }
-
-        if hovered_tile
-          alpha_channel = (Camera.to_screen_space(state.camera, hovered_tile)).merge(path: :pixel, r: 255, g: 0, b: 0, a: 128)
-          alpha_channel_borders = @primitives.create_borders(alpha_channel, border_width: 2, color: {r: 255, b: 0, g: 0, a: 255}).values
-          scene_sprites << alpha_channel
-          scene_sprites.concat(alpha_channel_borders)
-        end
-      end
-
-      if @mode == :add && @selected_node
-        hovered_tiles = @layers[@current_layer].tiles.select { |t| t.intersect_rect?(@selected_node) }
-
-        if hovered_tiles.length > 0
-          hovered_tiles.each do |hovered_tile|
-            world_hovered_tile = (Camera.to_screen_space(state.camera, hovered_tile)).merge(path: :pixel, r: 255, g: 0, b: 0, a: 128)
-            scene_sprites << world_hovered_tile
-            scene_sprites << @primitives.create_borders(world_hovered_tile, border_width: 2, color: { r: 255, g: 0, b: 0, a: 255 }).values
-          end
-        end
-      end
-
-      if @hovered_sprite
-        world_hovered_sprite = Camera.to_screen_space(state.camera, @hovered_sprite).merge({
-                            path: :pixel,
-                            r: 0, g: 0, b: 128, a: 64
-                  })
-
-        scene_sprites << world_hovered_sprite
-        scene_sprites << @primitives.create_borders(world_hovered_sprite, border_width: 2, color: { r: 0, b: 255, g: 0, a: 200 }).values
-      end
-
-      if @selected_sprite
-        sheet_id = @current_nodeset.id.to_sym
-
-        if args.inputs.mouse.intersect_rect?(@current_nodeset)
-          sprite = sprite_to_nodeset_rect(args.inputs.mouse, @selected_sprite, @current_nodeset)
-          outputs[sheet_id].sprites << sprite
-          outputs[sheet_id].sprites << sprite.merge(path: :pixel, r: 0, g: 255, b: 0, a: 30)
-          outputs[sheet_id].sprites << @primitives.create_borders(sprite, border_width: 2, color: { r: 0, g: 100, b: 0, a: 255 }).values
-        elsif @hovered_sprite.nil? && !args.inputs.mouse.intersect_rect?(@current_nodeset)
-          screen_selected_sprite = (Camera.to_screen_space(state.camera, @selected_sprite.merge({x: @mouse_world_rect.x, y: @mouse_world_rect.y })))
-          scene_sprites << screen_selected_sprite
-          scene_sprites << screen_selected_sprite.merge(path: :pixel, r: 255, g: 0, b: 0, a: 64)
-        end
-      end
-
-
-      if @selected_node
-        @selected_node.x = @mouse_world_rect.x
-        @selected_node.y = @mouse_world_rect.y
-
-        selected_node = (Camera.to_screen_space(state.camera, @selected_node))
-        scene_sprites << selected_node
-        selected_node_bg = selected_node.merge({ path: :pixel, r: 0, g: 255, b: 0, a: 20 })
-        scene_sprites << @primitives.create_borders(selected_node_bg, border_width: 2, color: {
-          r: 0,
-          g: 255,
-          b: 0,
-          a: 255,
-        }).values
-        scene_sprites << selected_node_bg
-      end
-      outputs.sprites << [sprites, args.state.buttons]
-      outputs[:scene].sprites << scene_sprites
+      render_camera(args)
+      render_tiles(args)
+      render_grid(args) if @show_grid
+      render_cursor(args)
+      render_panel(args)
+      render_status_bar(args)
+      render_hint(args)
     end
 
-    def reset_select
-      @start_y = nil
-      @start_x = nil
-      @end_y = nil
-      @end_x = nil
-      @select_rect = nil
+    def grid_w
+      [@state.tile_selection.w.to_i, 1].max
     end
 
-    def handle_box_select(args)
-      if @select_rect && args.inputs.mouse.click
-        fill_tiles(args)
-        save_tiles(args)
-        @mode = :add
-        reset_select
-        return
-      end
+    def grid_h
+      [@state.tile_selection.h.to_i, 1].max
+    end
 
-      if @mode != :select
-        reset_select
-        return
-      end
+    def save
+      @map.save
+      @saved_at = Kernel.tick_count
+    end
 
-      mouse = args.inputs.mouse
+    # Tiles that the current sprite (or prefab) would place with its bottom-left at `x`, `y`.
+    def brush_tiles(x, y)
+      sprite = @state.current_sprite
+      return [] if !sprite
 
-      if args.inputs.keyboard.key_down.backspace || args.inputs.keyboard.key_down.delete || args.inputs.keyboard.key_down.x
-        remove_tiles(args)
-        save_tiles(args)
-        @mode = :remove
-        reset_select
-        return
-      end
-
-      if (mouse.click || (mouse.held && mouse.moved))
-        if @start_y.nil? && @start_x.nil?
-          @start_y = args.inputs.mouse.y
-          @start_x = args.inputs.mouse.x
+      if sprite.prefab && sprite.prefab.length > 0
+        SpriteMethods.render_prefab(sprite.merge({ x: x, y: y })).map do |prefab_sprite|
+          tile_from_sprite(prefab_sprite, prefab_sprite.x, prefab_sprite.y)
         end
-
-        @end_y = args.inputs.mouse.y
-        @end_x = args.inputs.mouse.x
-      end
-
-      # Make sure we have something to render.
-      if !(@start_y && @start_x && @end_x && @end_y)
-        return
-      end
-
-      h = 0
-      w = 0
-      x = 0
-      y = 0
-      if @start_y > @end_y
-        y = @end_y
-        h = @start_y - @end_y
       else
-        y = @start_y
-        h = @end_y - @start_y
+        [tile_from_sprite(sprite, x, y)]
       end
+    end
 
-      if @start_x > @end_x
-        x = @end_x
-        w = @start_x - @end_x
-      else
-        x = @start_x
-        w = @end_x - @start_x
-      end
+    private
 
-      frame_index = 0.frame_index(
-        start_at: 0,
-        frame_count: 2,
-        repeat: true,
-        hold_for: 40,
-      )
-
-      alpha = 0
-      if frame_index == 0
-        alpha = 50
-      else
-        alpha = 150
-      end
-
-      args.outputs.debug << @select_rect.to_s
-
-      @select_rect = {
-        h: h,
-        w: w,
+    def tile_from_sprite(sprite, x, y)
+      {
         x: x,
         y: y,
+        w: sprite.source_w,
+        h: sprite.source_h,
+        path: sprite.path,
+        source_x: sprite.source_x,
+        source_y: sprite.source_y,
+        source_w: sprite.source_w,
+        source_h: sprite.source_h,
+      }
+    end
+
+    def calc_layout(args)
+      @panel = {
+        x: args.grid.w - PANEL_W,
+        y: 0,
+        w: PANEL_W,
+        h: args.grid.h,
       }
 
-      args.outputs.sprites << @select_rect.merge({
-        r: 100,
-        g: 100,
-        b: 100,
-        a: alpha,
-      })
-    end
-
-    def select_rect_to_tiles(args, tile_width: TILE_SIZE, tile_height: TILE_SIZE)
-      select_rect = Camera.to_world_space(args.state.camera, @select_rect)
-      select_rect.x = select_rect.x.ifloor(tile_width)
-      select_rect.y = select_rect.y.ifloor(tile_height)
-
-      select_rect
-    end
-
-    def remove_tiles(args, select_rect = nil)
-      selection = select_rect || select_rect_to_tiles(args)
-      @layers[@current_layer].tiles.reject! { |t| t.intersect_rect? selection }
-    end
-
-    def fill_tiles(args)
-      return if @select_rect.nil?
-      return if @selected_node.nil?
-
-      select_rect = select_rect_to_tiles(args)
-      columns = select_rect.w.idiv(@selected_node.w).floor
-      rows = select_rect.h.idiv(@selected_node.h).floor
-
-      remove_tiles(args, select_rect)
-
-      columns.times do |col|
-        rows.times do |row|
-          @layers[@current_layer].tiles << @selected_node.merge({
-            x: select_rect.x + (col * @selected_node.w),
-            y: select_rect.y + (row * @selected_node.h),
-            w: @selected_node.w,
-            h: @selected_node.h
-          })
-        end
-      end
-    end
-
-    def save_tiles(args)
-      contents = SpriteKit::Serializer.to_json({
-        layers: @layers
-      })
-      $gtk.write_file("data/layers.json", contents)
-    end
-
-    def load_layers(args)
-      return if @layers
-
-      @layers = []
-
-      begin
-        json = $gtk.parse_json_file("data/layers.json")
-        layers = json["layers"].map do |layer|
-          HashMethods.symbolize_keys(layer)
-        end
-        @layers = layers
-        @layers.each_with_index do |layer, index|
-          layer.name = "Layer #{index + 1}" if !layer.name
-        end
-      rescue => e
-      end
-
-      if @layers.length <= 0
-        add_layer
-      end
-
-      @current_layer = @layers.length - 1
-    end
-
-    def add_layer(layer = {})
-      id = GTK.create_uuid
-
-      if !layer.name
-        layer.name = "Layer #{@layers.length + 1}"
-      end
-
-      @layers.unshift({
-        id: layer.id || id,
-        name: layer.name,
-        tiles: layer.tiles
-      })
-    end
-
-    def scale_nodeset(nodeset)
-      nodeset.x = nodeset.source_x
-      nodeset.y = ((nodeset.source_y) - (nodeset.source_h))
-      nodeset.h = nodeset.source_h * EDITOR_TILE_SCALE
-      nodeset.w = nodeset.source_w * EDITOR_TILE_SCALE
-      nodeset.scaled_tiles = nodeset.tiles.map do |tile|
-        tile.merge({
-          x: nodeset.x + (tile.x * EDITOR_TILE_SCALE),
-          y: nodeset.y + (tile.y * EDITOR_TILE_SCALE),
-          w: tile.source_w * EDITOR_TILE_SCALE,
-          h: tile.source_h * EDITOR_TILE_SCALE,
-        })
-      end
-      nodeset
-    end
-
-    def load_nodesets
-      nodesets = []
-      begin
-        json = $gtk.parse_json_file("data/nodesets.json")
-
-        if json
-          nodesets = json["nodesets"].map do |nodeset|
-            nodeset = HashMethods.symbolize_keys(nodeset)
-            scale_nodeset(nodeset)
-          end
-        end
-      rescue => e
-        puts e
-        nodesets = []
-      end
-
-      nodesets
-    end
-
-    def save_nodesets
-      $gtk.write_file("data/nodesets.json", SpriteKit::Serializer.to_json({ nodesets: @nodesets }))
-    end
-
-    def render_sheet(sheet, args)
-      sheet_id = sheet.id.to_sym
-      args.outputs[sheet_id].w = sheet.source_w
-      args.outputs[sheet_id].h = sheet.source_h
-
-      background_tiles = []
-
-      rows = sheet.source_h.idiv(TILE_SIZE)
-      columns = sheet.source_w.idiv(TILE_SIZE)
-
-      # For even columns, we need an extra column to make it odd and get the pattern.
-      if columns.mod(2) <= 0
-        columns += 1
-      end
-
-      count = 0
-      rows.times do |row|
-        columns.times do |column|
-          count += 1
-          x = column * TILE_SIZE
-          y = row * TILE_SIZE
-
-          background = (count % 2).to_i == 0 ? { r: 230, g: 230, b: 230 } : { r: 180, g: 180, b: 180 }
-
-          background_tiles << {
-            x: x,
-            y: y,
-            h: TILE_SIZE,
-            w: TILE_SIZE,
-            path: :pixel,
-          }.merge!(background)
-        end
-      end
-
-      _label_width, label_height = $gtk.calcstringbox(sheet.name)
-      scaled_sheet = {x: sheet.x, y: sheet.y, w: sheet.source_w * EDITOR_TILE_SCALE, h: sheet.source_h * EDITOR_TILE_SCALE, path: sheet_id}
-      scaled_sheet_border = { x: scaled_sheet.x - 2, y: scaled_sheet.y - 2, w: scaled_sheet.w + 4, h: scaled_sheet.h + 4, r: 0, g: 0, b: 0, a: 255, path: :pixel }
-
-      label = {
-        x: scaled_sheet_border.x,
-        y: scaled_sheet_border.y - label_height - 40,
-        text: sheet.name,
-        size_enum: 2,
+      map_x = @viewport_boundary.x
+      @map_area = {
+        x: map_x,
+        y: STATUS_H,
+        w: @panel.x - map_x,
+        h: args.grid.h - STATUS_H,
       }
 
-      hovered_nodes = []
-      if @hovered_node && @view == :map
-        highlighted_hovered_node = @hovered_node.merge({ path: :pixel, r: 0, b: 255, g: 0, a: 64 })
-        hovered_nodes << highlighted_hovered_node
-        hovered_nodes.concat(@primitives.create_borders(highlighted_hovered_node, border_width: 2, color: {
-          r: 0,
-          g: 0,
-          b: 255,
-          a: 200,
-        }).values)
-      end
-
-      # Always make background_tiles before sheet tiles.
-      args.outputs[sheet_id].sprites.concat(background_tiles)
-      args.outputs[sheet_id].sprites.concat(sheet.tiles)
-      args.outputs.sprites.concat(
-        [
-          scaled_sheet_border,
-          scaled_sheet,
-        ],
-      )
-
-      args.outputs.sprites.concat(hovered_nodes)
-      args.outputs.labels << [label]
+      @status_bar = {
+        x: map_x,
+        y: 0,
+        w: @map_area.w,
+        h: STATUS_H,
+      }
     end
 
-    def render_current_nodeset(args)
-      @current_nodeset = @nodesets[@current_nodeset_index]
+    # Snaps a world point to the bottom-left of its grid cell.
+    def cell_at(point)
+      {
+        x: (point.x / grid_w).floor * grid_w,
+        y: (point.y / grid_h).floor * grid_h,
+        w: grid_w,
+        h: grid_h,
+      }
+    end
 
-      render_sheet(@current_nodeset, args)
+    # ---------------------------------------------------------------------------
+    # Camera
+    # ---------------------------------------------------------------------------
 
-      text = "<"
-      @previous_nodeset_button = @primitives.create_button(args,
-                  id: :previous_nodeset_button,
-                  text: text,
-                  background: @palette.colors.dig(:neutral, :fill, :loud),
-                  text_color: @palette.colors.dig(:neutral, :on, :loud),
-                )
-      @previous_nodeset_button = @previous_nodeset_button.merge({
-          id: :previous_nodeset_button,
-          x: @current_nodeset.x,
-          y: @current_nodeset.y - @previous_nodeset_button.h - 8,
-      })
+    def camera_speed
+      3 + (12 / @camera.scale)
+    end
 
-      args.state.buttons << @previous_nodeset_button
+    def move_camera(args)
+      return if @state.text_input_focused
 
-      text = ">"
-      @next_nodeset_button = @primitives.create_button(args,
-                  id: :next_nodeset_button,
-                  text: text,
-                  background: @palette.colors.dig(:neutral, :fill, :loud),
-                  text_color: @palette.colors.dig(:neutral, :on, :loud),
-                )
-      @next_nodeset_button = @next_nodeset_button.merge({
-          id: :next_nodeset_button,
-          x: @current_nodeset.x + @previous_nodeset_button.w + 4,
-          y: @previous_nodeset_button.y,
-      })
-      args.state.buttons << @next_nodeset_button
+      keyboard = args.inputs.keyboard
+      speed = camera_speed
 
-      text = "Delete"
-      @delete_nodeset_button = @primitives.create_button(args,
-        id: :delete_nodeset_button,
-        text: text,
-        background: @palette.colors.dig(:danger, :fill, :loud),
-        text_color: @palette.colors.dig(:danger, :on, :loud),
-      )
-      @delete_nodeset_button = @delete_nodeset_button.merge({
-          id: :add_nodeset_button,
-          x: @menu.x + @menu.w - @delete_nodeset_button.w - 16,
-          y: @next_nodeset_button.y,
+      # Movement
+      if keyboard.left_arrow
+        @camera.target_x -= speed
+      elsif keyboard.right_arrow
+        @camera.target_x += speed
+      end
+
+      if keyboard.down_arrow
+        @camera.target_y -= speed
+      elsif keyboard.up_arrow
+        @camera.target_y += speed
+      end
+
+      # Zoom
+      if keyboard.key_down.equal_sign || keyboard.key_down.plus
+        zoom_to(@camera.target_scale + 0.25)
+      elsif keyboard.key_down.minus
+        zoom_to(@camera.target_scale - 0.25)
+      elsif keyboard.key_down.zero
+        zoom_to(1)
+      end
+
+      wheel = args.inputs.mouse.wheel
+      if wheel && wheel.y != 0 && @mouse_over_map
+        zoom_to(@camera.target_scale * (1.1**wheel.y), anchor: args.inputs.mouse)
+      end
+    end
+
+    # Zooms while keeping the world point under `anchor` (a screen point) in place.
+    def zoom_to(scale, anchor: nil)
+      scale = scale.clamp(MIN_SCALE, MAX_SCALE)
+
+      if anchor
+        world = @camera.to_world_space({ x: anchor.x, y: anchor.y })
+        @camera.target_x = world.x - (anchor.x - @camera.half_width - @camera.offset_x) / scale
+        @camera.target_y = world.y - (anchor.y - @camera.half_height - @camera.offset_y) / scale
+      end
+
+      @camera.target_scale = scale
+    end
+
+    def handle_pan(args)
+      mouse = args.inputs.mouse
+      space_drag = args.inputs.keyboard.space && mouse.button_left
+
+      if !@panning && @mouse_over_map && (mouse.key_down.middle || (space_drag && mouse.key_down.left))
+        @panning = true
+      end
+
+      if @panning && !(mouse.button_middle || space_drag)
+        @panning = false
+      end
+
+      return if !@panning
+
+      # Panning moves 1:1 with the mouse, so skip the easing.
+      @camera.x -= mouse.relative_x / @camera.scale
+      @camera.y -= mouse.relative_y / @camera.scale
+      @camera.target_x = @camera.x
+      @camera.target_y = @camera.y
+    end
+
+    def calc_camera(_args)
+      ease = 0.1
+      @camera.scale += (@camera.target_scale - @camera.scale) * ease
+
+      @camera.x += (@camera.target_x - @camera.x) * ease
+      @camera.y += (@camera.target_y - @camera.y) * ease
+    end
+
+    # ---------------------------------------------------------------------------
+    # Keyboard
+    # ---------------------------------------------------------------------------
+
+    def handle_hotkeys(args)
+    end
+
+    def select_tool(tool)
+      return if @stroke
+
+      @tool = tool
+    end
+
+    # ---------------------------------------------------------------------------
+    # Mouse / tools
+    # ---------------------------------------------------------------------------
+
+    def handle_mouse(args)
+      mouse = args.inputs.mouse
+
+      if !@stroke && @mouse_over_map
+        if mouse.key_down.left
+          start_stroke(:left)
+        elsif mouse.key_down.right
+          start_stroke(:right)
+        end
+      end
+
+      return if !@stroke
+
+      held = @stroke.button == :left ? mouse.button_left : mouse.button_right
+
+      if held
+        continue_stroke
+      else
+        end_stroke
+      end
+    end
+
+    # The tool a stroke uses. Right click always erases.
+    def stroke_tool(button)
+      return :erase if button == :right && @tool != :rect
+
+      @tool
+    end
+
+    def start_stroke(button)
+      tool = stroke_tool(button)
+
+      if tool == :pick
+        pick_tile
+        return
+      end
+
+      layer = @map.current_layer
+      @stroke = {
+        button: button,
+        tool: tool,
+        erase: button == :right || tool == :erase,
+        change: @map.begin_change(layer),
+        start_cell: @hovered_cell,
+        last_cell: nil,
+      }
+
+      continue_stroke
+    end
+
+    def continue_stroke
+      stroke = @stroke
+      return if stroke.tool == :rect
+
+      cells = stroke.last_cell ? cells_between(stroke.last_cell, @hovered_cell) : [@hovered_cell]
+      cells.each do |cell|
+        if stroke.erase
+          @map.erase(cell, stroke.change)
+        else
+          paint_at(cell.x, cell.y, stroke.change)
+        end
+      end
+
+      stroke.last_cell = @hovered_cell
+    end
+
+    def end_stroke
+      stroke = @stroke
+      @stroke = nil
+
+      if stroke.tool == :rect
+        rect = stroke_rect(stroke)
+        if stroke.erase
+          @map.erase(rect, stroke.change)
+        else
+          fill_rect(rect, stroke.change)
+        end
+      end
+
+      # Purposely delay saving until the stroke ends, otherwise the editor lags a lot.
+      return save if @map.commit(stroke.change)
+    end
+
+    def paint_at(x, y, change)
+      tiles = brush_tiles(x, y)
+      return if tiles.length <= 0
+
+      # Don't let a stroke paint over itself when the brush is larger than the grid.
+      return if tiles.any? { |tile| Geometry.find_intersect_rect(tile, change.added) }
+
+      tiles.each { |tile| @map.place_tile(tile, change) }
+    end
+
+    def fill_rect(rect, change)
+      sprite = @state.current_sprite
+      return if !sprite
+
+      # Step by the brush size (rounded up to the grid) so larger sprites tile cleanly.
+      bounds = brush_bounds(brush_tiles(0, 0))
+      step_x = [(bounds.w / grid_w).ceil, 1].max * grid_w
+      step_y = [(bounds.h / grid_h).ceil, 1].max * grid_h
+
+      y = rect.y
+      while y < rect.y + rect.h
+        x = rect.x
+        while x < rect.x + rect.w
+          paint_at(x, y, change)
+          x += step_x
+        end
+        y += step_y
+      end
+    end
+
+    def pick_tile
+      found = @map.tile_at(@world_mouse)
+      return if !found
+
+      tile = found.tile
+      spritesheet = @state.spritesheets[tile.path]
+
+      if !spritesheet
+        spritesheet = SpritesheetLoader.new.load_file(path: tile.path)
+        @state.spritesheets[tile.path] = spritesheet
+      end
+
+      @state.current_sprite = {
+        source_x: tile.source_x,
+        source_y: tile.source_y,
+        source_w: tile.source_w,
+        source_h: tile.source_h,
+        w: tile.source_w,
+        h: tile.source_h,
+        path: tile.path,
+        spritesheet: spritesheet,
+      }
+
+      # So tabbing over to the canvas shows the spritesheet the tile came from.
+      @state.file_path = tile.path
+      @map.current_layer_index = found.layer_index
+      @tool = :paint
+    end
+
+    # Grid cells along the line between 2 cells so fast mouse movements don't leave gaps.
+    def cells_between(from, to)
+      columns = ((to.x - from.x) / grid_w).abs
+      rows = ((to.y - from.y) / grid_h).abs
+      steps = [columns, rows].max.ceil
+
+      return [to] if steps <= 0
+
+      (1..steps).map do |step|
+        percent = step.fdiv(steps)
+        cell_at({
+          x: from.x + (to.x - from.x) * percent + grid_w / 2,
+          y: from.y + (to.y - from.y) * percent + grid_h / 2,
+        })
+      end
+    end
+
+    # The rect (in world space) covered by a rect stroke, from its starting cell to the hovered cell.
+    def stroke_rect(stroke)
+      start_cell = stroke.start_cell
+      x = [start_cell.x, @hovered_cell.x].min
+      y = [start_cell.y, @hovered_cell.y].min
+
+      {
+        x: x,
+        y: y,
+        w: [start_cell.x, @hovered_cell.x].max + grid_w - x,
+        h: [start_cell.y, @hovered_cell.y].max + grid_h - y,
+      }
+    end
+
+    def brush_bounds(tiles)
+      return @hovered_cell if tiles.length <= 0
+
+      min_x = tiles.map(&:x).min
+      min_y = tiles.map(&:y).min
+      max_x = tiles.map { |tile| tile.x + tile.w }.max
+      max_y = tiles.map { |tile| tile.y + tile.h }.max
+
+      { x: min_x, y: min_y, w: max_x - min_x, h: max_y - min_y }
+    end
+
+    # ---------------------------------------------------------------------------
+    # History / layers
+    # ---------------------------------------------------------------------------
+
+    def undo_change
+      return if @stroke
+
+      save if @map.undo
+    end
+
+    def redo_change
+      return if @stroke
+
+      save if @map.redo
+    end
+
+    def add_layer
+      @map.add_layer
+      save
+    end
+
+    def remove_layer
+      save if @map.remove_layer
+    end
+
+    def move_layer(direction)
+      save if @map.move_layer(@map.current_layer_index, direction)
+    end
+
+    def select_layer(index)
+      @map.current_layer_index = index.clamp(0, @map.layers.length - 1)
+    end
+
+    def toggle_layer_visibility(index)
+      @map.toggle_layer_visibility(index)
+      save
+    end
+
+    # ---------------------------------------------------------------------------
+    # Rendering
+    # ---------------------------------------------------------------------------
+
+    def render_camera(args)
+      viewport = @camera.viewport
+      args.outputs[@camera_path].w = viewport.w
+      args.outputs[@camera_path].h = viewport.h
+      args.outputs[@camera_path].background_color = [40, 42, 54, 255]
+      @state.draw_buffer.primitives << { **viewport, path: @camera_path }
+    end
+
+    def render_tiles(_args)
+      sprites = []
+
+      @map.layers.each do |layer|
+        next if !layer.visible
+
+        @camera.find_all_intersect_viewport(layer.tiles).each do |tile|
+          sprites << @camera.to_screen_space(tile)
+        end
+      end
+
+      @state.draw_buffer[@camera_path].concat(sprites)
+    end
+
+    def render_grid(_args)
+      # Too dense to be useful, and expensive.
+      return if grid_w * @camera.scale < 4 || grid_h * @camera.scale < 4
+
+      world = @camera.viewport_world
+
+      min_x = (world.x / grid_w).floor * grid_w
+      min_y = (world.y / grid_h).floor * grid_h
+      max_x = world.x + world.w
+      max_y = world.y + world.h
+
+      solids = []
+
+      x = min_x
+      while x <= max_x
+        s = @camera.to_screen_space!({ x: x, y: min_y, w: 1, h: max_y - min_y })
+        alpha = x == 0 ? 120 : 30
+        solids << { x: s.x, y: s.y, w: 1, h: s.h, r: 255, g: 255, b: 255, a: alpha, path: :solid }
+        x += grid_w
+      end
+
+      y = min_y
+      while y <= max_y
+        s = @camera.to_screen_space!({ x: min_x, y: y, w: max_x - min_x, h: 1 })
+        alpha = y == 0 ? 120 : 30
+        solids << { x: s.x, y: s.y, w: s.w, h: 1, r: 255, g: 255, b: 255, a: alpha, path: :solid }
+        y += grid_h
+      end
+
+      @state.draw_buffer[@camera_path].concat(solids)
+    end
+
+    def render_cursor(args)
+      return if @panning
+      return if !@stroke && !@mouse_over_map
+
+      primitives = []
+      tool = @stroke ? @stroke.tool : @tool
+      erasing = @stroke ? @stroke.erase : (tool == :erase || args.inputs.mouse.button_right)
+
+      if tool == :rect && @stroke
+        rect = @camera.to_screen_space(stroke_rect(@stroke))
+        color = erasing ? { r: 255, g: 60, b: 60 } : { r: 80, g: 160, b: 255 }
+        primitives << rect.merge({ path: :solid, a: 60, **color })
+        primitives.concat(Primitives.borders(rect, border_width: 2, color: { **color, a: 255 }).values)
+      elsif tool == :pick
+        found = @map.tile_at(@world_mouse)
+        if found
+          rect = @camera.to_screen_space(found.tile)
+          primitives.concat(Primitives.borders(rect, border_width: 2, color: { r: 255, g: 220, b: 80, a: 255 }).values)
+        end
+      elsif erasing
+        rect = @camera.to_screen_space(@hovered_cell)
+        primitives << rect.merge({ path: :solid, r: 255, g: 60, b: 60, a: 80 })
+        primitives.concat(Primitives.borders(rect, border_width: 2, color: { r: 255, g: 60, b: 60, a: 255 }).values)
+      else
+        tiles = brush_tiles(@hovered_cell.x, @hovered_cell.y)
+
+        tiles.each do |tile|
+          primitives << @camera.to_screen_space(tile).merge({ a: 160 })
+        end
+
+        rect = @camera.to_screen_space(brush_bounds(tiles))
+        primitives.concat(Primitives.borders(rect, border_width: 2, color: { r: 80, g: 220, b: 120, a: 255 }).values)
+      end
+
+      @state.draw_buffer[@camera_path].concat(primitives)
+    end
+
+    # Tells the user where tiles come from when they don't have one to paint with yet.
+    def render_hint(_args)
+      return if @state.current_sprite
+      return if @tool != :paint && @tool != :rect
+
+      text = "No tile selected. Click \"Choose tile\" in the panel (or press Tab) to pick one."
+      text_w, text_h = GTK.calcstringbox(text, size_px: 18)
+      hint = {
+        x: @map_area.x + (@map_area.w - text_w) / 2 - PADDING,
+        y: @map_area.y + @map_area.h - text_h - PADDING * 3,
+        w: text_w + PADDING * 2,
+        h: text_h + PADDING,
+      }
+
+      @state.draw_buffer.primitives.concat([
+        hint.merge({ path: :solid, **@palette.colors.dig(:brand, :fill, :loud) }),
+        {
+          x: hint.x + PADDING,
+          y: hint.y + hint.h / 2,
+          text: text,
+          size_px: 18,
+          anchor_y: 0.5,
+          **@palette.colors.dig(:brand, :on, :loud)
+        }.label!
+      ])
+    end
+
+    def render_status_bar(args)
+      layer = @map.current_layer
+      cell_x = (@hovered_cell.x / grid_w).floor
+      cell_y = (@hovered_cell.y / grid_h).floor
+
+      saved = if @saved_at && Kernel.tick_count - @saved_at < 60
+                "saved!"
+              else
+                @map.path
+              end
+
+      parts = [
+        @tools[@tool][:label],
+        "Layer: #{layer.name}#{layer.visible ? "" : " (hidden)"}",
+        "Cell: #{cell_x}, #{cell_y}",
+        "Zoom: #{@camera.scale.round(2)}x",
+        "Tiles: #{@map.tile_count}",
+        saved,
+      ]
+
+      @state.draw_buffer.primitives.concat([
+        @status_bar.merge({ path: :solid, **@palette.colors.dig(:neutral, :fill, :loud) }),
+        {
+          x: @status_bar.x + PADDING,
+          y: @status_bar.y + @status_bar.h / 2,
+          text: StringHelper.truncate(parts.join("  |  "), size_px: 16, max_width: @status_bar.w - PADDING * 2),
+          size_px: 16,
+          anchor_y: 0.5,
+          **@palette.colors.dig(:neutral, :on, :loud)
+        }.label!
+      ])
+    end
+
+    # Builds every clickable element of the side panel. `render_panel` draws them, `handle_panel_click` clicks them.
+    def build_panel(args)
+      mouse = args.inputs.mouse
+      @panel_buttons = []
+      @panel_labels = []
+      @panel_sprites = []
+
+      x = @panel.x + PADDING
+      w = @panel.w - PADDING * 2
+      y = @panel.h - PADDING
+
+      _, button_h = GTK.calcstringbox("+ Add")
+      button_h += 2 + 8
+
+      y = add_panel_heading("Brush", x, y)
+      y = build_brush_preview(x, y, button_h)
+      y -= 16
+
+      y = add_panel_heading("Layers", x, y)
+
+      button_x = x
+      [
+        { text: "+ Add", action: proc { add_layer } },
+        { text: "Delete", action: proc { remove_layer }, danger: true },
+        { text: "Up", action: proc { move_layer(1) } },
+        { text: "Down", action: proc { move_layer(-1) } },
+      ].each do |config|
+        button = panel_button(config.text, button_x, y - button_h, config.action, danger: config.danger)
+        button_x += button.w + 6
+      end
+      y -= button_h + 10
+
+      # Top-most layer first, like most editors.
+      (@map.layers.length - 1).downto(0) do |index|
+        layer = @map.layers[index]
+        row = { x: x, y: y - ROW_H, w: w, h: ROW_H }
+        eye = { x: row.x + 6, y: row.y + (ROW_H - 14) / 2, w: 14, h: 14 }
+
+        @panel_buttons << row.merge({
+          kind: :layer_row,
+          active: index == @map.current_layer_index,
+          hovered: mouse.intersect_rect?(row),
+          layer: layer,
+          eye: eye,
+          action: proc { select_layer(index) }
         })
 
-      args.state.buttons << @delete_nodeset_button
+        # Comes after the row so it gets clicked instead of the row.
+        @panel_buttons << eye.merge({ kind: :hit_box, action: proc { toggle_layer_visibility(index) } })
 
-      text = "Create"
-      @add_nodeset_button = @primitives.create_button(args,
-                  id: :add_nodeset_button,
-                  text: text,
-                  background: @palette.colors.dig(:neutral, :fill, :loud),
-                  text_color: @palette.colors.dig(:neutral, :on, :loud),
-                )
-      @add_nodeset_button = @add_nodeset_button.merge({
-          id: :add_nodeset_button,
-          x: @delete_nodeset_button.x - @add_nodeset_button.w - 8,
-          y: @next_nodeset_button.y,
+        y -= ROW_H + 2
+      end
+
+      y -= 16
+      y = add_panel_heading("Tools", x, y)
+
+      @tools.each do |tool, config|
+        row = { x: x, y: y - ROW_H, w: w, h: ROW_H }
+        @panel_buttons << row.merge({
+          kind: :tool_row,
+          text: config[:label],
+          active: tool == @tool,
+          hovered: mouse.intersect_rect?(row),
+          action: proc { select_tool(tool) }
         })
-
-      args.state.buttons << @add_nodeset_button
-    end
-
-    def create_nodeset
-      # columns always needs to be odd.
-      columns = 11
-      rows = 6
-      h = rows * TILE_SIZE
-      w = columns * TILE_SIZE
-      @nodesets << scale_nodeset({
-        name: "nodeset__#{@nodesets.length + 1}",
-        id: $gtk.create_uuid,
-        type: :nodeset,
-        source_h: h,
-        source_w: w,
-        source_x: 20,
-        source_y: 20.from_top - h,
-        tiles: []
-      })
-
-      @current_nodeset_index = @nodesets.length - 1
-      @current_nodeset = @nodesets[@current_nodeset_index]
-      save_nodesets
-    end
-
-    def next_nodeset
-      idx = @current_nodeset_index + 1
-
-      idx = 0 if idx > @nodesets.length - 1
-
-      @current_nodeset_index = idx
-      @current_nodeset = @nodesets[@current_nodeset_index]
-    end
-
-    def previous_nodeset
-      idx = @current_nodeset_index - 1
-
-      idx = @nodesets.length - 1 if idx < 0
-
-      @current_nodeset_index = idx
-      @current_nodeset = @nodesets[@current_nodeset_index]
-    end
-
-    def delete_nodeset
-      return if @nodesets.length <= 1 # cannot delete all nodesets.
-      idx = @current_nodeset_index
-      if idx == 0
-        @nodesets = @nodesets.slice(1..-1)
-      else
-        previous_nodeset
-        @nodesets.delete_at(idx)
-      end
-      save_nodesets
-    end
-
-    # This method is for merging 2 sprites when a sprite > 16px.
-    # Used for shift+click sprites.
-    def combine_sprites(current_sprite, new_sprite)
-      hash = {}
-
-      hash[:source_x] = [new_sprite.source_x, current_sprite.source_x].min
-      hash[:source_y] = [new_sprite.source_y, current_sprite.source_y].min
-
-      if new_sprite.source_x > current_sprite.source_x
-        hash[:source_w] = [current_sprite.source_w, new_sprite.source_x - current_sprite.source_x + new_sprite.source_w].max
-      else
-        hash[:source_w] = current_sprite.source_x - new_sprite.source_x + current_sprite.source_w
+        y -= ROW_H + 2
       end
 
-      if new_sprite.source_y > current_sprite.source_y
-        hash[:source_h] = [current_sprite.source_h, new_sprite.source_y - current_sprite.source_y + new_sprite.source_h].max
-      else
-        hash[:source_h] = current_sprite.source_y - new_sprite.source_y + current_sprite.source_h
-      end
+      y -= 16
+      @panel_labels << panel_label("Grid: #{grid_w}x#{grid_h} (brush w / h)", x, y, :quiet)
+      y -= 24
 
-      current_sprite.merge(new_sprite).merge(hash)
+      HELP.each do |text|
+        @panel_labels << panel_label(text, x, y, :quiet)
+        y -= 20
+      end
     end
 
-    def sprite_to_nodeset_rect(mouse, sprite, nodeset)
-        mouse_x = (mouse.x - nodeset.x) / EDITOR_TILE_SCALE
-        mouse_y = (mouse.y - nodeset.y) / EDITOR_TILE_SCALE
-        w = sprite.source_w
-        h = sprite.source_h
-        # prevent overflow right / left
-        x = mouse_x.ifloor(TILE_SIZE).clamp(0, nodeset.w - w)
+    # Shows the current tile and a button to go pick one from the spritesheets.
+    def build_brush_preview(x, y, button_h)
+      preview_size = 48
+      preview = { x: x, y: y - preview_size, w: preview_size, h: preview_size }
+      sprite = @state.current_sprite
 
-        # prevent overflow up / down.
-        y = mouse_y.ifloor(TILE_SIZE).clamp(0, nodeset.h - h)
+      @panel_sprites << preview.merge({ path: :solid, r: 0, g: 0, b: 0, a: 80 })
+      @panel_sprites.concat(Primitives.borders(preview, color: @palette.colors.dig(:neutral, :border, :loud)).values)
 
-        sprite.merge({
-          x: x,
-          y: y,
+      text_x = preview.x + preview.w + 10
+
+      if sprite
+        # Fit the tile inside the preview box, keeping its aspect ratio.
+        scale = [preview_size.fdiv(sprite.source_w), preview_size.fdiv(sprite.source_h)].min
+        w = sprite.source_w * scale
+        h = sprite.source_h * scale
+        @panel_sprites << {
+          x: preview.x + (preview_size - w) / 2,
+          y: preview.y + (preview_size - h) / 2,
           w: w,
           h: h,
-        })
+          path: sprite.path,
+          source_x: sprite.source_x,
+          source_y: sprite.source_y,
+          source_w: sprite.source_w,
+          source_h: sprite.source_h,
+        }
+
+        name = "#{sprite.source_w}x#{sprite.source_h} #{File.basename(sprite.path.to_s)}"
+        name = StringHelper.truncate(name, size_px: 16, max_width: @panel.x + @panel.w - PADDING - text_x)
+        @panel_labels << panel_label(name, text_x, preview.y + preview.h, :loud)
+      else
+        @panel_labels << panel_label("No tile selected", text_x, preview.y + preview.h, :loud)
+      end
+
+      if @state.view == :map
+        panel_button("Choose tile", text_x, preview.y, proc { choose_tile }, brand: !sprite)
+      else
+        panel_button("Back to map", text_x, preview.y, proc { @state.next_view = :map }, brand: !!sprite)
+      end
+
+      preview.y - 4
     end
 
-    def calc_nodes(args)
+    # Sends the user to pick a tile. Opens the last spritesheet if there was one, otherwise the file tree.
+    def choose_tile
+      @state.next_view = @state.spritesheets[@state.file_path] ? :canvas : :file_tree
+    end
+
+    def panel_button(text, x, y, action, danger: false, brand: false)
+      color_group = if danger
+                      :danger
+                    elsif brand
+                      :brand
+                    else
+                      :neutral
+                    end
+      attention = brand ? :loud : :normal
+
+      button = Primitives.button(
+        text: text,
+        x: x,
+        y: y,
+        padding: 4,
+        border_width: 1,
+        background_color: { path: :solid, **@palette.colors.dig(color_group, :fill, attention) }
+      )
+      button.action = action
+      button.label_color = @palette.colors.dig(color_group, :on, attention)
+      @panel_buttons << button
+      button
+    end
+
+    def add_panel_heading(text, x, y)
+      @panel_labels << panel_label(text, x, y, :loud, size_px: 20)
+      y - 30
+    end
+
+    def panel_label(text, x, y, attention, size_px: 16)
+      color = attention == :loud ? @palette.colors.dig(:neutral, :on, :loud) : @palette.colors.dig(:neutral, :border, :normal)
+      {
+        x: x,
+        y: y,
+        text: text,
+        size_px: size_px,
+        anchor_y: 1,
+        **color
+      }.label!
+    end
+
+    def handle_panel_click(args)
       mouse = args.inputs.mouse
+      return if !mouse.click
+      return if @stroke
+      return if !mouse.intersect_rect?(@panel)
 
-      # If a user has a sprite selected
-      if @current_nodeset && @selected_sprite && mouse.intersect_rect?(@current_nodeset)
-        new_sprite = sprite_to_nodeset_rect(mouse, @selected_sprite, @current_nodeset)
+      button = @panel_buttons.reverse_each.find { |b| mouse.intersect_rect?(b) }
+      button.action.call if button
+    end
 
-        intersecting_tiles = args.geometry.find_all_intersect_rect(new_sprite, @current_nodeset.tiles)
+    def render_panel(_args)
+      primitives = []
+      colors = @palette.colors
 
-        if (mouse.click || (mouse.held && mouse.moved))
-          intersecting_tiles.each { |tile| @current_nodeset.tiles.delete(tile) }
-          @current_nodeset.tiles << new_sprite
-          scale_nodeset(@current_nodeset)
-          save_nodesets
-        elsif intersecting_tiles.length > 0
-          tile_target = {x: nil, y: nil, w: 0, h: 0, path: :pixel, r: 255, b: 0, g: 0, a: 128, primitive_marker: :sprite}
+      primitives << @panel.merge({ path: :solid, **colors.dig(:neutral, :fill, :loud) })
+      primitives << { x: @panel.x, y: 0, w: 1, h: @panel.h, path: :solid, **colors.dig(:neutral, :border, :loud) }
 
-          intersecting_tiles.each do |tile|
-            if !tile_target.x || tile_target.x < tile.x
-              tile_target.x = tile.x
-            end
-
-            if !tile_target.y || tile_target.y < tile.y
-              tile_target.y = tile.y
-            end
-
-            tile_target.w += tile.w
-            tile_target.h += tile.h
-          end
-
-          sheet_id = @current_nodeset.id.to_sym
-
-          # sprite = sprite_to_nodeset_rect(args.inputs.mouse, tile_target, @current_nodeset)
-          sprite = tile_target
-          # sprite.y = @current_nodeset.y + sprite.y
-          # sprite.x = @current_nodeset.x + sprite.x
-
-          args.outputs[sheet_id].sprites << sprite
-          args.outputs[sheet_id].sprites << @primitives.create_borders(sprite, border_width: 2, color: { r: 100, g: 0, b: 0, a: 255 }).values
+      @panel_buttons.each do |button|
+        case button.kind
+        when :hit_box
+          next
+        when :layer_row
+          primitives.concat(render_layer_row(button))
+        when :tool_row
+          primitives.concat(render_tool_row(button))
+        else
+          # Primitives.button
+          label = button.primitives[0].merge(button.label_color)
+          primitives << button
+          primitives << label
+          primitives.concat(button.primitives[1..-1])
         end
       end
 
-      if @current_nodeset && !@selected_sprite && mouse.intersect_rect?(@current_nodeset)
-        tile = @current_nodeset.scaled_tiles.find { |tile| mouse.intersect_rect?(tile) }
+      primitives.concat(@panel_sprites)
+      primitives.concat(@panel_labels)
+      @state.draw_buffer.primitives.concat(primitives)
+    end
 
-        @hovered_node = tile
-      else
-        @hovered_node = nil
-      end
+    def row_background(row)
+      colors = @palette.colors
+      # Only take the rect, otherwise a row with `text:` gets rendered as a label.
+      rect = { x: row.x, y: row.y, w: row.w, h: row.h }
 
-      mouse = args.inputs.mouse
-      if @hovered_node && mouse.intersect_rect?(@hovered_node) && mouse.click && @view == :map
-        @selected_node = Camera.to_world_space(args.state.camera, @hovered_node).merge({
-          w: @hovered_node.source_w,
-          h: @hovered_node.source_h,
-        })
+      if row.active
+        rect.merge({ path: :solid, **colors.dig(:brand, :fill, :loud) })
+      elsif row.hovered
+        rect.merge({ path: :solid, **colors.dig(:neutral, :on, :quiet) })
       end
+    end
+
+    def render_layer_row(row)
+      colors = @palette.colors
+      layer = row.layer
+      eye = row.eye
+      text_color = layer.visible ? colors.dig(:neutral, :on, :loud) : colors.dig(:neutral, :border, :loud)
+
+      primitives = []
+      background = row_background(row)
+      primitives << background if background
+
+      if layer.visible
+        primitives << eye.merge({ path: :solid, **colors.dig(:neutral, :on, :loud) })
+      end
+      primitives.concat(Primitives.borders(eye, color: colors.dig(:neutral, :on, :loud)).values)
+
+      primitives << {
+        x: eye.x + eye.w + 10,
+        y: row.y + row.h / 2,
+        text: StringHelper.truncate(layer.name, size_px: 16, max_width: row.w - 90),
+        size_px: 16,
+        anchor_y: 0.5,
+        **text_color
+      }.label!
+
+      primitives << {
+        x: row.x + row.w - 8,
+        y: row.y + row.h / 2,
+        text: "#{layer.tiles.length}",
+        size_px: 14,
+        anchor_x: 1,
+        anchor_y: 0.5,
+        **text_color
+      }.label!
+
+      primitives
+    end
+
+    def render_tool_row(row)
+      primitives = []
+      background = row_background(row)
+      primitives << background if background
+
+      primitives << {
+        x: row.x + 10,
+        y: row.y + row.h / 2,
+        text: row.text,
+        size_px: 16,
+        anchor_y: 0.5,
+        **@palette.colors.dig(:neutral, :on, :loud)
+      }.label!
+
+      primitives
     end
   end
 end

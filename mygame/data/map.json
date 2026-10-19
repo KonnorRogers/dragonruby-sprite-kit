@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "tile_w": 16,
+  "tile_h": 16,
+  "layers": [
+    {
+      "id": "13cebda3-d522-46b9-a7ee-5728e87a272f",
+      "name": "Layer 2",
+      "visible": true,
+      "tiles": [
+
+      ]
+    }
+  ]
+}

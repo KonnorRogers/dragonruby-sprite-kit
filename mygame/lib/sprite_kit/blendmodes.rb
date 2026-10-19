@@ -75,12 +75,15 @@ module App
       )
     end
 
-    alias_method :hole_punch, :dst_out
     def self.dst_out
       @dst_out ||= Numeric.compose_blendmode(
         BLENDFACTOR_ZERO, BLENDFACTOR_ONE_MINUS_SRC_ALPHA, BLENDOPERATION_ADD,
         BLENDFACTOR_ZERO, BLENDFACTOR_ONE_MINUS_SRC_ALPHA, BLENDOPERATION_ADD
       )
+    end
+
+    def self.hole_punch
+      dst_out
     end
 
     def self.dst_atop

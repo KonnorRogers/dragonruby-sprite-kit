@@ -1,8 +1,10 @@
 module SpriteKit
   module Serializer
-    # Primitive for turning a value into a JSON string. Right now it supports Hash, Numeric, String, Symbol, Array, and nil.
+    # Primitive for turning a value into a JSON string. Right now it supports Hash, Numeric, String, Symbol, Array, Boolean, and nil.
     def self.to_json_value(value, spacer, depth)
       return "null" if value.nil?
+
+      return value.to_s if value == true || value == false
 
       return value.to_s if value.is_a?(Numeric)
 
@@ -28,10 +30,10 @@ module SpriteKit
         return "[\n" + strings + "\n#{leading_space}]"
       end
 
-      raise "Value is not of type String, Symbol, Hash, Numeric, Array, or nil"
+      raise "Value is not of type String, Symbol, Hash, Numeric, Array, Boolean, or nil"
     end
 
-    # down and dirty to_json. Just hashes, numbers, symbols, strings, array, and nil.
+    # down and dirty to_json. Just hashes, numbers, symbols, strings, array, booleans, and nil.
     def self.to_json(object, spacer = "  ", depth = 0)
       if object.is_a?(Array) || object.is_a?(Hash)
         return to_json_value(object, spacer, depth)
