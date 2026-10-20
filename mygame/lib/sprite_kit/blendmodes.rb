@@ -1,4 +1,4 @@
-module App
+module SpriteKit
   # https://gist.github.com/KonnorRogers/87543aed86e0c2dd888b554b85e0583e
   # Reference: https://www.stat.auckland.ac.nz/~paul/Reports/GraphicsEngine/compositing/compositing.html
   # Porter-Duff "Compositing Digital Images" paper.
@@ -97,6 +97,13 @@ module App
       @xor ||= Numeric.compose_blendmode(
         BLENDFACTOR_ONE_MINUS_DST_ALPHA, BLENDFACTOR_ONE_MINUS_SRC_ALPHA, BLENDOPERATION_ADD,
         BLENDFACTOR_ONE_MINUS_DST_ALPHA, BLENDFACTOR_ONE_MINUS_SRC_ALPHA, BLENDOPERATION_ADD
+      )
+    end
+
+    def self.invert
+      @invert ||= Numeric.compose_blendmode(
+        BLENDFACTOR_ONE_MINUS_DST_COLOR, BLENDFACTOR_ZERO, BLENDOPERATION_ADD,
+        BLENDFACTOR_ZERO,                BLENDFACTOR_ONE,  BLENDOPERATION_ADD
       )
     end
   end

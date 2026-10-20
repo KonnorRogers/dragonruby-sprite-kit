@@ -37,6 +37,10 @@ module SpriteKit
             row_gap: 0, column_gap: 0,
             offset_x: 0, offset_y: 0,
           },
+          grid_size: {
+            w: 16,
+            h: 16,
+          },
           current_sprite: nil,
           viewport_boundary: nil,
           next_view: nil,

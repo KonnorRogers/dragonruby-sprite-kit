@@ -62,13 +62,16 @@ module SpriteKit
       @camera_path = camera.path || :map_camera
       @palette = UI::SemanticPalette.new
 
-      @map = ::SpriteKit::Map.new(path: map_path, tile_w: @state.tile_selection.w, tile_h: @state.tile_selection.h)
+      @map = ::SpriteKit::Map.new(path: map_path, tile_w: @state.grid_size.w, tile_h: @state.grid_size.h)
 
       # Keep the brush in sync with the grid the map was made with.
       if @map.load
-        @state.tile_selection.w = @map.tile_w
-        @state.tile_selection.h = @map.tile_h
+        @state.grid_size.w = @map.tile_w
+        @state.grid_size.h = @map.tile_h
       end
+
+      @state.grid_size.w = 48
+      @state.grid_size.h = 48
 
       # @type [:paint, :erase, :rect, :pick]
       @tool = :paint
@@ -185,6 +188,9 @@ module SpriteKit
           }
         }
       }.merge(@tools)
+
+      @background_color = nil
+      # @background_color = { r: 40, g: 42, b: 54, a: 255 }
     end
 
     def tick(args)
@@ -224,8 +230,8 @@ module SpriteKit
     def calc(args)
       calc_camera(args)
 
-      @map.tile_w = grid_w
-      @map.tile_h = grid_h
+      @map.tile_w = @state.grid_size.w
+      @map.tile_h = @state.grid_size.h
     end
 
     def render(args)
@@ -239,11 +245,11 @@ module SpriteKit
     end
 
     def grid_w
-      [@state.tile_selection.w.to_i, 1].max
+      [@state.grid_size.w.to_i, 1].max
     end
 
     def grid_h
-      [@state.tile_selection.h.to_i, 1].max
+      [@state.grid_size.h.to_i, 1].max
     end
 
     def save
@@ -646,7 +652,7 @@ module SpriteKit
       viewport = @camera.viewport
       args.outputs[@camera_path].w = viewport.w
       args.outputs[@camera_path].h = viewport.h
-      args.outputs[@camera_path].background_color = [40, 42, 54, 255]
+      args.outputs[@camera_path].background_color = @background_color
       @state.draw_buffer.primitives << { **viewport, path: @camera_path }
     end
 
@@ -680,16 +686,20 @@ module SpriteKit
       x = min_x
       while x <= max_x
         s = @camera.to_screen_space!({ x: x, y: min_y, w: 1, h: max_y - min_y })
-        alpha = x == 0 ? 120 : 30
-        solids << { x: s.x, y: s.y, w: 1, h: s.h, r: 255, g: 255, b: 255, a: alpha, path: :solid }
+        dark_alpha = x == 0 ? 200 : 120
+        light_alpha = x == 0 ? 180 : 60
+        solids << { x: s.x - 1, y: s.y, w: 1, h: s.h, r: 0, g: 0, b: 0, a: dark_alpha, path: :solid } # dark
+        solids << { x: s.x, y: s.y, w: 1, h: s.h, r: 255, g: 255, b: 255, a: light_alpha, path: :solid } # light
         x += grid_w
       end
 
       y = min_y
       while y <= max_y
         s = @camera.to_screen_space!({ x: min_x, y: y, w: max_x - min_x, h: 1 })
-        alpha = y == 0 ? 120 : 30
-        solids << { x: s.x, y: s.y, w: s.w, h: 1, r: 255, g: 255, b: 255, a: alpha, path: :solid }
+        dark_alpha = y == 0 ? 180 : 120
+        light_alpha = y == 0 ? 200 : 60
+        solids << { x: s.x, y: s.y - 1, w: s.w, h: 1, r: 0, g: 0, b: 0, a: dark_alpha, path: :solid } # dark
+        solids << { x: s.x, y: s.y, w: s.w, h: 1, r: 255, g: 255, b: 255, a: light_alpha, path: :solid } # light
         y += grid_h
       end
 
@@ -936,7 +946,10 @@ module SpriteKit
         y: y,
         padding: 4,
         border_width: 1,
-        background_color: { path: :solid, **@palette.colors.dig(color_group, :fill, attention) }
+        background_color: {
+          path: :solid,
+          **@palette.colors.dig(color_group, :fill, attention)
+        }
       )
       button.action = action
       button.label_color = @palette.colors.dig(color_group, :on, attention)
