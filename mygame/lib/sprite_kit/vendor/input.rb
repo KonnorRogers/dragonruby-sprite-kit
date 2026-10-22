@@ -679,7 +679,7 @@ module Input
         w: @cursor_width,
         h: @font_height,
         path: :solid
-      }.merge(**@cursor_color, a: alpha)
+      }.merge!(**@cursor_color, a: alpha)
     end
 
     def tick
