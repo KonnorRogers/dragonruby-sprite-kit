@@ -85,13 +85,14 @@ module Input
       keyboard = @args.inputs.keyboard
 
       tick_count = @args.tick_count
-      repeat_keys = keyboard.key_held.truthy_keys.select do |key|
-        key_held = keyboard.key_held.send(key)
-        puts "KEY: #{key}"
-        puts "KEY_HELD: #{key_held}"
-        ticks = tick_count - key_held.to_i
-        ticks > @key_repeat_delay && ticks % @key_repeat_debounce == 0
-      end
+      # repeat_keys = keyboard.key_held.truthy_keys.select do |key|
+      #   key_held = keyboard.key_held.send(key)
+      #   puts "KEY: #{key}"
+      #   puts "KEY_HELD: #{key_held}"
+      #   ticks = tick_count - key_held.to_i
+      #   ticks > @key_repeat_delay && ticks % @key_repeat_debounce == 0
+      # end
+      repeat_keys = keyboard.key_repeat.truthy_keys
       @down_keys = keyboard.key_down.truthy_keys.concat(repeat_keys) - IGNORE_KEYS
 
       # Find special keys
@@ -570,11 +571,9 @@ module Input
                 :content_w, :content_h, :scroll_w, :scroll_h, :font_height, :value_changed
     attr_accessor :readonly, :scroll_x, :scroll_y
 
-    CURSOR_FULL_TICKS = 30
-    CURSOR_FLASH_TICKS = 20
+    CURSOR_FULL_TICKS = 50
+    CURSOR_FLASH_TICKS = 30
     CURSOR_HOT_TICKS = 12
-
-    @@id = 0
 
     def initialize(args, **params) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       @args = args
@@ -620,7 +619,7 @@ module Input
       @mouse_wheel_speed = params[:mouse_wheel_speed] || @font_height
 
       # Render target for text scrolling
-      @path = "__input_#{@@id += 1}"
+      @path = "__input_#{object_id}"
 
       @content_w = @w
       @content_h = @h
@@ -668,7 +667,9 @@ module Input
                 @cursor_dir = 1
                 0
               elsif @cursor_ticks < CURSOR_FULL_TICKS
-                Easing.smooth_start(start_at: 0, tick_count: @cursor_ticks, end_at: CURSOR_FLASH_TICKS, power: 2) * 255
+                # Easing.smooth_start(start_at: 0, tick_count: @cursor_ticks, end_at: CURSOR_FLASH_TICKS, power: 2) * 255
+                # More "abrupt" cursor to match OS.
+                Easing.smooth_start(start_at: 0, tick_count: @cursor_ticks, end_at: CURSOR_FLASH_TICKS, power: 8) * 255
               else
                 255
               end
@@ -1018,7 +1019,7 @@ module Input
   class Text < Base
     def initialize(args, **params)
       @value = TextValue.new(params[:value].to_s)
-      super(args)
+      super(args, **params)
     end
 
     def draw_override(ffi)
@@ -1232,7 +1233,7 @@ module Input
     def initialize(args, **params)
       value = params[:value].to_s
 
-      super(args)
+      super(args, **params)
 
       @word_wrap_chars = @word_chars.merge(@punctuation_chars)
       @value = MultilineValue.new(value, @word_wrap_chars, @crlf_chars, @w, font_style: @font_style)
@@ -1669,8 +1670,6 @@ module Input
     attr_reader :selected_index, :content_w, :content_h, :scroll_w, :scroll_h, :items
     attr_accessor :readonly, :scroll_x, :scroll_y
 
-    @@id = 0
-
     def initialize(**params) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       @x = params[:x] || 0
       @y = params[:y] || 0
@@ -1699,7 +1698,7 @@ module Input
       @mouse_wheel_speed = params[:mouse_wheel_speed] || @font_height
 
       # Render target for text scrolling
-      @path = "__input_m_#{@@id += 1}"
+      @path = "__input_m_#{object_id}"
 
       @scroll_x = 0
       @scroll_y = 0
