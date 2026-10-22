@@ -68,12 +68,9 @@ module SpriteKit
 end
 
 # Special case for vendored files. Right now the only namespace we vendor is "Input"
-SpriteKit.load(File.join(SpriteKit.load_path, "vendor"))
 module SpriteKit
-  Input = ::Input # Assign it as a constant inside of this module
+  eval(DR.read_file(File.join(SpriteKit.load_path, "vendor", "input.rb")))
 end
-# Remove the root `Object::Input` module assigned
-Object.send(:remove_const, :Input)
 
 # Now load everything else.
 SpriteKit.load

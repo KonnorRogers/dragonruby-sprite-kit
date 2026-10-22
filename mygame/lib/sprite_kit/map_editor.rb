@@ -190,7 +190,7 @@ module SpriteKit
       }.merge(@tools)
 
       @background_color = nil
-      # @background_color = { r: 40, g: 42, b: 54, a: 255 }
+      @background_color = { r: 40, g: 42, b: 54, a: 255 }
     end
 
     def tick(args)
@@ -336,15 +336,15 @@ module SpriteKit
       speed = camera_speed
 
       # Movement
-      if keyboard.left_arrow
+      if keyboard.left
         @camera.target_x -= speed
-      elsif keyboard.right_arrow
+      elsif keyboard.right
         @camera.target_x += speed
       end
 
-      if keyboard.down_arrow
+      if keyboard.down
         @camera.target_y -= speed
-      elsif keyboard.up_arrow
+      elsif keyboard.up
         @camera.target_y += speed
       end
 

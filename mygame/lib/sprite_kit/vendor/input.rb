@@ -82,9 +82,9 @@ module Input
     end
 
     def prepare_special_keys # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      keyboard = $args.inputs.keyboard
+      keyboard = @args.inputs.keyboard
 
-      tick_count = $args.tick_count
+      tick_count = @args.tick_count
       repeat_keys = keyboard.key_held.truthy_keys.select do |key|
         key_held = keyboard.key_held.send(key)
         puts "KEY: #{key}"
@@ -101,7 +101,8 @@ module Input
       @shift = @shift_lock || (special_keys & SHIFT_KEYS).any?
       @ctrl = (special_keys & CTRL_KEYS).any?
 
-      @text_keys = $args.inputs.text
+      DR.start_text_input
+      @text_keys = @args.inputs.text
     end
   end
 end
@@ -575,7 +576,8 @@ module Input
 
     @@id = 0
 
-    def initialize(**params) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def initialize(args, **params) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      @args = args
       @x = params[:x] || 0
       @y = params[:y] || 0
 
@@ -675,8 +677,9 @@ module Input
         x: (@cursor_x - 1).greater(0) - @scroll_x,
         y: @cursor_y - @scroll_y,
         w: @cursor_width,
-        h: @font_height
-      }.solid!(**@cursor_color, a: alpha)
+        h: @font_height,
+        path: :solid
+      }.merge(**@cursor_color, a: alpha)
     end
 
     def tick
@@ -1013,9 +1016,9 @@ end
 
 module Input
   class Text < Base
-    def initialize(**params)
+    def initialize(args, **params)
       @value = TextValue.new(params[:value].to_s)
-      super
+      super(args)
     end
 
     def draw_override(ffi)
@@ -1106,7 +1109,7 @@ module Input
 
     # TODO: Word selection (double click), All selection (triple click)
     def handle_mouse # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-      mouse = $args.inputs.mouse
+      mouse = @args.inputs.mouse
 
       if mouse.wheel && mouse.inside_rect?(self)
         d = mouse.wheel.x == 0 ? mouse.wheel.y : mouse.wheel.x
@@ -1171,7 +1174,7 @@ module Input
       @content_w = @w.lesser(@scroll_w)
       @scroll_h = @content_h = @h
 
-      rt = $args.outputs[@path]
+      rt = @args.outputs[@path]
       rt.w = @w
       rt.h = @h
       rt.background_color = bg
@@ -1210,7 +1213,7 @@ module Input
             right = (@font_style.string_width(@value[0, @selection_start].to_s) - @scroll_x).cap_min_max(0, @w)
           end
 
-          rt.primitives << { x: left, y: 0, w: right - left, h: @font_height + @padding * 2 }.solid!(sc)
+          rt.primitives << { x: left, y: 0, w: right - left, h: @font_height + @padding * 2, path: :solid }.merge!(sc)
         end
 
         # TEXT
@@ -1226,10 +1229,10 @@ end
 
 module Input
   class Multiline < Base
-    def initialize(**params)
+    def initialize(args, **params)
       value = params[:value].to_s
 
-      super
+      super(args)
 
       @word_wrap_chars = @word_chars.merge(@punctuation_chars)
       @value = MultilineValue.new(value, @word_wrap_chars, @crlf_chars, @w, font_style: @font_style)
@@ -1505,7 +1508,7 @@ module Input
 
     # TODO: Word selection (double click), All selection (triple click)
     def handle_mouse # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-      mouse = $args.inputs.mouse
+      mouse = @args.inputs.mouse
       inside = mouse.inside_rect?(self)
 
       if mouse.wheel && inside
@@ -1644,7 +1647,7 @@ module Input
           if selection_visible && selection_start <= line.end && selection_end >= line.start
             left = line.measure_to((selection_start - line.start).greater(0))
             right = line.measure_to((selection_end - line.start).lesser(line.length))
-            rt.primitives << { x: left, y: y, w: right - left, h: selection_h }.solid!(sc)
+            rt.primitives << { x: left, y: y, w: right - left, h: selection_h, path: :solid }.merge!(sc)
           end
 
           # TEXT FOR LINE
@@ -1894,7 +1897,7 @@ module Input
 
       # TODO: Attach menu to another widget so we space above of below
       # TODO: A bounding box? Assuming grid for now
-      grid = $args.grid
+      grid = @args.grid
       avail_h = if @y - @h > 0 || @y + @h < grid.h # can we render fully below or above?
         @h
       else # ok, we gotta scroll
@@ -1904,7 +1907,7 @@ module Input
       @content_h = num_items * @font_height
       @content_w = @w
 
-      rt = $args.outputs[@path]
+      rt = @args.outputs[@path]
       rt.w = @content_w
       rt.h = @content_h
       rt.background_color = bg
@@ -1918,7 +1921,7 @@ module Input
       i = -1
       while (i += 1) < num_items
         y = (num_items - i - 1) * @font_height
-        rt.primitives << { x: 0, y: y, w: @content_w, h: @font_height }.solid!(sc) if @selected_index == first_item + i
+        rt.primitives << { x: 0, y: y, w: @content_w, h: @font_height, path: :solid }.merge!(sc) if @selected_index == first_item + i
         rt.primitives << @font_style.label(x: @padding, y: y, text: @items[first_item + i].text, **@text_color)
       end
 
@@ -1940,15 +1943,15 @@ module Input
 
     # TODO: implement positioning
     def position
-      if @y + @content_h > $args.grid.h # over the top?
+      if @y + @content_h > @args.grid.h # over the top?
         if @y - @content_h < 0 # also down under?
-          @y = $args.grid.h - @content_h # move down so we fit
+          @y = @args.grid.h - @content_h # move down so we fit
         else
           @y -= @content_h # render down
         end
       end
 
-      if @x + @content_w > $args.grid.w # too far?
+      if @x + @content_w > @args.grid.w # too far?
         if @x - @content_w < 0 # also too left?
           @x = $args.grid.w - @content_w # move left so we fit
         else
@@ -1981,6 +1984,7 @@ module Input
     def render(args, x:, y:)
       @x = x
       @y = y
+      @args = args
       args.outputs.reserved << self
     end
 
@@ -1996,10 +2000,10 @@ module Input
       super
 
       # prevent keys from reaching game
-      $args.inputs.text.clear
-      $args.inputs.keyboard.key_down.clear
-      $args.inputs.keyboard.key_up.clear
-      $args.inputs.keyboard.key_held.clear
+      @args.inputs.text.clear
+      @args.inputs.keyboard.key_down.clear
+      @args.inputs.keyboard.key_up.clear
+      @args.inputs.keyboard.key_held.clear
     end
 
     def delete_back
