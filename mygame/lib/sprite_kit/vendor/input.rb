@@ -658,9 +658,13 @@ module Input
         @cursor_ticks = CURSOR_HOT_TICKS unless @cursor_ticks > CURSOR_HOT_TICKS
         @cursor_dir = 1
       end
+
       @cursor_ticks += @cursor_dir
 
-      alpha = if @cursor_ticks >= CURSOR_FULL_TICKS
+      alpha = if @cursor_moving
+                255
+              elsif
+                @cursor_ticks >= CURSOR_FULL_TICKS
                 @cursor_dir = -1
                 255
               elsif @cursor_ticks <= 0
@@ -685,6 +689,7 @@ module Input
 
     def tick
       @value_changed = false
+      @cursor_moving = false
       if @focussed
         prepare_special_keys
         handle_keyboard
@@ -891,6 +896,8 @@ module Input
     end
 
     def move_char_left
+      start_pos = @selection_start
+      end_pos = @selection_end
       @selection_end = if @selection_end > @selection_start
                          @selection_start
                        elsif @selection_end < @selection_start
@@ -899,9 +906,12 @@ module Input
                          (@selection_start - 1).greater(0)
                        end
       @selection_start = @selection_end
+      @cursor_moving = end_pos != @selection_start || start_pos != @selection_end
     end
 
     def move_char_right
+      start_pos = @selection_start
+      end_pos = @selection_end
       @selection_end = if @selection_end > @selection_start
                          @selection_end
                        elsif @selection_end < @selection_start
@@ -910,6 +920,7 @@ module Input
                          (@selection_start + 1).lesser(@value.length)
                        end
       @selection_start = @selection_end
+      @cursor_moving = end_pos != @selection_start || start_pos != @selection_end
     end
 
     def copy
