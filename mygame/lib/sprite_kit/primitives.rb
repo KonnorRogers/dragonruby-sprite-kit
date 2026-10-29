@@ -63,13 +63,14 @@ module SpriteKit
     end
 
     def self.borders(rect, padding: nil, border_width: 1, color: { r: 0, b: 0, g: 0, a: 255 })
-      if padding && padding.is_a?(Numeric)
+      if padding.is_a?(Numeric)
         padding = {
           top: padding,
           right: padding,
           bottom: padding,
           left: padding
         }
+      elsif padding
       else
         padding = {
           top: 0,

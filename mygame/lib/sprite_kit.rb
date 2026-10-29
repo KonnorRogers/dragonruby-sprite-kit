@@ -69,7 +69,9 @@ end
 
 # Special case for vendored files. Right now the only namespace we vendor is "Input"
 module SpriteKit
-  eval(DR.read_file(File.join(SpriteKit.load_path, "vendor", "input.rb")))
+  module Vendor
+    eval(DR.read_file(File.join(SpriteKit.load_path, "vendor", "input.rb")))
+  end
 end
 
 # Now load everything else.

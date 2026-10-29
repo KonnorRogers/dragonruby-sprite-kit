@@ -3,38 +3,39 @@ module SpriteKit
   class Sprite
     attr_sprite
 
-    def method_missing(m, *args, **kwargs, &block)
+    def initialize(**kwargs)
+      kwargs.each { |k, v| send("#{k}=", v) }
+    end
+
+    def method_missing(m, *args, &block)
       name = m.to_s
-      return super if name.end_with?("?", "!")
+      return super if name.end_with?("?", "!") || block
 
-      name = name.chomp("=")
-      ivar = "@#{name}"
-
-      self.class.define_method(name) { instance_variable_get(ivar) }
-      self.class.define_method("#{name}=") { |val| instance_variable_set(ivar, val) }
-
-      send(m, *args, **kwargs, &block)
+      if name.end_with?("=") && !name.end_with?("==") && args.length == 1
+        self.class.attr_accessor(name.chomp("="))   # first write defines the accessor
+        send(m, *args)
+      elsif args.empty?
+        instance_variable_get("@#{name}")   # nil if unset, the value if set
+      else
+        super
+      end
     end
 
     def respond_to_missing?(m, include_private = false)
-      !m.to_s.end_with?("?", "!") || super
-    end
-
-    def initialize(**kwargs)
-      kwargs.each do |kwarg, value|
-        instance_variable_set("@#{kwarg}", value)
+      name = m.to_s
+      if name.end_with?("=") && !name.end_with?("==")
+        true
+      elsif name.end_with?("?", "!")
+        super
+      else
+        instance_variable_defined?("@#{name}") || super
       end
     end
 
     def serialize
-      hash = {}
-      instance_variables.each do |var|
-        # Remove the '@' prefix from the instance variable name for the hash key
-        key = var.to_s.delete('@').to_sym
-        value = instance_variable_get(var)
-        hash[key] = value
+      instance_variables.to_h do |var|
+        [var.to_s.delete_prefix("@").to_sym, instance_variable_get(var)]
       end
-      hash
     end
   end
 end
