@@ -28,8 +28,26 @@ module SpriteKit
 
       def run_tick(args)
         if !@primitives[:input]
-          @primitives[:input] = Vendor::Input::Text.new(args, x: @x, y: @y, w: 50, h: INPUT_H, focussed: false)
+          @primitives[:input] = Vendor::Input::Text.new(args, x: @x, y: @y, w: 40, h: INPUT_H, focussed: false)
           @primitives[:input].value.replace(@value.to_s)
+        end
+
+        if !@primitives[:decrement_button]
+          @primitives.decrement_button = {
+            w: 16,
+            h: 16,
+            path: SpriteKit.to_load_path("sprites/minus-sprite.png"),
+            on_click: @on_decrement
+          }
+        end
+
+        if !@primitives[:increment_button]
+          @primitives.increment_button = {
+            w: 16,
+            h: 16,
+            path: SpriteKit.to_load_path("sprites/plus-sprite.png"),
+            on_click: @on_increment
+          }
         end
 
         label = @primitives[:label]
@@ -44,7 +62,17 @@ module SpriteKit
         input.x = @x + label_w + 20
         input.y = @y + PAD[:bottom]             # border extends PAD below input, so lift it
         input.tick
-        # sync(input)
+        sync(input)
+
+        @primitives[:decrement_button].tap do |button|
+          button.x = input.x + input.w + 20
+          button.y = input.y + PAD[:bottom]
+        end
+
+        @primitives[:increment_button].tap do |button|
+          button.x = @primitives[:decrement_button].x + 32
+          button.y = @primitives[:decrement_button].y
+        end
 
         @primitives[:borders] = SpriteKit::Primitives.borders(input, padding: PAD).values
       end
@@ -56,8 +84,10 @@ module SpriteKit
 
           @last_input_value = input.value.text.to_s
           @value = input.value.text.to_s
+          set_value.call(@value)
         else
           # state -> input
+          @value = get_value.call(@value)
           s = @value.to_s
 
           return if input.value.text.to_s == s
@@ -65,8 +95,6 @@ module SpriteKit
           input.value.replace(s)
           @last_input_value = s.to_s
         end
-
-        # set_value.call(@value)
       end
     end
 
@@ -123,7 +151,7 @@ module SpriteKit
         { id: :tile_selection_w, label: "w: ", path: [:tile_selection, :w] },
         { id: :tile_selection_h, label: "h: ", path: [:tile_selection, :h] },
         { id: :row_gap, label: "row_gap: ", path: [:tile_selection, :row_gap] },
-        { id: :column_gap, label: "column_gap: ", path: [:tile_selection, :column_gap] },
+        { id: :column_gap, label: "col_gap: ", path: [:tile_selection, :column_gap] },
         { id: :offset_x, label: "offset_x: ", path: [:tile_selection, :offset_x] },
         { id: :offset_y, label: "offset_y: ", path: [:tile_selection, :offset_y] },
         { id: :source_x, label: "source_x: ", path: [:tile_selection, :source_x] },
@@ -138,21 +166,24 @@ module SpriteKit
           label: c.label,
           value: @state.dig(*c.path),
           get_value: proc {
-            @state.dig(*c.path)
+            @state.dig(*c.path).to_i
           },
           set_value: proc { |value|
-            dig_assign(@state, c.path, value)
+            dig_assign(@state, c.path, value.to_i)
           },
           on_increment: proc {
             val = @state.dig(*c.path)
             dig_assign(@state, c.path, val + 1)
           },
           on_decrement: proc {
-            val = @state.dig(c.path)
+            val = @state.dig(*c.path)
             dig_assign(@state, c.path, val - 1)
           }
         )
       end
+
+      @static_clickables = []
+      @tick_count = 0
     end
 
     def dig_assign(hash, path, value)
@@ -176,9 +207,24 @@ module SpriteKit
     end
 
     def tick(args)
+      if @tick_count > 0 && !@static_clickables_assigned
+        @static_clickables.concat(@counters.values.map do |c|
+          [
+            c.primitives[:input],
+            c.primitives[:increment_button],
+            c.primitives[:decrement_button],
+          ]
+        end.flatten)
+        @static_clickables_assigned = true
+      end
+
+      @clickables = []
+        .concat(@static_clickables)
+
       input(args)
       calc(args)
       render(args)
+      @tick_count += 1
     end
 
     def input(args)
@@ -190,17 +236,12 @@ module SpriteKit
         @state.next_view = @state.views[idx]
       end
 
-      if @focus
-        # counter = @counters[@focus.id]
-        # if counter
-        #   text = args.inputs.text
-        #   if text.length > 0
-        #     counter.handle_text&.call(text)
-        #   end
-        #   counter.handle_keyboard.call(args.inputs.keyboard)
-        # end
-      else
-        # DR.stop_text_input
+      clicked_item = args.inputs.mouse.click && Geometry.find_intersect_rect(args.inputs.mouse, @clickables)
+
+      if clicked_item
+        if clicked_item.respond_to?(:on_click) || (clicked_item.is_a?(Hash) && clicked_item.on_click)
+          clicked_item.on_click.call
+        end
       end
     end
 
@@ -214,7 +255,9 @@ module SpriteKit
       render_target.w = @w
       render_target.h = @h
 
-      args.outputs.debug << "#{@state.tile_selection.w}"
+      args.outputs.debug << "#{@state.tile_selection}"
+      # args.outputs.debug << "#{args.inputs.mouse}"
+      # args.outputs.debug << "#{@static_clickables}"
 
       primitives = []
       controls = [
@@ -229,7 +272,7 @@ module SpriteKit
       ]
 
       cursor_y = 50.from_top
-      cursor_x = 50
+      cursor_x = 20
       gap = 8
 
       controls.each do |c|
