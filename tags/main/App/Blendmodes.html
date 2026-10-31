@@ -250,6 +250,28 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#hole_punch-class_method" title="hole_punch (class method)">.<strong>hole_punch</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#src_atop-class_method" title="src_atop (class method)">.<strong>src_atop</strong>  &#x21d2; Object </a>
     
 
@@ -382,38 +404,6 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
     </ul>
     
   
-    <h2>
-      Instance Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#hole_punch-instance_method" title="#hole_punch (instance method)">#<strong>hole_punch</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
-    
-  
 
 
 
@@ -472,15 +462,15 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
       <pre class="lines">
 
 
-86
-87
-88
 89
 90
-91</pre>
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dst_atop'>dst_atop</span>
   <span class='ivar'>@dst_atop</span> <span class='op'>||=</span> <span class='const'>Numeric</span><span class='period'>.</span><span class='id identifier rubyid_compose_blendmode'>compose_blendmode</span><span class='lparen'>(</span>
@@ -580,15 +570,15 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
       <pre class="lines">
 
 
+78
 79
 80
 81
 82
-83
-84</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dst_out'>dst_out</span>
   <span class='ivar'>@dst_out</span> <span class='op'>||=</span> <span class='const'>Numeric</span><span class='period'>.</span><span class='id identifier rubyid_compose_blendmode'>compose_blendmode</span><span class='lparen'>(</span>
@@ -631,6 +621,36 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
     <span class='const'>BLENDFACTOR_ONE_MINUS_DST_ALPHA</span><span class='comma'>,</span> <span class='const'>BLENDFACTOR_ONE</span><span class='comma'>,</span> <span class='const'>BLENDOPERATION_ADD</span><span class='comma'>,</span>
     <span class='const'>BLENDFACTOR_ONE_MINUS_DST_ALPHA</span><span class='comma'>,</span> <span class='const'>BLENDFACTOR_ONE</span><span class='comma'>,</span> <span class='const'>BLENDOPERATION_ADD</span>
   <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hole_punch-class_method">
+  
+    .<strong>hole_punch</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_hole_punch'>hole_punch</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dst_out'>dst_out</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -858,15 +878,15 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
       <pre class="lines">
 
 
-93
-94
-95
 96
 97
-98</pre>
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_xor'>xor</span>
   <span class='ivar'>@xor</span> <span class='op'>||=</span> <span class='const'>Numeric</span><span class='period'>.</span><span class='id identifier rubyid_compose_blendmode'>compose_blendmode</span><span class='lparen'>(</span>
@@ -881,44 +901,12 @@ Porter-Duff &quot;Compositing Digital Images&quot; paper.
     
   </div>
 
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="hole_punch-instance_method">
-  
-    #<strong>hole_punch</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-78</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/blendmodes.rb', line 78</span>
-
-<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:hole_punch</span><span class='comma'>,</span> <span class='symbol'>:dst_out</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
-
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 21 00:55:31 2026 by
+  Generated on Sat Oct 31 05:49:12 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.45 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.12).
 </div>
 
     </div>
