@@ -1271,8 +1271,6 @@
       <pre class="lines">
 
 
-366
-367
 368
 369
 370
@@ -1292,10 +1290,12 @@
 384
 385
 386
-387</pre>
+387
+388
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 368</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_current_sprite'>render_current_sprite</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
@@ -1339,8 +1339,6 @@
       <pre class="lines">
 
 
-389
-390
 391
 392
 393
@@ -1367,10 +1365,12 @@
 414
 415
 416
-417</pre>
+417
+418
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render_grid'>render_grid</span>
   <span class='id identifier rubyid_world'>world</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_to_world_space!'>to_world_space!</span><span class='lparen'>(</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera'>camera</span><span class='period'>.</span><span class='id identifier rubyid_viewport'>viewport</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
@@ -1667,7 +1667,9 @@
 361
 362
 363
-364</pre>
+364
+365
+366</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 118</span>
@@ -1877,7 +1879,9 @@
       <span class='label'>scale_quality_enum:</span> <span class='int'>2</span>
     <span class='rbrace'>}</span>
     <span class='id identifier rubyid_label_w'>label_w</span><span class='comma'>,</span> <span class='id identifier rubyid_label_h'>label_h</span> <span class='op'>=</span> <span class='const'>GTK</span><span class='period'>.</span><span class='id identifier rubyid_calcstringbox'>calcstringbox</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='label'>size_px:</span> <span class='id identifier rubyid_label_size'>label_size</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_label_background'>label_background</span> <span class='op'>=</span> <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+    <span class='id identifier rubyid_label_background'>label_background</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='label'>x:</span> <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span>
+      <span class='label'>y:</span> <span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span><span class='comma'>,</span>
       <span class='label'>w:</span> <span class='id identifier rubyid_label_w'>label_w</span> <span class='op'>+</span> <span class='int'>16</span><span class='comma'>,</span>
       <span class='label'>h:</span> <span class='id identifier rubyid_label_h'>label_h</span> <span class='op'>+</span> <span class='int'>8</span><span class='comma'>,</span>
       <span class='label'>anchor_x:</span> <span class='float'>0.5</span><span class='comma'>,</span>
@@ -1887,7 +1891,7 @@
       <span class='label'>g:</span> <span class='int'>0</span><span class='comma'>,</span>
       <span class='label'>a:</span> <span class='int'>255</span><span class='comma'>,</span>
       <span class='label'>path:</span> <span class='symbol'>:solid</span>
-    <span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
     <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_draw_buffer'>draw_buffer</span><span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_camera_path'>camera_path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='lbracket'>[</span>
       <span class='id identifier rubyid_label_background'>label_background</span><span class='comma'>,</span>
       <span class='id identifier rubyid_label'>label</span><span class='comma'>,</span>
@@ -1961,17 +1965,17 @@
       <pre class="lines">
 
 
-419
-420
 421
 422
 423
 424
 425
-426</pre>
+426
+427
+428</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/canvas.rb', line 421</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sprite_out_of_bounds?'>sprite_out_of_bounds?</span><span class='lparen'>(</span><span class='id identifier rubyid_sprite'>sprite</span><span class='comma'>,</span> <span class='id identifier rubyid_rect'>rect</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_sprite'>sprite</span><span class='period'>.</span><span class='id identifier rubyid_source_x'>source_x</span> <span class='op'>&lt;</span> <span class='int'>0</span>
@@ -2025,7 +2029,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Oct 31 05:49:12 2026 by
+  Generated on Sat Oct 31 16:29:35 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.12).
 </div>
