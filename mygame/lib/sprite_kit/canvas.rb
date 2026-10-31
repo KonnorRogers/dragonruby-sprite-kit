@@ -320,7 +320,9 @@ module SpriteKit
           scale_quality_enum: 2
         }
         label_w, label_h = GTK.calcstringbox(label.text, size_px: label_size)
-        label_background = label.merge({
+        label_background = {
+          x: label.x,
+          y: label.y,
           w: label_w + 16,
           h: label_h + 8,
           anchor_x: 0.5,
@@ -330,7 +332,7 @@ module SpriteKit
           g: 0,
           a: 255,
           path: :solid
-        })
+        }
         @state.draw_buffer[@state.camera_path].concat([
           label_background,
           label,
@@ -426,3 +428,4 @@ module SpriteKit
     end
   end # Canvas
 end # SpriteKit
+
