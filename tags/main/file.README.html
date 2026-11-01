@@ -123,10 +123,33 @@ end
 
 $gtk.reset
 </code></pre>
-<h2 id="Map_Editor__Maybe__">Map Editor (Maybe?)</h2></div></div>
+<h2 id="Map_Editor">Map Editor</h2>
+<p>The <code>MapEditorScene</code> combines the spritesheet canvas with a layered tile map editor.</p>
+<pre class="code rb"><code class="rb">require &quot;vendor/sprite_kit/sprite_kit.rb&quot;
+
+def tick(args)
+  args.state.map_editor_scene ||= SpriteKit::Scenes::MapEditorScene.new(nil, sprite_directory: &quot;sprites&quot;, map_path: &quot;data/map.json&quot;)
+  args.state.map_editor_scene.tick(args)
+end
+</code></pre>
+<p>To add tiles, click <strong>Choose tile</strong> in the panel (or press <code>Tab</code>), double click a spritesheet in the file tree, click a tile on the canvas, then press <code>Enter</code> to go back to the map and paint with it. <code>Tab</code> cycles between the map, the file tree, and the canvas. The grid size is the brush <code>w</code> / <code>h</code> from the tool drawer, so set it to your tileset's tile size.</p>
+<ul>
+<li>Tools: Paint (<code>B</code>), Erase (<code>E</code>), Rect fill (<code>R</code>), Pick tile (<code>I</code>). Right click always erases.</li>
+<li>Pan with middle mouse or <code>Space</code> + drag, zoom with the mouse wheel or <code>+</code> / <code>-</code> / <code>0</code>.</li>
+<li>Layers: <code>N</code> new layer, <code>V</code> hide / show, <code>[</code> / <code>]</code> change layer, or use the layers panel.</li>
+<li><code>Ctrl+Z</code> / <code>Ctrl+Shift+Z</code> to undo / redo. The map saves after every change (and with <code>Ctrl+S</code>).</li>
+</ul>
+<p>Maps are saved as JSON. Load them into your game with <code>SpriteKit::Map</code>:</p>
+<pre class="code rb"><code class="rb">map = SpriteKit::Map.load(&quot;data/map.json&quot;)
+
+map.layers.each do |layer|
+  args.outputs.sprites.concat(layer.tiles) if layer.visible
+end
+</code></pre>
+<p>Each tile is a plain sprite hash: <code>{ x:, y:, w:, h:, path:, source_x:, source_y:, source_w:, source_h: }</code>.</p></div></div>
 
       <div id="footer">
-  Generated on Sat Oct 31 16:29:34 2026 by
+  Generated on Sun Nov  1 17:31:48 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.12).
 </div>

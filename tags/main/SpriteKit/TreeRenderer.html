@@ -229,7 +229,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#render-instance_method" title="#render (instance method)">#<strong>render</strong>(args, offset_x: 0, offset_y: 0)  &#x21d2; Object </a>
+      <a href="#render-instance_method" title="#render (instance method)">#<strong>render</strong>(args, offset_x: 0, offset_y: 0, width: nil)  &#x21d2; Object </a>
     
 
     
@@ -312,7 +312,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="render-instance_method">
   
-    #<strong>render</strong>(args, offset_x: 0, offset_y: 0)  &#x21d2; <tt>Object</tt> 
+    #<strong>render</strong>(args, offset_x: 0, offset_y: 0, width: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -325,7 +325,27 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>width</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Integer.html" title="Integer (class)">Integer</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>defaults to the rest of the screen after <code>offset_x</code>.</p></div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -333,7 +353,6 @@
       <pre class="lines">
 
 
-26
 27
 28
 29
@@ -360,13 +379,16 @@
 50
 51
 52
-53</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tree_renderer.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/tree_renderer.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>offset_x:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>offset_y:</span> <span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>offset_x:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>offset_y:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>width:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@args</span>  <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span>
+  <span class='ivar'>@width</span> <span class='op'>=</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>-</span> <span class='id identifier rubyid_offset_x'>offset_x</span>
   <span class='ivar'>@mouse</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_mouse'>mouse</span>
   <span class='ivar'>@rows</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
@@ -380,7 +402,7 @@
   <span class='ivar'>@primitives</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@primitives</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span>
     <span class='label'>x:</span> <span class='id identifier rubyid_offset_x'>offset_x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span> <span class='op'>-</span> <span class='id identifier rubyid_panel_h'>panel_h</span><span class='comma'>,</span>
-    <span class='label'>w:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_grid'>grid</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span> <span class='op'>-</span> <span class='id identifier rubyid_offset_x'>offset_x</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='id identifier rubyid_panel_h'>panel_h</span><span class='comma'>,</span>
+    <span class='label'>w:</span> <span class='ivar'>@width</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='id identifier rubyid_panel_h'>panel_h</span><span class='comma'>,</span>
     <span class='label'>path:</span> <span class='symbol'>:solid</span><span class='comma'>,</span>
     <span class='op'>**</span><span class='const'><span class='object_link'><a href="#COLOR_BG-constant" title="SpriteKit::TreeRenderer::COLOR_BG (constant)">COLOR_BG</a></span></span>
   <span class='rbrace'>}</span>
@@ -403,7 +425,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Oct 31 16:29:35 2026 by
+  Generated on Sun Nov  1 17:31:50 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.12).
 </div>

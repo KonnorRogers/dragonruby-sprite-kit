@@ -1,0 +1,3793 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Input::Base
+  
+    &mdash; Documentation by YARD 0.9.45
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "Input::Base";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Input.html" title="Input (module)">Input</a></span></span>
+     &raquo; 
+    <span class="title">Base</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Input::Base
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Input::Base</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="Keyboard.html" title="Input::Keyboard (module)">Keyboard</a></span>, <span class='object_link'><a href="Util.html" title="Input::Util (module)">Util</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>mygame/lib/sprite_kit/vendor/input.rb
+</dd>
+  </dl>
+  
+</div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Multiline.html" title="Input::Multiline (class)">Multiline</a></span>, <span class='object_link'><a href="Text.html" title="Input::Text (class)">Text</a></span></p>
+</div>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CURSOR_FULL_TICKS-constant" class="">CURSOR_FULL_TICKS =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>50</span></pre></dd>
+      
+        <dt id="CURSOR_FLASH_TICKS-constant" class="">CURSOR_FLASH_TICKS =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>30</span></pre></dd>
+      
+        <dt id="CURSOR_HOT_TICKS-constant" class="">CURSOR_HOT_TICKS =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>12</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Keyboard.html" title="Input::Keyboard (module)">Keyboard</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Keyboard.html#ALT_KEYS-constant" title="Input::Keyboard::ALT_KEYS (constant)">Keyboard::ALT_KEYS</a></span>, <span class='object_link'><a href="Keyboard.html#CTRL_KEYS-constant" title="Input::Keyboard::CTRL_KEYS (constant)">Keyboard::CTRL_KEYS</a></span>, <span class='object_link'><a href="Keyboard.html#IGNORE_KEYS-constant" title="Input::Keyboard::IGNORE_KEYS (constant)">Keyboard::IGNORE_KEYS</a></span>, <span class='object_link'><a href="Keyboard.html#META_KEYS-constant" title="Input::Keyboard::META_KEYS (constant)">Keyboard::META_KEYS</a></span>, <span class='object_link'><a href="Keyboard.html#SHIFT_KEYS-constant" title="Input::Keyboard::SHIFT_KEYS (constant)">Keyboard::SHIFT_KEYS</a></span></p>
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#content_h-instance_method" title="#content_h (instance method)">#<strong>content_h</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute content_h.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#content_w-instance_method" title="#content_w (instance method)">#<strong>content_w</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute content_w.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cursor_x-instance_method" title="#cursor_x (instance method)">#<strong>cursor_x</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute cursor_x.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cursor_y-instance_method" title="#cursor_y (instance method)">#<strong>cursor_y</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute cursor_y.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#font_height-instance_method" title="#font_height (instance method)">#<strong>font_height</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute font_height.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#readonly-instance_method" title="#readonly (instance method)">#<strong>readonly</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute readonly.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scroll_h-instance_method" title="#scroll_h (instance method)">#<strong>scroll_h</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute scroll_h.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scroll_w-instance_method" title="#scroll_w (instance method)">#<strong>scroll_w</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute scroll_w.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scroll_x-instance_method" title="#scroll_x (instance method)">#<strong>scroll_x</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute scroll_x.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scroll_y-instance_method" title="#scroll_y (instance method)">#<strong>scroll_y</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute scroll_y.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#selection_end-instance_method" title="#selection_end (instance method)">#<strong>selection_end</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute selection_end.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#selection_start-instance_method" title="#selection_start (instance method)">#<strong>selection_start</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute selection_start.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value-instance_method" title="#value (instance method)">#<strong>value</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute value.</p></div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value_changed-instance_method" title="#value_changed (instance method)">#<strong>value_changed</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute value_changed.</p></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="Keyboard.html" title="Input::Keyboard (module)">Keyboard</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Keyboard.html#shift_lock-instance_method" title="Input::Keyboard#shift_lock (method)">#shift_lock</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#append-instance_method" title="#append (instance method)">#<strong>append</strong>(str)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blur-instance_method" title="#blur (instance method)">#<strong>blur</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#content_rect-instance_method" title="#content_rect (instance method)">#<strong>content_rect</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#copy-instance_method" title="#copy (instance method)">#<strong>copy</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_selection-instance_method" title="#current_selection (instance method)">#<strong>current_selection</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_word-instance_method" title="#current_word (instance method)">#<strong>current_word</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cut-instance_method" title="#cut (instance method)">#<strong>cut</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_back-instance_method" title="#delete_back (instance method)">#<strong>delete_back</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delete_forward-instance_method" title="#delete_forward (instance method)">#<strong>delete_forward</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#draw_cursor-instance_method" title="#draw_cursor (instance method)">#<strong>draw_cursor</strong>(rt)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#draw_override-instance_method" title="#draw_override (instance method)">#<strong>draw_override</strong>(_ffi)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-instance_method" title="#find (instance method)">#<strong>find</strong>(text)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_next-instance_method" title="#find_next (instance method)">#<strong>find_next</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_prev-instance_method" title="#find_prev (instance method)">#<strong>find_prev</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_word_break_left-instance_method" title="#find_word_break_left (instance method)">#<strong>find_word_break_left</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>rubocop:disable Metrics/MethodLength.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find_word_break_right-instance_method" title="#find_word_break_right (instance method)">#<strong>find_word_break_right</strong>(index = @selection_end)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>rubocop:disable Metrics/MethodLength.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#focus-instance_method" title="#focus (instance method)">#<strong>focus</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#focussed%3F-instance_method" title="#focussed? (instance method)">#<strong>focussed?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+      (also: #focused?)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(args, **params)  &#x21d2; Base </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert-instance_method" title="#insert (instance method)">#<strong>insert</strong>(str)  &#x21d2; Object </a>
+    
+
+    
+      (also: #replace)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#insert_at-instance_method" title="#insert_at (instance method)">#<strong>insert_at</strong>(str, start_at, end_at = start_at)  &#x21d2; Object </a>
+    
+
+    
+      (also: #replace_at)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_char_left-instance_method" title="#move_char_left (instance method)">#<strong>move_char_left</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_char_right-instance_method" title="#move_char_right (instance method)">#<strong>move_char_right</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_to_end-instance_method" title="#move_to_end (instance method)">#<strong>move_to_end</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_to_start-instance_method" title="#move_to_start (instance method)">#<strong>move_to_start</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_word_left-instance_method" title="#move_word_left (instance method)">#<strong>move_word_left</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_word_right-instance_method" title="#move_word_right (instance method)">#<strong>move_word_right</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#paste-instance_method" title="#paste (instance method)">#<strong>paste</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rect-instance_method" title="#rect (instance method)">#<strong>rect</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scroll_rect-instance_method" title="#scroll_rect (instance method)">#<strong>scroll_rect</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_all-instance_method" title="#select_all (instance method)">#<strong>select_all</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_char_left-instance_method" title="#select_char_left (instance method)">#<strong>select_char_left</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_char_right-instance_method" title="#select_char_right (instance method)">#<strong>select_char_right</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_to_end-instance_method" title="#select_to_end (instance method)">#<strong>select_to_end</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_to_start-instance_method" title="#select_to_start (instance method)">#<strong>select_to_start</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_word_left-instance_method" title="#select_word_left (instance method)">#<strong>select_word_left</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#select_word_right-instance_method" title="#select_word_right (instance method)">#<strong>select_word_right</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#size_enum-instance_method" title="#size_enum (instance method)">#<strong>size_enum</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#size_px-instance_method" title="#size_px (instance method)">#<strong>size_px</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tick-instance_method" title="#tick (instance method)">#<strong>tick</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#value_changed%3F-instance_method" title="#value_changed? (instance method)">#<strong>value_changed?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Keyboard.html" title="Input::Keyboard (module)">Keyboard</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Keyboard.html#initialize_keyboard-instance_method" title="Input::Keyboard#initialize_keyboard (method)">#initialize_keyboard</a></span>, <span class='object_link'><a href="Keyboard.html#prepare_special_keys-instance_method" title="Input::Keyboard#prepare_special_keys (method)">#prepare_special_keys</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Util.html" title="Input::Util (module)">Util</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Util.html#parse_color-instance_method" title="Input::Util#parse_color (method)">#parse_color</a></span>, <span class='object_link'><a href="Util.html#parse_color_nilable-instance_method" title="Input::Util#parse_color_nilable (method)">#parse_color_nilable</a></span>, <span class='object_link'><a href="Util.html#position_in_window-instance_method" title="Input::Util#position_in_window (method)">#position_in_window</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(args, **params)  &#x21d2; <tt><span class='object_link'><a href="" title="Input::Base (class)">Base</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 578</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+</span>  <span class='ivar'>@args</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span>
+  <span class='ivar'>@x</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span>
+  <span class='ivar'>@y</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span>
+
+  <span class='id identifier rubyid_word_chars'>word_chars</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:word_chars</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='op'>..</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>z</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>A</span><span class='tstring_end'>&#39;</span></span><span class='op'>..</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Z</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span><span class='op'>..</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>9</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@font_style</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FontStyle.html" title="Input::FontStyle (module)">FontStyle</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from'><span class='object_link'><a href="FontStyle.html#from-class_method" title="Input::FontStyle.from (method)">from</a></span></span><span class='lparen'>(</span><span class='label'>word_chars:</span> <span class='id identifier rubyid_word_chars'>word_chars</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_slice'>slice</span><span class='lparen'>(</span><span class='symbol'>:font</span><span class='comma'>,</span> <span class='symbol'>:size_enum</span><span class='comma'>,</span> <span class='symbol'>:size_px</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@font_height</span> <span class='op'>=</span> <span class='ivar'>@font_style</span><span class='period'>.</span><span class='id identifier rubyid_font_height'>font_height</span>
+  <span class='ivar'>@word_chars</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_word_chars'>word_chars</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='lbracket'>[</span><span class='id identifier rubyid__1'>_1</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rbracket'>]</span>
+  <span class='ivar'>@punctuation_chars</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='lbracket'>[</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:punctuation_chars</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>!</span><span class='words_sep'> </span><span class='tstring_content'>%</span><span class='words_sep'> </span><span class='tstring_content'>,</span><span class='words_sep'> </span><span class='tstring_content'>.</span><span class='words_sep'> </span><span class='tstring_content'>;</span><span class='words_sep'> </span><span class='tstring_content'>:</span><span class='words_sep'> </span><span class='tstring_content'>&#39;</span><span class='words_sep'> </span><span class='tstring_content'>&quot;</span><span class='words_sep'> </span><span class='tstring_content'>`</span><span class='words_sep'> </span><span class='tstring_content'>)</span><span class='words_sep'> </span><span class='tstring_content'>\]</span><span class='words_sep'> </span><span class='tstring_content'>}</span><span class='words_sep'> </span><span class='tstring_content'>*</span><span class='words_sep'> </span><span class='tstring_content'>&amp;</span><span class='tstring_end'>]</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='lbracket'>[</span><span class='id identifier rubyid__1'>_1</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rbracket'>]</span>
+  <span class='ivar'>@crlf_chars</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\r</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
+
+  <span class='ivar'>@padding</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:padding</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>2</span>
+
+  <span class='ivar'>@w</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:w</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>256</span>
+  <span class='ivar'>@h</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:h</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='ivar'>@font_height</span> <span class='op'>+</span> <span class='ivar'>@padding</span> <span class='op'>*</span> <span class='int'>2</span>
+
+  <span class='ivar'>@text_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color'>parse_color</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:text</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>vertical_alignment_enum:</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='ivar'>@background_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color_nilable'>parse_color_nilable</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:background</span><span class='rparen'>)</span>
+  <span class='ivar'>@blurred_background_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color_nilable'>parse_color_nilable</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:blurred</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='ivar'>@background_color</span>
+
+  <span class='ivar'>@prompt</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:prompt</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='ivar'>@prompt_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color'>parse_color</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:prompt</span><span class='comma'>,</span> <span class='label'>dr:</span> <span class='int'>128</span><span class='comma'>,</span> <span class='label'>dg:</span> <span class='int'>128</span><span class='comma'>,</span> <span class='label'>db:</span> <span class='int'>128</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>vertical_alignment_enum:</span> <span class='int'>0</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@max_length</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:max_length</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>false</span>
+
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:selection_start</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:selection_end</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='ivar'>@selection_start</span>
+
+  <span class='ivar'>@selection_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color'>parse_color</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:selection</span><span class='comma'>,</span> <span class='label'>dr:</span> <span class='int'>102</span><span class='comma'>,</span> <span class='label'>dg:</span> <span class='int'>178</span><span class='comma'>,</span> <span class='label'>db:</span> <span class='int'>255</span><span class='comma'>,</span> <span class='label'>da:</span> <span class='int'>128</span><span class='rparen'>)</span>
+  <span class='ivar'>@blurred_selection_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color'>parse_color</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:blurred_selection</span><span class='comma'>,</span> <span class='label'>dr:</span> <span class='int'>112</span><span class='comma'>,</span> <span class='label'>dg:</span> <span class='int'>128</span><span class='comma'>,</span> <span class='label'>db:</span> <span class='int'>144</span><span class='comma'>,</span> <span class='label'>da:</span> <span class='int'>128</span><span class='rparen'>)</span>
+
+  <span class='comment'># To manage the flashing cursor
+</span>  <span class='ivar'>@cursor_color</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_color'>parse_color</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='symbol'>:cursor</span><span class='rparen'>)</span>
+  <span class='ivar'>@cursor_width</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:cursor_width</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>2</span>
+  <span class='ivar'>@cursor_ticks</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@cursor_dir</span> <span class='op'>=</span> <span class='int'>1</span>
+  <span class='ivar'>@ensure_cursor_visible</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='comment'># Mouse focus for selection
+</span>  <span class='ivar'>@mouse_down</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@mouse_wheel_speed</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:mouse_wheel_speed</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='ivar'>@font_height</span>
+
+  <span class='comment'># Render target for text scrolling
+</span>  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>__input_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_object_id'>object_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='ivar'>@content_w</span> <span class='op'>=</span> <span class='ivar'>@w</span>
+  <span class='ivar'>@content_h</span> <span class='op'>=</span> <span class='ivar'>@h</span>
+
+  <span class='ivar'>@scroll_x</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@scroll_y</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@scroll_w</span> <span class='op'>=</span> <span class='ivar'>@w</span>
+  <span class='ivar'>@scroll_h</span> <span class='op'>=</span> <span class='ivar'>@h</span>
+
+  <span class='ivar'>@readonly</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:readonly</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>false</span>
+  <span class='ivar'>@focussed</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:focussed</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:focused</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>false</span>
+  <span class='ivar'>@will_focus</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='comment'># Get the focus at the end of the tick
+</span>
+  <span class='ivar'>@on_click</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:on_click</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:on_clicked</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../Input.html#NOOP-constant" title="Input::NOOP (constant)">NOOP</a></span></span>
+  <span class='comment'># @on_handled_key = params[:on_handled_key] || NOOP
+</span>  <span class='ivar'>@on_unhandled_key</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:on_unhandled_key</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../Input.html#NOOP-constant" title="Input::NOOP (constant)">NOOP</a></span></span>
+
+  <span class='ivar'>@value_changed</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='id identifier rubyid_initialize_keyboard'>initialize_keyboard</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="content_h-instance_method">
+  
+    #<strong>content_h</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute content_h.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_content_h'>content_h</span>
+  <span class='ivar'>@content_h</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="content_w-instance_method">
+  
+    #<strong>content_w</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute content_w.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_content_w'>content_w</span>
+  <span class='ivar'>@content_w</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="cursor_x-instance_method">
+  
+    #<strong>cursor_x</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute cursor_x.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cursor_x'>cursor_x</span>
+  <span class='ivar'>@cursor_x</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="cursor_y-instance_method">
+  
+    #<strong>cursor_y</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute cursor_y.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cursor_y'>cursor_y</span>
+  <span class='ivar'>@cursor_y</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="font_height-instance_method">
+  
+    #<strong>font_height</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute font_height.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_font_height'>font_height</span>
+  <span class='ivar'>@font_height</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="readonly=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="readonly-instance_method">
+  
+    #<strong>readonly</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute readonly.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 572</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_readonly'>readonly</span>
+  <span class='ivar'>@readonly</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scroll_h-instance_method">
+  
+    #<strong>scroll_h</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute scroll_h.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scroll_h'>scroll_h</span>
+  <span class='ivar'>@scroll_h</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scroll_w-instance_method">
+  
+    #<strong>scroll_w</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute scroll_w.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scroll_w'>scroll_w</span>
+  <span class='ivar'>@scroll_w</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="scroll_x=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scroll_x-instance_method">
+  
+    #<strong>scroll_x</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute scroll_x.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 572</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scroll_x'>scroll_x</span>
+  <span class='ivar'>@scroll_x</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="scroll_y=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="scroll_y-instance_method">
+  
+    #<strong>scroll_y</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute scroll_y.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 572</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scroll_y'>scroll_y</span>
+  <span class='ivar'>@scroll_y</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="selection_end=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="selection_end-instance_method">
+  
+    #<strong>selection_end</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute selection_end.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_selection_end'>selection_end</span>
+  <span class='ivar'>@selection_end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="selection_start=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="selection_start-instance_method">
+  
+    #<strong>selection_start</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute selection_start.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_selection_start'>selection_start</span>
+  <span class='ivar'>@selection_start</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="value=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="value-instance_method">
+  
+    #<strong>value</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute value.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='ivar'>@value</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="value_changed-instance_method">
+  
+    #<strong>value_changed</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute value_changed.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+570
+571
+572</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 570</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_value_changed'>value_changed</span>
+  <span class='ivar'>@value_changed</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="append-instance_method">
+  
+    #<strong>append</strong>(str)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+763
+764
+765</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 763</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_insert_at'>insert_at</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="blur-instance_method">
+  
+    #<strong>blur</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+714
+715
+716</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 714</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_blur'>blur</span>
+  <span class='ivar'>@focussed</span> <span class='op'>=</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="content_rect-instance_method">
+  
+    #<strong>content_rect</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+955
+956
+957</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 955</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_content_rect'>content_rect</span>
+  <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='ivar'>@scroll_x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='ivar'>@scroll_y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='ivar'>@content_w</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='ivar'>@content_h</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="copy-instance_method">
+  
+    #<strong>copy</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+926
+927
+928
+929
+930</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 926</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_copy'>copy</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>==</span> <span class='ivar'>@selection_end</span>
+
+  <span class='gvar'>$gtk</span><span class='period'>.</span><span class='id identifier rubyid_ffi_misc'>ffi_misc</span><span class='period'>.</span><span class='id identifier rubyid_setclipboard'>setclipboard</span><span class='lparen'>(</span><span class='id identifier rubyid_current_selection'>current_selection</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_selection-instance_method">
+  
+    #<strong>current_selection</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+775
+776
+777
+778
+779
+780
+781
+782
+783</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 775</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_selection'>current_selection</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>==</span> <span class='ivar'>@selection_end</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>&lt;</span> <span class='ivar'>@selection_end</span>
+    <span class='ivar'>@value</span><span class='lbracket'>[</span><span class='ivar'>@selection_start</span><span class='comma'>,</span> <span class='ivar'>@selection_end</span> <span class='op'>-</span> <span class='ivar'>@selection_start</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@value</span><span class='lbracket'>[</span><span class='ivar'>@selection_end</span><span class='comma'>,</span> <span class='ivar'>@selection_start</span> <span class='op'>-</span> <span class='ivar'>@selection_end</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_word-instance_method">
+  
+    #<strong>current_word</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+785
+786
+787
+788
+789
+790
+791
+792</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 785</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_word'>current_word</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='ivar'>@selection_end</span> <span class='op'>==</span> <span class='int'>0</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='ivar'>@value</span><span class='lbracket'>[</span><span class='ivar'>@selection_end</span> <span class='op'>-</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_left'>left</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_left'>find_word_break_left</span>
+  <span class='id identifier rubyid_right'>right</span> <span class='op'>=</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='ivar'>@value</span><span class='lbracket'>[</span><span class='ivar'>@selection_end</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_find_word_break_right'>find_word_break_right</span> <span class='op'>:</span> <span class='ivar'>@selection_end</span>
+  <span class='ivar'>@value</span><span class='lbracket'>[</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span> <span class='op'>-</span> <span class='id identifier rubyid_left'>left</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cut-instance_method">
+  
+    #<strong>cut</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+932
+933
+934
+935</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 932</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cut'>cut</span>
+  <span class='id identifier rubyid_copy'>copy</span>
+  <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_back-instance_method">
+  
+    #<strong>delete_back</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+937
+938
+939
+940</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 937</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_back'>delete_back</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>-=</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>==</span> <span class='ivar'>@selection_end</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@selection_start</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delete_forward-instance_method">
+  
+    #<strong>delete_forward</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+942
+943
+944
+945</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 942</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_delete_forward'>delete_forward</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>==</span> <span class='ivar'>@selection_end</span>
+  <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="draw_cursor-instance_method">
+  
+    #<strong>draw_cursor</strong>(rt)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 653</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_draw_cursor'>draw_cursor</span><span class='lparen'>(</span><span class='id identifier rubyid_rt'>rt</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@focussed</span> <span class='op'>||</span> <span class='ivar'>@will_focus</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@readonly</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@value_changed</span>
+    <span class='ivar'>@cursor_ticks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#CURSOR_HOT_TICKS-constant" title="Input::Base::CURSOR_HOT_TICKS (constant)">CURSOR_HOT_TICKS</a></span></span> <span class='kw'>unless</span> <span class='ivar'>@cursor_ticks</span> <span class='op'>&gt;</span> <span class='const'><span class='object_link'><a href="#CURSOR_HOT_TICKS-constant" title="Input::Base::CURSOR_HOT_TICKS (constant)">CURSOR_HOT_TICKS</a></span></span>
+    <span class='ivar'>@cursor_dir</span> <span class='op'>=</span> <span class='int'>1</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@cursor_ticks</span> <span class='op'>+=</span> <span class='ivar'>@cursor_dir</span>
+
+  <span class='id identifier rubyid_alpha'>alpha</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@cursor_moving</span>
+            <span class='int'>255</span>
+          <span class='kw'>elsif</span>
+            <span class='ivar'>@cursor_ticks</span> <span class='op'>&gt;=</span> <span class='const'><span class='object_link'><a href="#CURSOR_FULL_TICKS-constant" title="Input::Base::CURSOR_FULL_TICKS (constant)">CURSOR_FULL_TICKS</a></span></span>
+            <span class='ivar'>@cursor_dir</span> <span class='op'>=</span> <span class='op'>-</span><span class='int'>1</span>
+            <span class='int'>255</span>
+          <span class='kw'>elsif</span> <span class='ivar'>@cursor_ticks</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+            <span class='ivar'>@cursor_dir</span> <span class='op'>=</span> <span class='int'>1</span>
+            <span class='int'>0</span>
+          <span class='kw'>elsif</span> <span class='ivar'>@cursor_ticks</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="#CURSOR_FULL_TICKS-constant" title="Input::Base::CURSOR_FULL_TICKS (constant)">CURSOR_FULL_TICKS</a></span></span>
+            <span class='comment'># Easing.smooth_start(start_at: 0, tick_count: @cursor_ticks, end_at: CURSOR_FLASH_TICKS, power: 2) * 255
+</span>            <span class='comment'># More &quot;abrupt&quot; cursor to match OS.
+</span>            <span class='const'>Easing</span><span class='period'>.</span><span class='id identifier rubyid_smooth_start'>smooth_start</span><span class='lparen'>(</span><span class='label'>start_at:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>tick_count:</span> <span class='ivar'>@cursor_ticks</span><span class='comma'>,</span> <span class='label'>end_at:</span> <span class='const'><span class='object_link'><a href="#CURSOR_FLASH_TICKS-constant" title="Input::Base::CURSOR_FLASH_TICKS (constant)">CURSOR_FLASH_TICKS</a></span></span><span class='comma'>,</span> <span class='label'>power:</span> <span class='int'>8</span><span class='rparen'>)</span> <span class='op'>*</span> <span class='int'>255</span>
+          <span class='kw'>else</span>
+            <span class='int'>255</span>
+          <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_rt'>rt</span><span class='period'>.</span><span class='id identifier rubyid_primitives'>primitives</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span>
+    <span class='label'>x:</span> <span class='lparen'>(</span><span class='ivar'>@cursor_x</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_greater'>greater</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='ivar'>@scroll_x</span><span class='comma'>,</span>
+    <span class='label'>y:</span> <span class='ivar'>@cursor_y</span> <span class='op'>-</span> <span class='ivar'>@scroll_y</span><span class='comma'>,</span>
+    <span class='label'>w:</span> <span class='ivar'>@cursor_width</span><span class='comma'>,</span>
+    <span class='label'>h:</span> <span class='ivar'>@font_height</span><span class='comma'>,</span>
+    <span class='label'>path:</span> <span class='symbol'>:solid</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='op'>**</span><span class='ivar'>@cursor_color</span><span class='comma'>,</span> <span class='label'>a:</span> <span class='id identifier rubyid_alpha'>alpha</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="draw_override-instance_method">
+  
+    #<strong>draw_override</strong>(_ffi)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+645
+646
+647
+648
+649
+650
+651</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 645</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_draw_override'>draw_override</span><span class='lparen'>(</span><span class='id identifier rubyid__ffi'>_ffi</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@will_focus</span>
+
+  <span class='ivar'>@will_focus</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@focussed</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='ivar'>@ensure_cursor_visible</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find-instance_method">
+  
+    #<strong>find</strong>(text)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+767
+768
+769
+770
+771
+772
+773</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 767</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_index'>index</span>
+
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_next-instance_method">
+  
+    #<strong>find_next</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+794
+795
+796
+797
+798
+799
+800
+801
+802</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 794</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_next'>find_next</span>
+  <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='id identifier rubyid_current_selection'>current_selection</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='ivar'>@selection_end</span><span class='period'>.</span><span class='id identifier rubyid_greater'>greater</span><span class='lparen'>(</span><span class='ivar'>@selection_start</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_prev-instance_method">
+  
+    #<strong>find_prev</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 804</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_prev'>find_prev</span>
+  <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='id identifier rubyid_current_selection'>current_selection</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_rindex'>rindex</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='ivar'>@selection_start</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_lesser'>lesser</span><span class='lparen'>(</span><span class='ivar'>@selection_end</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>||</span>
+          <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_rindex'>rindex</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_word_break_left-instance_method">
+  
+    #<strong>find_word_break_left</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>rubocop:disable Metrics/MethodLength</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 815</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_word_break_left'>find_word_break_left</span> <span class='comment'># rubocop:disable Metrics/MethodLength
+</span>  <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='ivar'>@selection_end</span> <span class='op'>==</span> <span class='int'>0</span>
+
+  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span>
+  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_index'>index</span> <span class='op'>-=</span> <span class='int'>1</span>
+    <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='kw'>break</span> <span class='kw'>if</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_index'>index</span> <span class='op'>-=</span> <span class='int'>1</span>
+    <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='int'>0</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>+</span> <span class='int'>1</span> <span class='kw'>unless</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="find_word_break_right-instance_method">
+  
+    #<strong>find_word_break_right</strong>(index = @selection_end)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>rubocop:disable Metrics/MethodLength</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 834</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_find_word_break_right'>find_word_break_right</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Metrics/MethodLength
+</span>  <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_length'>length</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_length'>length</span>
+
+  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_length'>length</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='id identifier rubyid_length'>length</span>
+    <span class='kw'>break</span> <span class='kw'>if</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_index'>index</span> <span class='op'>+=</span> <span class='int'>1</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_index'>index</span> <span class='op'>+=</span> <span class='int'>1</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_length'>length</span> <span class='kw'>if</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>==</span> <span class='id identifier rubyid_length'>length</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_index'>index</span> <span class='kw'>unless</span> <span class='ivar'>@word_chars</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='id identifier rubyid_index'>index</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="focus-instance_method">
+  
+    #<strong>focus</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+710
+711
+712</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 710</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_focus'>focus</span>
+  <span class='ivar'>@will_focus</span> <span class='op'>=</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="focussed?-instance_method">
+  
+    #<strong>focussed?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='focused?-instance_method'>focused?</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+701
+702
+703</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 701</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_focussed?'>focussed?</span>
+  <span class='ivar'>@focussed</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert-instance_method">
+  
+    #<strong>insert</strong>(str)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='replace-instance_method'>replace</span></span>
+    </span>
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+742
+743
+744
+745</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 742</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='ivar'>@selection_end</span><span class='comma'>,</span> <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_start</span><span class='comma'>,</span> <span class='ivar'>@selection_end</span> <span class='kw'>if</span> <span class='ivar'>@selection_start</span> <span class='op'>&gt;</span> <span class='ivar'>@selection_end</span>
+  <span class='id identifier rubyid_insert_at'>insert_at</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='ivar'>@selection_start</span><span class='comma'>,</span> <span class='ivar'>@selection_end</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="insert_at-instance_method">
+  
+    #<strong>insert_at</strong>(str, start_at, end_at = start_at)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='replace_at-instance_method'>replace_at</span></span>
+    </span>
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 748</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_insert_at'>insert_at</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='comma'>,</span> <span class='id identifier rubyid_start_at'>start_at</span><span class='comma'>,</span> <span class='id identifier rubyid_end_at'>end_at</span> <span class='op'>=</span> <span class='id identifier rubyid_start_at'>start_at</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_end_at'>end_at</span><span class='comma'>,</span> <span class='id identifier rubyid_start_at'>start_at</span> <span class='op'>=</span> <span class='id identifier rubyid_start_at'>start_at</span><span class='comma'>,</span> <span class='id identifier rubyid_end_at'>end_at</span> <span class='kw'>if</span> <span class='id identifier rubyid_start_at'>start_at</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_end_at'>end_at</span>
+  <span class='kw'>if</span> <span class='ivar'>@max_length</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>-</span> <span class='lparen'>(</span><span class='id identifier rubyid_end_at'>end_at</span> <span class='op'>-</span> <span class='id identifier rubyid_start_at'>start_at</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>&gt;</span> <span class='ivar'>@max_length</span>
+    <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_str'>str</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='ivar'>@max_length</span> <span class='op'>-</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>+</span> <span class='lparen'>(</span><span class='id identifier rubyid_end_at'>end_at</span> <span class='op'>-</span> <span class='id identifier rubyid_start_at'>start_at</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+    <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='comment'># too long
+</span>  <span class='kw'>end</span>
+
+  <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='id identifier rubyid_start_at'>start_at</span><span class='comma'>,</span> <span class='id identifier rubyid_end_at'>end_at</span><span class='comma'>,</span> <span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='ivar'>@value_changed</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='ivar'>@selection_start</span> <span class='op'>+=</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='ivar'>@selection_start</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_char_left-instance_method">
+  
+    #<strong>move_char_left</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+898
+899
+900
+901
+902
+903
+904
+905
+906
+907
+908
+909
+910</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 898</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_char_left'>move_char_left</span>
+  <span class='id identifier rubyid_start_pos'>start_pos</span> <span class='op'>=</span> <span class='ivar'>@selection_start</span>
+  <span class='id identifier rubyid_end_pos'>end_pos</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@selection_end</span> <span class='op'>&gt;</span> <span class='ivar'>@selection_start</span>
+                     <span class='ivar'>@selection_start</span>
+                   <span class='kw'>elsif</span> <span class='ivar'>@selection_end</span> <span class='op'>&lt;</span> <span class='ivar'>@selection_start</span>
+                     <span class='ivar'>@selection_end</span>
+                   <span class='kw'>else</span>
+                     <span class='lparen'>(</span><span class='ivar'>@selection_start</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_greater'>greater</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
+                   <span class='kw'>end</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span>
+  <span class='ivar'>@cursor_moving</span> <span class='op'>=</span> <span class='id identifier rubyid_end_pos'>end_pos</span> <span class='op'>!=</span> <span class='ivar'>@selection_start</span> <span class='op'>||</span> <span class='id identifier rubyid_start_pos'>start_pos</span> <span class='op'>!=</span> <span class='ivar'>@selection_end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_char_right-instance_method">
+  
+    #<strong>move_char_right</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 912</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_char_right'>move_char_right</span>
+  <span class='id identifier rubyid_start_pos'>start_pos</span> <span class='op'>=</span> <span class='ivar'>@selection_start</span>
+  <span class='id identifier rubyid_end_pos'>end_pos</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@selection_end</span> <span class='op'>&gt;</span> <span class='ivar'>@selection_start</span>
+                     <span class='ivar'>@selection_end</span>
+                   <span class='kw'>elsif</span> <span class='ivar'>@selection_end</span> <span class='op'>&lt;</span> <span class='ivar'>@selection_start</span>
+                     <span class='ivar'>@selection_start</span>
+                   <span class='kw'>else</span>
+                     <span class='lparen'>(</span><span class='ivar'>@selection_start</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_lesser'>lesser</span><span class='lparen'>(</span><span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+                   <span class='kw'>end</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span>
+  <span class='ivar'>@cursor_moving</span> <span class='op'>=</span> <span class='id identifier rubyid_end_pos'>end_pos</span> <span class='op'>!=</span> <span class='ivar'>@selection_start</span> <span class='op'>||</span> <span class='id identifier rubyid_start_pos'>start_pos</span> <span class='op'>!=</span> <span class='ivar'>@selection_end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_to_end-instance_method">
+  
+    #<strong>move_to_end</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+869
+870
+871</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 869</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to_end'>move_to_end</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_to_start-instance_method">
+  
+    #<strong>move_to_start</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+861
+862
+863</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 861</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to_start'>move_to_start</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_word_left-instance_method">
+  
+    #<strong>move_word_left</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+889
+890
+891
+892</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 889</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_word_left'>move_word_left</span>
+  <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_left'>find_word_break_left</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_left'>find_word_break_left</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_word_right-instance_method">
+  
+    #<strong>move_word_right</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+894
+895
+896</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 894</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_word_right'>move_word_right</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_right'>find_word_break_right</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="paste-instance_method">
+  
+    #<strong>paste</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+947
+948
+949</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 947</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_paste'>paste</span>
+  <span class='id identifier rubyid_insert'>insert</span><span class='lparen'>(</span><span class='gvar'>$gtk</span><span class='period'>.</span><span class='id identifier rubyid_ffi_misc'>ffi_misc</span><span class='period'>.</span><span class='id identifier rubyid_getclipboard'>getclipboard</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rect-instance_method">
+  
+    #<strong>rect</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+951
+952
+953</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 951</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rect'>rect</span>
+  <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='ivar'>@x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='ivar'>@y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='ivar'>@w</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='ivar'>@h</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="scroll_rect-instance_method">
+  
+    #<strong>scroll_rect</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+959
+960
+961</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 959</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scroll_rect'>scroll_rect</span>
+  <span class='lbrace'>{</span> <span class='label'>x:</span> <span class='ivar'>@scroll_x</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='ivar'>@scroll_y</span><span class='comma'>,</span> <span class='label'>w:</span> <span class='ivar'>@scroll_w</span><span class='comma'>,</span> <span class='label'>h:</span> <span class='ivar'>@scroll_h</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_all-instance_method">
+  
+    #<strong>select_all</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+852
+853
+854
+855</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 852</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_all'>select_all</span>
+  <span class='ivar'>@selection_start</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_char_left-instance_method">
+  
+    #<strong>select_char_left</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+881
+882
+883</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 881</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_char_left'>select_char_left</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@selection_end</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_greater'>greater</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_char_right-instance_method">
+  
+    #<strong>select_char_right</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+885
+886
+887</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 885</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_char_right'>select_char_right</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@selection_end</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_lesser'>lesser</span><span class='lparen'>(</span><span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_to_end-instance_method">
+  
+    #<strong>select_to_end</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+865
+866
+867</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 865</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_to_end'>select_to_end</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_to_start-instance_method">
+  
+    #<strong>select_to_start</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+857
+858
+859</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 857</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_to_start'>select_to_start</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_word_left-instance_method">
+  
+    #<strong>select_word_left</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+873
+874
+875</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 873</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_word_left'>select_word_left</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_left'>find_word_break_left</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="select_word_right-instance_method">
+  
+    #<strong>select_word_right</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+877
+878
+879</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 877</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_select_word_right'>select_word_right</span>
+  <span class='ivar'>@selection_end</span> <span class='op'>=</span> <span class='id identifier rubyid_find_word_break_right'>find_word_break_right</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="size_enum-instance_method">
+  
+    #<strong>size_enum</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+726
+727
+728</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 726</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_size_enum'>size_enum</span>
+  <span class='ivar'>@font_style</span><span class='period'>.</span><span class='id identifier rubyid_size_enum'>size_enum</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="size_px-instance_method">
+  
+    #<strong>size_px</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+730
+731
+732</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 730</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_size_px'>size_px</span>
+  <span class='ivar'>@font_style</span><span class='period'>.</span><span class='id identifier rubyid_size_px'>size_px</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tick-instance_method">
+  
+    #<strong>tick</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 690</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span>
+  <span class='ivar'>@value_changed</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@cursor_moving</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='kw'>if</span> <span class='ivar'>@focussed</span>
+    <span class='id identifier rubyid_prepare_special_keys'>prepare_special_keys</span>
+    <span class='id identifier rubyid_handle_keyboard'>handle_keyboard</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_handle_mouse'>handle_mouse</span>
+  <span class='id identifier rubyid_prepare_render_target'>prepare_render_target</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="value_changed?-instance_method">
+  
+    #<strong>value_changed?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+706
+707
+708</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 706</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_value_changed?'>value_changed?</span>
+  <span class='ivar'>@value_changed</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Nov  1 17:31:49 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.45 (ruby-3.4.12).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Input::FontStyle
+  
+    &mdash; Documentation by YARD 0.9.45
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "Input::FontStyle";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (F)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Input.html" title="Input (module)">Input</a></span></span>
+     &raquo; 
+    <span class="title">FontStyle</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Input::FontStyle
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>mygame/lib/sprite_kit/vendor/input.rb
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="FontStyle/UsingSizeEnum.html" title="Input::FontStyle::UsingSizeEnum (class)">UsingSizeEnum</a></span>, <span class='object_link'><a href="FontStyle/UsingSizePx.html" title="Input::FontStyle::UsingSizePx (class)">UsingSizePx</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#from-class_method" title="from (class method)">.<strong>from</strong>(word_chars:, font: nil, size_px: nil, size_enum: nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="from-class_method">
+  
+    .<strong>from</strong>(word_chars:, font: nil, size_px: nil, size_enum: nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+506
+507
+508
+509
+510
+511</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 506</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='label'>word_chars:</span><span class='comma'>,</span> <span class='label'>font:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>size_px:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>size_enum:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_font'>font</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="FontStyle/UsingSizePx.html" title="Input::FontStyle::UsingSizePx (class)">UsingSizePx</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FontStyle/UsingSizePx.html#initialize-instance_method" title="Input::FontStyle::UsingSizePx#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>font:</span> <span class='id identifier rubyid_font'>font</span><span class='comma'>,</span> <span class='label'>word_chars:</span> <span class='id identifier rubyid_word_chars'>word_chars</span><span class='comma'>,</span> <span class='label'>size_px:</span> <span class='id identifier rubyid_size_px'>size_px</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_size_px'>size_px</span>
+
+  <span class='const'><span class='object_link'><a href="FontStyle/UsingSizeEnum.html" title="Input::FontStyle::UsingSizeEnum (class)">UsingSizeEnum</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FontStyle/UsingSizeEnum.html#initialize-instance_method" title="Input::FontStyle::UsingSizeEnum#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>font:</span> <span class='id identifier rubyid_font'>font</span><span class='comma'>,</span> <span class='label'>word_chars:</span> <span class='id identifier rubyid_word_chars'>word_chars</span><span class='comma'>,</span> <span class='label'>size_enum:</span> <span class='id identifier rubyid_size_enum'>size_enum</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Nov  1 17:31:48 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.45 (ruby-3.4.12).
+</div>
+
+    </div>
+  </body>
+</html>

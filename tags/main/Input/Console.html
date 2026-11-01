@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Input::Console
+  
+    &mdash; Documentation by YARD 0.9.45
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "Input::Console";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Input.html" title="Input (module)">Input</a></span></span>
+     &raquo; 
+    <span class="title">Console</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Input::Console
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>mygame/lib/sprite_kit/vendor/input.rb
+</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete-instance_method" title="#autocomplete (instance method)">#<strong>autocomplete</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>the following methods are modified copies from console_prompt.rb <a href="https://github.com/marcheiligers/dragonruby-game-toolkit-contrib/blob/master/dragon/console_prompt.rb">https://github.com/marcheiligers/dragonruby-game-toolkit-contrib/blob/master/dragon/console_prompt.rb</a>.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_accept-instance_method" title="#autocomplete_accept (instance method)">#<strong>autocomplete_accept</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_clear-instance_method" title="#autocomplete_clear (instance method)">#<strong>autocomplete_clear</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_items-instance_method" title="#autocomplete_items (instance method)">#<strong>autocomplete_items</strong>(prefix)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_next-instance_method" title="#autocomplete_next (instance method)">#<strong>autocomplete_next</strong>(dir)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_object-instance_method" title="#autocomplete_object (instance method)">#<strong>autocomplete_object</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocomplete_prefix-instance_method" title="#autocomplete_prefix (instance method)">#<strong>autocomplete_prefix</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_input_str-instance_method" title="#current_input_str (instance method)">#<strong>current_input_str</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_input_str=-instance_method" title="#current_input_str= (instance method)">#<strong>current_input_str=</strong>(str)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display_autocomplete_candidate-instance_method" title="#display_autocomplete_candidate (instance method)">#<strong>display_autocomplete_candidate</strong>(candidate)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_unhandled_key-instance_method" title="#on_unhandled_key (instance method)">#<strong>on_unhandled_key</strong>(key, input)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process_inputs-instance_method" title="#process_inputs (instance method)">#<strong>process_inputs</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#prompt-instance_method" title="#prompt (instance method)">#<strong>prompt</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render-instance_method" title="#render (instance method)">#<strong>render</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="autocomplete-instance_method">
+  
+    #<strong>autocomplete</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>the following methods are modified copies from console_prompt.rb
+<a href="https://github.com/marcheiligers/dragonruby-game-toolkit-contrib/blob/master/dragon/console_prompt.rb">https://github.com/marcheiligers/dragonruby-game-toolkit-contrib/blob/master/dragon/console_prompt.rb</a></p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2130
+2131
+2132
+2133
+2134
+2135
+2136
+2137
+2138
+2139
+2140
+2141
+2142
+2143
+2144
+2145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2130</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete'>autocomplete</span>
+  <span class='ivar'>@autocompleting</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_shift_lock'>shift_lock</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='ivar'>@autocomplete_menu</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Menu.html" title="Input::Menu (class)">Menu</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Menu.html#initialize-instance_method" title="Input::Menu#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>focussed:</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='label'>text_color:</span> <span class='int'>0xDDDDDD</span><span class='comma'>,</span>
+    <span class='label'>background_color:</span> <span class='int'>0x333333DD</span>
+  <span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_autocomplete_prefix'>autocomplete_prefix</span>
+  <span class='id identifier rubyid_autocomplete_next'>autocomplete_next</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* BUG: Tab autocompletion failed. Let us know about this.\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_accept-instance_method">
+  
+    #<strong>autocomplete_accept</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2195
+2196
+2197
+2198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2195</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_accept'>autocomplete_accept</span>
+  <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_end'>selection_end</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_start'>selection_start</span>
+  <span class='id identifier rubyid_autocomplete_clear'>autocomplete_clear</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_clear-instance_method">
+  
+    #<strong>autocomplete_clear</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2200
+2201
+2202
+2203
+2204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2200</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_clear'>autocomplete_clear</span>
+  <span class='ivar'>@autocompleting</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@autocomplete_prefix</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_shift_lock'>shift_lock</span> <span class='op'>=</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_items-instance_method">
+  
+    #<strong>autocomplete_items</strong>(prefix)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2182
+2183
+2184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2182</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_items'>autocomplete_items</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_autocomplete_object'>autocomplete_object</span><span class='period'>.</span><span class='id identifier rubyid_autocomplete_methods'>autocomplete_methods</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span> <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_next-instance_method">
+  
+    #<strong>autocomplete_next</strong>(dir)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2163
+2164
+2165
+2166
+2167
+2168
+2169
+2170
+2171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_next'>autocomplete_next</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@autocompleting</span>
+
+  <span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_selected_index'>selected_index</span> <span class='op'>-=</span> <span class='id identifier rubyid_dir'>dir</span>
+  <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_display_autocomplete_candidate'>display_autocomplete_candidate</span><span class='lparen'>(</span><span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_start'>selection_start</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error in #autocomplete_next(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dir'>dir</span><span class='embexpr_end'>}</span><span class='tstring_content'>): &lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_object-instance_method">
+  
+    #<strong>autocomplete_object</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2173
+2174
+2175
+2176
+2177
+2178
+2179
+2180</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2173</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_object'>autocomplete_object</span>
+  <span class='kw'>return</span> <span class='const'>GTK</span><span class='op'>::</span><span class='const'>ConsoleEvaluator</span> <span class='kw'>unless</span> <span class='ivar'>@autocomplete_period_index</span>
+
+  <span class='const'>GTK</span><span class='op'>::</span><span class='const'>ConsoleEvaluator</span><span class='period'>.</span><span class='id identifier rubyid_eval'>eval</span><span class='lparen'>(</span><span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='ivar'>@autocomplete_period_index</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># probably a RuntimeError
+</span>  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error in #autocomplete_object: &lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocomplete_prefix-instance_method">
+  
+    #<strong>autocomplete_prefix</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2147
+2148
+2149
+2150
+2151
+2152
+2153
+2154
+2155
+2156
+2157
+2158
+2159
+2160
+2161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2147</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_autocomplete_prefix'>autocomplete_prefix</span>
+  <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='ivar'>@autocomplete_period_index</span> <span class='op'>=</span> <span class='id identifier rubyid_lpi'>lpi</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_rindex'>rindex</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_lpi'>lpi</span> <span class='op'>?</span> <span class='id identifier rubyid_val'>val</span><span class='lbracket'>[</span><span class='id identifier rubyid_lpi'>lpi</span> <span class='op'>+</span> <span class='int'>1</span><span class='comma'>,</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_end'>selection_end</span> <span class='op'>-</span> <span class='id identifier rubyid_lpi'>lpi</span> <span class='op'>-</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span>
+  <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@autocomplete_prefix</span> <span class='op'>||</span> <span class='ivar'>@autocomplete_prefix</span> <span class='op'>!=</span> <span class='id identifier rubyid_prefix'>prefix</span>
+    <span class='ivar'>@autocomplete_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_prefix'>prefix</span>
+
+    <span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='id identifier rubyid_autocomplete_items'>autocomplete_items</span><span class='lparen'>(</span><span class='ivar'>@autocomplete_prefix</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_items'>items</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+      <span class='id identifier rubyid_autocomplete_clear'>autocomplete_clear</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='id identifier rubyid_items'>items</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_input_str-instance_method">
+  
+    #<strong>current_input_str</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2219
+2220
+2221</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2219</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_input_str'>current_input_str</span>
+  <span class='id identifier rubyid_prompt'>prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_input_str=-instance_method">
+  
+    #<strong>current_input_str=</strong>(str)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2223
+2224
+2225
+2226</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2223</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_input_str='>current_input_str=</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_prompt'>prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_str'>str</span>
+  <span class='id identifier rubyid_prompt'>prompt</span><span class='period'>.</span><span class='id identifier rubyid_move_to_end'>move_to_end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="display_autocomplete_candidate-instance_method">
+  
+    #<strong>display_autocomplete_candidate</strong>(candidate)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2186
+2187
+2188
+2189
+2190
+2191
+2192
+2193</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2186</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display_autocomplete_candidate'>display_autocomplete_candidate</span><span class='lparen'>(</span><span class='id identifier rubyid_candidate'>candidate</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_candidate'>candidate</span> <span class='op'>=</span> <span class='id identifier rubyid_candidate'>candidate</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='op'>-</span><span class='int'>2</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> = </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_candidate'>candidate</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>=</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>if</span> <span class='ivar'>@autocomplete_period_index</span>
+    <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='comma'>,</span> <span class='ivar'>@autocomplete_period_index</span> <span class='op'>+</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_candidate'>candidate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_candidate'>candidate</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_unhandled_key-instance_method">
+  
+    #<strong>on_unhandled_key</strong>(key, input)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2053
+2054
+2055
+2056
+2057
+2058
+2059
+2060
+2061
+2062
+2063
+2064
+2065
+2066
+2067
+2068
+2069
+2070
+2071
+2072
+2073
+2074
+2075
+2076
+2077
+2078
+2079
+2080
+2081
+2082
+2083
+2084
+2085
+2086
+2087
+2088
+2089
+2090
+2091
+2092
+2093
+2094
+2095
+2096
+2097
+2098
+2099
+2100
+2101
+2102
+2103
+2104
+2105
+2106
+2107
+2108
+2109
+2110
+2111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2053</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_unhandled_key'>on_unhandled_key</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_input'>input</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@autocompleting</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:escape</span>
+    <span class='id identifier rubyid_autocomplete_clear'>autocomplete_clear</span>
+  <span class='kw'>elsif</span> <span class='gvar'>$args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_key_down'>key_down</span><span class='period'>.</span><span class='id identifier rubyid_enter'>enter</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_slide_progress'>slide_progress</span> <span class='op'>&gt;</span> <span class='float'>0.5</span>
+      <span class='comment'># in the event of an exception, the console window pops up
+</span>      <span class='comment'># and is pre-filled with $gtk.reset.
+</span>      <span class='comment'># there is an annoying scenario where the exception could be thrown
+</span>      <span class='comment'># by pressing enter (while playing the game). if you press enter again
+</span>      <span class='comment'># quickly, then the game is reset which closes the console.
+</span>      <span class='comment'># so enter in the console is only evaluated if the slide_progress
+</span>      <span class='comment'># is atleast half way down the page.
+</span>      <span class='id identifier rubyid_eval_the_set_command'>eval_the_set_command</span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='gvar'>$args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_key_down'>key_down</span><span class='period'>.</span><span class='id identifier rubyid_up'>up</span>
+    <span class='kw'>if</span> <span class='ivar'>@autocompleting</span>
+      <span class='id identifier rubyid_autocomplete_next'>autocomplete_next</span><span class='lparen'>(</span><span class='int'>+1</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='kw'>if</span> <span class='ivar'>@command_history_index</span> <span class='op'>==</span> <span class='op'>-</span><span class='int'>1</span>
+        <span class='ivar'>@nonhistory_input</span> <span class='op'>=</span> <span class='id identifier rubyid_current_input_str'>current_input_str</span>
+      <span class='kw'>end</span>
+      <span class='kw'>if</span> <span class='ivar'>@command_history_index</span> <span class='op'>&lt;</span> <span class='lparen'>(</span><span class='ivar'>@command_history</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span>
+        <span class='ivar'>@command_history_index</span> <span class='op'>+=</span> <span class='int'>1</span>
+        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_input_str'>current_input_str</span> <span class='op'>=</span> <span class='ivar'>@command_history</span><span class='lbracket'>[</span><span class='ivar'>@command_history_index</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='gvar'>$args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_key_down'>key_down</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
+    <span class='kw'>if</span> <span class='ivar'>@autocompleting</span>
+      <span class='id identifier rubyid_autocomplete_next'>autocomplete_next</span><span class='lparen'>(</span><span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='kw'>if</span> <span class='ivar'>@command_history_index</span> <span class='op'>==</span> <span class='int'>0</span>
+        <span class='ivar'>@command_history_index</span> <span class='op'>=</span> <span class='op'>-</span><span class='int'>1</span>
+        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_input_str'>current_input_str</span> <span class='op'>=</span> <span class='ivar'>@nonhistory_input</span>
+        <span class='ivar'>@nonhistory_input</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+      <span class='kw'>elsif</span> <span class='ivar'>@command_history_index</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+        <span class='ivar'>@command_history_index</span> <span class='op'>-=</span> <span class='int'>1</span>
+        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_input_str'>current_input_str</span> <span class='op'>=</span> <span class='ivar'>@command_history</span><span class='lbracket'>[</span><span class='ivar'>@command_history_index</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_inputs_scroll_up_full?'>inputs_scroll_up_full?</span> <span class='gvar'>$args</span>
+    <span class='id identifier rubyid_scroll_up_full'>scroll_up_full</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_inputs_scroll_down_full?'>inputs_scroll_down_full?</span> <span class='gvar'>$args</span>
+    <span class='id identifier rubyid_scroll_down_full'>scroll_down_full</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_inputs_scroll_up_half?'>inputs_scroll_up_half?</span> <span class='gvar'>$args</span>
+    <span class='id identifier rubyid_scroll_up_half'>scroll_up_half</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_inputs_scroll_down_half?'>inputs_scroll_down_half?</span> <span class='gvar'>$args</span>
+    <span class='id identifier rubyid_scroll_down_half'>scroll_down_half</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_inputs_clear_command?'>inputs_clear_command?</span> <span class='gvar'>$args</span>
+    <span class='id identifier rubyid_prompt'>prompt</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+    <span class='ivar'>@command_history_index</span> <span class='op'>=</span> <span class='op'>-</span><span class='int'>1</span>
+    <span class='ivar'>@nonhistory_input</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>elsif</span> <span class='gvar'>$args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_key_down'>key_down</span><span class='period'>.</span><span class='id identifier rubyid_tab'>tab</span>
+    <span class='kw'>if</span> <span class='ivar'>@autocompleting</span>
+      <span class='id identifier rubyid_autocomplete_accept'>autocomplete_accept</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_autocomplete'>autocomplete</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="process_inputs-instance_method">
+  
+    #<strong>process_inputs</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2027
+2028
+2029
+2030
+2031
+2032
+2033
+2034
+2035
+2036
+2037
+2038
+2039
+2040
+2041
+2042
+2043
+2044
+2045
+2046
+2047
+2048
+2049
+2050
+2051</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2027</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process_inputs'>process_inputs</span> <span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_console_toggle_key_down?'>console_toggle_key_down?</span> <span class='id identifier rubyid_args'>args</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+    <span class='id identifier rubyid_toggle'>toggle</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@visible</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_visible?'>visible?</span>
+
+  <span class='id identifier rubyid_mouse_wheel_scroll'>mouse_wheel_scroll</span> <span class='id identifier rubyid_args'>args</span>
+
+  <span class='ivar'>@log_offset</span> <span class='op'>=</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='ivar'>@log_offset</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@autocompleting</span>
+    <span class='comment'># is the cursor before the period?
+</span>    <span class='kw'>if</span> <span class='ivar'>@autocomplete_period_index</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@autocomplete_period_index</span> <span class='op'>&gt;=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_end'>selection_end</span>
+      <span class='id identifier rubyid_autocomplete_clear'>autocomplete_clear</span>
+    <span class='kw'>elsif</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_value_changed?'>value_changed?</span> <span class='op'>||</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_end'>selection_end</span> <span class='op'>!=</span> <span class='ivar'>@autocomplete_selection_end</span>
+      <span class='id identifier rubyid_autocomplete_prefix'>autocomplete_prefix</span>
+      <span class='id identifier rubyid_autocomplete_next'>autocomplete_next</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='ivar'>@autocomplete_selection_end</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_selection_end'>selection_end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="prompt-instance_method">
+  
+    #<strong>prompt</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2113
+2114
+2115
+2116
+2117
+2118
+2119
+2120
+2121
+2122
+2123
+2124
+2125
+2126</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2113</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_prompt'>prompt</span>
+  <span class='ivar'>@prompt</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../Input.html" title="Input (module)">Input</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Prompt.html" title="Input::Prompt (class)">Prompt</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Text.html#initialize-instance_method" title="Input::Text#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>x:</span> <span class='int'>0</span><span class='comma'>,</span>
+    <span class='label'>y:</span> <span class='int'>0</span><span class='comma'>,</span>
+    <span class='label'>w:</span> <span class='int'>1280</span><span class='comma'>,</span>
+    <span class='label'>prompt:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Press CTRL+g or ESCAPE to clear the prompt. Press TAB for autocomplete.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>text_color:</span> <span class='int'>0xFFFFFF</span><span class='comma'>,</span>
+    <span class='label'>background_color:</span> <span class='int'>0x000000</span><span class='comma'>,</span>
+    <span class='label'>cursor_color:</span> <span class='lbracket'>[</span><span class='int'>219</span><span class='comma'>,</span> <span class='int'>182</span><span class='comma'>,</span> <span class='int'>104</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>on_unhandled_key:</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:on_unhandled_key</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>focussed:</span> <span class='kw'>true</span><span class='comma'>,</span>
+    <span class='label'>draw_autocomplete_menu:</span> <span class='kw'>false</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render-instance_method">
+  
+    #<strong>render</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2206
+2207
+2208
+2209
+2210
+2211
+2212
+2213
+2214
+2215
+2216</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/vendor/input.rb', line 2206</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span> <span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>super</span>
+
+  <span class='comment'># Add the autocomplete menu last so it renders on top
+</span>  <span class='kw'>if</span> <span class='ivar'>@autocompleting</span>
+    <span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_prepare_render_target'>prepare_render_target</span>
+    <span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_x'>x</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_cursor_x'>cursor_x</span>
+    <span class='ivar'>@autocomplete_menu</span><span class='period'>.</span><span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_cursor_y'>cursor_y</span> <span class='op'>+</span> <span class='ivar'>@prompt</span><span class='period'>.</span><span class='id identifier rubyid_font_height'>font_height</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_outputs'>outputs</span><span class='period'>.</span><span class='id identifier rubyid_reserved'>reserved</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@autocomplete_menu</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Nov  1 17:31:48 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.45 (ruby-3.4.12).
+</div>
+
+    </div>
+  </body>
+</html>
