@@ -26,9 +26,9 @@ module SpriteKit
       if name.end_with?("=") && !name.end_with?("==")
         true
       elsif name.end_with?("?", "!")
-        super
+        false
       else
-        instance_variable_defined?("@#{name}") || super
+        instance_variable_defined?("@#{name}")
       end
     end
 

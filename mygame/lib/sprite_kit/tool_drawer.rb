@@ -8,8 +8,8 @@ module SpriteKit
     attr_reader :focus
 
     class Counter < SpriteKit::Sprite
-      INPUT_H = 28
-      PAD     = { top: 4, bottom: 4, left: 8, right: 4 }
+      INPUT_H = 24
+      PAD     = { top: 4, bottom: 0, left: 8, right: 4 }
 
       def initialize(label:, value: 0, get_value: proc {}, set_value: proc {}, on_increment: proc {}, on_decrement: proc {}, **kwargs)
         super(
@@ -112,35 +112,90 @@ module SpriteKit
       @focus = nil
 
       @buttons = {
-        view_file_tree: {
-          id: :view_file_tree,
-          label: proc { { id: :view_file_tree, text: "View File Tree" } },
-          handle_click: proc {
-            @state.next_view = :file_tree
+        view_file_tree: proc {
+          hash = {
+            id: :view_file_tree,
+            on_click: proc {
+              @state.next_view = :file_tree
+            },
+            padding: 8,
+            text: "View File Tree",
           }
-        },
-        gap_button: {
-          id: :gap_button,
-          label: proc { { id: :gap_button, text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap") } },
-          handle_click: proc {
-            current_sprite = @state.current_sprite
 
-            if current_sprite.prefab
-              current_sprite.prefab = nil
-            else
-              current_sprite.prefab = SpriteKit::SpriteMethods.generate_prefab(current_sprite, @state)
-            end
+          hash.run_tick = proc {
+            @primitives.concat(SpriteKit::Primitives.borders(hash, padding: hash.padding).values)
+            click_box = hash.merge({
+              x: hash.x - hash.padding,
+              y: hash.y - hash.padding,
+              w: hash.w + (hash.padding * 2),
+              h: hash.h + (hash.padding * 2),
+            })
+
+            @clickables << click_box
+            hash.y = hash.y + (hash.padding / 2) + 2
+            hash.x = hash.x + (hash.padding / 2) + 2
           }
+
+          hash
         },
-        copy_to_clipboard: {
-          id: :copy_to_clipboard,
-          label: proc { { id: :copy_to_clipboard, text: "Copy to clipboard" } },
-          handle_click: proc {
-            str = SpriteMethods.serialize_sprite(@state.current_sprite, :ruby)
-            str = str.slice(2..-4) + ","
-            GTK.exec("echo \"#{str}\" | pbcopy")
-            # DR.misc_ffi.set_clipboard(str)
+        gap_button: proc {
+          hash = {
+            id: :gap_button,
+            text: (@state.current_sprite.prefab ? "Add gap" : "Remove Gap"),
+            padding: 4,
+            on_click: proc {
+              current_sprite = @state.current_sprite
+
+              if current_sprite.prefab
+                current_sprite.prefab = nil
+              else
+                current_sprite.prefab = SpriteKit::SpriteMethods.generate_prefab(current_sprite, @state)
+              end
+            }
           }
+          hash.run_tick = proc {
+            @primitives.concat(SpriteKit::Primitives.borders(hash, padding: hash.padding).values)
+            click_box = hash.merge({
+              x: hash.x - hash.padding,
+              y: hash.y - hash.padding,
+              w: hash.w + (hash.padding * 2),
+              h: hash.h + (hash.padding * 2),
+            })
+
+            @clickables << click_box
+            hash.y = hash.y + (hash.padding / 2) + 2
+            hash.x = hash.x + (hash.padding / 2) + 2
+          }
+          hash
+        },
+        copy_to_clipboard: proc {
+          hash = {
+            id: :copy_to_clipboard,
+            text: "Copy to clipboard",
+            padding: 4,
+            on_click: proc {
+              str = SpriteMethods.serialize_sprite(@state.current_sprite, :ruby)
+              str = str.slice(2..-4) + ","
+              GTK.exec("echo \"#{str}\" | pbcopy")
+              # DR.misc_ffi.set_clipboard(str)
+            }
+          }
+
+          hash.run_tick = proc {
+            @primitives.concat(SpriteKit::Primitives.borders(hash, padding: hash.padding).values)
+            click_box = hash.merge({
+              x: hash.x - hash.padding,
+              y: hash.y - hash.padding,
+              w: hash.w + (hash.padding * 2),
+              h: hash.h + (hash.padding * 2),
+            })
+
+            @clickables << click_box
+            hash.y = hash.y + (hash.padding / 2) + 2
+            hash.x = hash.x + (hash.padding / 2) + 2
+          }
+
+          hash
         },
         # save_format: {
         #   label: proc { { id: :save_format, text: "Copy to clipboard" } },
@@ -154,10 +209,10 @@ module SpriteKit
         { id: :column_gap, label: "col_gap: ", path: [:tile_selection, :column_gap] },
         { id: :offset_x, label: "offset_x: ", path: [:tile_selection, :offset_x] },
         { id: :offset_y, label: "offset_y: ", path: [:tile_selection, :offset_y] },
-        { id: :source_x, label: "source_x: ", path: [:tile_selection, :source_x] },
-        { id: :source_y, label: "source_y: ", path: [:tile_selection, :source_y] },
-        { id: :source_w, label: "source_w: ", path: [:tile_selection, :source_w] },
-        { id: :source_h, label: "source_h: ", path: [:tile_selection, :source_h] },
+        { id: :source_x, label: "source_x: ", path: [:current_sprite, :source_x] },
+        { id: :source_y, label: "source_y: ", path: [:current_sprite, :source_y] },
+        { id: :source_w, label: "source_w: ", path: [:current_sprite, :source_w] },
+        { id: :source_h, label: "source_h: ", path: [:current_sprite, :source_h] },
       ]
 
       @counters = {}
@@ -182,7 +237,6 @@ module SpriteKit
         )
       end
 
-      @static_clickables = []
       @tick_count = 0
     end
 
@@ -207,19 +261,17 @@ module SpriteKit
     end
 
     def tick(args)
-      if @tick_count > 0 && !@static_clickables_assigned
-        @static_clickables.concat(@counters.values.map do |c|
+      @clickables = []
+
+      if @tick_count > 0
+        @clickables.concat(@counters.values.map do |c|
           [
             c.primitives[:input],
             c.primitives[:increment_button],
             c.primitives[:decrement_button],
           ]
         end.flatten)
-        @static_clickables_assigned = true
       end
-
-      @clickables = []
-        .concat(@static_clickables)
 
       input(args)
       calc(args)
@@ -236,13 +288,6 @@ module SpriteKit
         @state.next_view = @state.views[idx]
       end
 
-      clicked_item = args.inputs.mouse.click && Geometry.find_intersect_rect(args.inputs.mouse, @clickables)
-
-      if clicked_item
-        if clicked_item.respond_to?(:on_click) || (clicked_item.is_a?(Hash) && clicked_item.on_click)
-          clicked_item.on_click.call
-        end
-      end
     end
 
     def calc(args)
@@ -255,12 +300,17 @@ module SpriteKit
       render_target.w = @w
       render_target.h = @h
 
-      args.outputs.debug << "#{@state.tile_selection}"
+      # args.outputs.debug << "#{@state.tile_selection}"
       # args.outputs.debug << "#{args.inputs.mouse}"
-      # args.outputs.debug << "#{@static_clickables}"
 
-      primitives = []
+      @primitives = []
+
+      cursor_y = 20.from_top
+      cursor_x = 20
+      gap = 8
+
       controls = [
+        @buttons.view_file_tree.call,
         { text: "brush: {" },
         @counters.tile_selection_w,
         @counters.tile_selection_h,
@@ -271,37 +321,63 @@ module SpriteKit
         @counters.row_gap,
       ]
 
-      cursor_y = 50.from_top
-      cursor_x = 20
-      gap = 8
+      # puts @clickables[-1]
+
+      if @state.current_sprite
+        controls.concat([
+          @buttons.gap_button.call,
+          @counters.source_x,
+          @counters.source_y,
+          @counters.source_w,
+          @counters.source_h,
+          { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - cursor_x - 5) },
+          @buttons.copy_to_clipboard.call,
+          { text: "Spritesheet Properties:" },
+          { text: "w: #{@state.current_sprite.spritesheet.w}" },
+          { text: "h: #{@state.current_sprite.spritesheet.h}" },
+        ])
+      end
 
       controls.each do |c|
-        ch = control_h(c)
+        calc_size(c)
         c.x = cursor_x
-        c.y = cursor_y - ch           # y is the bottom edge, so subtract first
+        c.y = cursor_y - c.h # y is the bottom edge, so subtract first
         c.run_tick(args) if c.respond_to?(:run_tick)
 
-        cursor_y = c.y - gap
+        if c.is_a?(Hash) && c[:run_tick].is_a?(Proc)
+          c.run_tick.call(args)
+        end
+
+        padding = 0
+        if c.is_a?(Hash) || c.respond_to?(:padding)
+          padding = (c.padding || 0) * 2
+        end
+        cursor_y = c.y - gap - padding
 
         if (c.is_a?(Hash) || c.respond_to?(:primitives)) && c.primitives
-          render_primitives(c.primitives.values, primitives)
+          render_primitives(c.primitives.values, @primitives)
         else
-          render_primitives(c, primitives)
+          render_primitives(c, @primitives)
         end
       end
 
       if args.inputs.mouse.click
-        clickable_controls = controls.select do |c|
+        @clickables.concat(controls.select do |c|
           c.x && c.y && c.h && c.w
-        end
-        clicked = Geometry.find_intersect_rect(args.inputs.mouse, clickable_controls)
+        end)
 
-        if clicked
-          @focus.blur if @focus != clicked.input
+        clicked_item = Geometry.find_intersect_rect(args.inputs.mouse, @clickables)
 
-          if (clicked.is_a?(Hash) || clicked.respond_to?(:primitives)) && clicked.primitives
-            clicked.primitives.input.focus
-            @focus = clicked.primitives.input
+        if clicked_item
+          @focus.blur if @focus != clicked_item.input
+
+          if (clicked_item.is_a?(Hash) && clicked_item.on_click.is_a?(Proc))
+            clicked_item.on_click.call
+          end
+
+          if (clicked_item.is_a?(Hash) || clicked_item.respond_to?(:primitives)) && clicked_item.primitives
+            clicked_item.primitives.input.focus
+            @focus = clicked_item.primitives.input
           else
             @focus = nil
           end
@@ -310,38 +386,9 @@ module SpriteKit
         end
       end
 
-
-      # putz60 "PRIMS: #{primitives}"
-
       @state.draw_buffer[@render_path]
-        .concat(primitives)
+        .concat(@primitives)
 
-      # text = [
-      #   @buttons.view_file_tree.label.call,
-      #   { text: "brush: { " },
-      #   @counters.tile_selection_w.label.call,
-      #   @counters.tile_selection_h.label.call,
-      #   { text: "}" } ,
-      #   @counters.offset_x.label.call,
-      #   @counters.offset_y.label.call,
-      #   @counters.column_gap.label.call,
-      #   @counters.row_gap.label.call,
-      # ]
-
-      # if @state.current_sprite
-      #   text.concat([
-      #     @buttons.gap_button.label.call,
-      #     @counters.source_x.label.call,
-      #     @counters.source_y.label.call,
-      #     @counters.source_w.label.call,
-      #     @counters.source_h.label.call,
-      #     { text: StringHelper.truncate("path: #{@state.current_sprite.path}", max_width: @w - label_offset_x - 5) },
-      #     @buttons.copy_to_clipboard.label.call,
-      #     { text: "Spritesheet Properties:" },
-      #     { text: "w: #{@state.current_sprite.spritesheet.w}" },
-      #     { text: "h: #{@state.current_sprite.spritesheet.h}" },
-      #   ])
-      # end
 
       # prev_y = 0
       # label_gap = 14
@@ -375,7 +422,7 @@ module SpriteKit
       #   if label
       #     button_borders.concat(Primitives.borders(label, padding: 8).values)
       #     if args.inputs.click && args.inputs.mouse.intersect_rect?(label)
-      #       button.handle_click.call
+      #       button.on_click.call
       #     end
       #   end
       # end
@@ -493,6 +540,7 @@ module SpriteKit
       #     ])
       #   end
       # end
+
     end
 
     def render_primitives(c, ary = [])
@@ -514,20 +562,14 @@ module SpriteKit
       ary
     end
 
-    def control_h(c)
+    def calc_size(c)
       if c.is_a?(Hash)
+        if !c.h || !c.w
+          c_w, c_h = GTK.calcstringbox(c.text)
+          c.w ||= c_w + ((c.padding || 0) * 2)
+          c.h ||= c_h + ((c.padding || 0) * 2)
+        end
         c[:anchor_y] ||= 0
-        c[:h] ||= GTK.calcstringbox(c[:text])[1]
-      else
-        c.h
-      end
-    end
-
-    def control_w(c)
-      if c.is_a?(Hash)
-        c[:w] ||= GTK.calcstringbox(c[:text])[0]
-      else
-        c.w
       end
     end
   end
