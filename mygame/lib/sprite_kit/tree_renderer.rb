@@ -23,8 +23,10 @@ module SpriteKit
     end
 
     # Call this from your tick, passing args
-    def render(args, offset_x: 0, offset_y: 0)
+    # @param width [Integer, nil] defaults to the rest of the screen after `offset_x`.
+    def render(args, offset_x: 0, offset_y: 0, width: nil)
       @args  = args
+      @width = width || args.grid.w - offset_x
       @mouse = args.inputs.mouse
       @rows  = []
 
@@ -38,7 +40,7 @@ module SpriteKit
       @primitives = []
       @primitives << {
         x: offset_x, y: args.grid.h - panel_h,
-        w: args.grid.w - offset_x, h: panel_h,
+        w: @width, h: panel_h,
         path: :solid,
         **COLOR_BG
       }
@@ -168,7 +170,7 @@ module SpriteKit
       label = File.basename(node.value.path.to_s)
       x = offset_x + 8 + depth * INDENT_SIZE
 
-      hit     = { x: offset_x, y: y, w: @args.grid.w - offset_x, h: ROW_HEIGHT }
+      hit     = { x: offset_x, y: y, w: @width, h: ROW_HEIGHT }
       hovered = @mouse.intersect_rect?(hit)
 
       # Mouse hover updates the keyboard cursor so the two stay in sync

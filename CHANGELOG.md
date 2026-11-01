@@ -1,2 +1,6 @@
 - Updated to camera functionality to use the example here: <https://docs.dragonruby.org/#/samples/genre-platformer?id=map-editor-camerarb> with minor tweaks.
 - Added `#to_screen_space!` and `#to_world_space!` mutating methods
+- Rewrote the map editor (`SpriteKit::MapEditor` / `SpriteKit::Scenes::MapEditorScene`) on top of `Canvas`, `ToolDrawer`, and `DrawBuffer`. Supports layers, paint / erase / rect fill / pick tools, undo / redo, and JSON save / load.
+- Added `SpriteKit::Map` for loading maps made with the editor.
+- `SpriteKit::Serializer` now supports booleans.
+- Fixed `Blendmodes.hole_punch` alias that prevented the library from loading.
