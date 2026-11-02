@@ -93,104 +93,109 @@ module SpriteKit
       @panel_buttons = []
 
       @tools = {
-        paint: {
-          keybindings: [
-            [:b]
-          ],
-          label: "Paint (B)",
-          action: -> { select_tool(:paint) }
-        },
-        erase: {
-          keybindings: [
-            [:e]
-          ],
-          label: "Erase (E)",
-          action: -> { select_tool(:erase) }
-        },
-        rect: {
-          keybindings: [
-            [:r]
-          ],
-          label: "Rect fill (R)",
-          action: -> { select_tool(:rect) }
-        },
-        pick: {
-          keybindings: [
-            [:p]
-          ],
-          label: "Pick tile (P)",
-          action: -> { select_tool(:pick) }
-        },
+        keyboard: {
+          paint: {
+            keybindings: [
+              [:b]
+            ],
+            label: "Paint (B)",
+            action: -> { select_tool(:paint) }
+          },
+          erase: {
+            keybindings: [
+              [:e]
+            ],
+            label: "Erase (E)",
+            action: -> { select_tool(:erase) }
+          },
+          rect: {
+            keybindings: [
+              [:r]
+            ],
+            label: "Rect fill (R)",
+            action: -> { select_tool(:rect) }
+          },
+          pick: {
+            keybindings: [
+              [:p]
+            ],
+            label: "Pick tile (P)",
+            action: -> { select_tool(:pick) }
+          },
+        }
       }
 
       @hotkeys = {
-        undo_change: {
-          keybindings: [
-            [:ctrl, :z],
-            [:meta, :z]
-          ],
-          action: -> { undo_change }
-        },
-        redo_change: {
-          keybindings: [
-            [:ctrl, :shift, :z],
-            [:meta, :shift, :z]
-          ],
-          action: -> { redo_change }
-        },
-        save: {
-          keybindings: [
-            [:ctrl, :s],
-            [:meta, :s]
-          ],
-          action: -> { save }
-        },
-        show_grid: {
-          keybindings: [
-            [:g]
-          ],
-          action: -> { @show_grid = !@show_grid }
-        },
-        add_layer: {
-          keybindings: [
-            [:n]
-          ],
-          action: -> { add_layer }
-        },
-        toggle_layer_visibility: {
-          keybindings: [
-            [:v]
-          ],
-          action: -> { toggle_layer_visibility(@map.current_layer_index) }
-        },
-        select_previous_layer: {
-          keybindings: [
-            [:open_square_brace]
-          ],
-          action: -> { select_layer(@map.current_layer_index - 1) }
-        },
-        select_next_layer: {
-          keybindings: [
-            [:close_square_brace]
-          ],
-          action: -> { select_layer(@map.current_layer_index + 1) }
-        },
-        clear: {
-          keybindings: [
-            [:escape]
-          ],
-          action: -> {
-            if @stroke
-              @stroke = nil
-            else
-              @state.current_sprite = nil
-            end
+        keyboard: {
+          undo_change: {
+            keybindings: [
+              [:ctrl, :z],
+              [:meta, :z]
+            ],
+            action: -> { undo_change }
+          },
+          redo_change: {
+            keybindings: [
+              [:ctrl, :shift, :z],
+              [:meta, :shift, :z]
+            ],
+            action: -> { redo_change }
+          },
+          save: {
+            keybindings: [
+              [:ctrl, :s],
+              [:meta, :s]
+            ],
+            action: -> { save }
+          },
+          show_grid: {
+            keybindings: [
+              [:g]
+            ],
+            action: -> { @show_grid = !@show_grid }
+          },
+          add_layer: {
+            keybindings: [
+              [:n]
+            ],
+            action: -> { add_layer }
+          },
+          toggle_layer_visibility: {
+            keybindings: [
+              [:v]
+            ],
+            action: -> { toggle_layer_visibility(@map.current_layer_index) }
+          },
+          select_previous_layer: {
+            keybindings: [
+              [:open_square_brace]
+            ],
+            action: -> { select_layer(@map.current_layer_index - 1) }
+          },
+          select_next_layer: {
+            keybindings: [
+              [:close_square_brace]
+            ],
+            action: -> { select_layer(@map.current_layer_index + 1) }
+          },
+          clear: {
+            keybindings: [
+              [:escape]
+            ],
+            action: -> {
+              if @stroke
+                @stroke = nil
+              else
+                @state.current_sprite = nil
+              end
+            }
           }
         }
       }.merge(@tools)
 
       @background_color = nil
       @background_color = { r: 40, g: 42, b: 54, a: 255 }
+      @hotkey_handler = HotkeyHandler.new(@hotkeys)
     end
 
     def tick(args)
@@ -219,7 +224,7 @@ module SpriteKit
       handle_pan(args)
 
       if !@state.text_input_focused
-        HotkeyHandler.handle(args.inputs.keyboard, @hotkeys)
+        @hotkey_handler.tick(args)
       end
 
       build_panel(args)
@@ -765,8 +770,9 @@ module SpriteKit
           text: text,
           size_px: 18,
           anchor_y: 0.5,
+          primitive_marker: :label,
           **@palette.colors.dig(:brand, :on, :loud)
-        }.label!
+        }
       ])
     end
 
@@ -782,7 +788,7 @@ module SpriteKit
               end
 
       parts = [
-        @tools[@tool][:label],
+        @tools[:keyboard][@tool][:label],
         "Layer: #{layer.name}#{layer.visible ? "" : " (hidden)"}",
         "Cell: #{cell_x}, #{cell_y}",
         "Zoom: #{@camera.scale.round(2)}x",
@@ -859,7 +865,7 @@ module SpriteKit
       y -= 16
       y = add_panel_heading("Tools", x, y)
 
-      @tools.each do |tool, config|
+      @tools.keyboard.each do |tool, config|
         row = { x: x, y: y - ROW_H, w: w, h: ROW_H }
         @panel_buttons << row.merge({
           kind: :tool_row,

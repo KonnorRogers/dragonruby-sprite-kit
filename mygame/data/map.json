@@ -372,17 +372,6 @@
           "source_h": 80
         },
         {
-          "x": -96,
-          "y": -96,
-          "w": 80,
-          "h": 80,
-          "path": "sprites/circle/blue.png",
-          "source_x": 0,
-          "source_y": 0,
-          "source_w": 80,
-          "source_h": 80
-        },
-        {
           "x": -16,
           "y": -96,
           "w": 80,
