@@ -18,8 +18,10 @@ module SpriteKit
   # args.outputs.sprites << ::SpriteKit::Animation.animate!(sprite, frame.animations.idle)
   #
   module Animation
-    def self.animate!(sprite, animation)
-      frame = current_frame(animation)
+    def self.animate!(sprite, animation, start_at: 0, tick_count_override: Kernel.tick_count)
+      frame = current_frame(animation, start_at: start_at, tick_count_override: tick_count_override)
+
+      return if !frame
 
       sprite.source_x = frame.source_x
       sprite.source_y = frame.source_y
@@ -73,8 +75,8 @@ module SpriteKit
       if frames.is_a?(Array)
         frame_index = self.frame_index(
           start_at: start_at,
-          repeat: animation.repeat,
-          hold_for: animation.hold_for,
+          repeat: animation.repeat || false,
+          hold_for: animation.hold_for || 1,
           tick_count_override: tick_count_override,
           frames: frames
         )
@@ -86,3 +88,4 @@ module SpriteKit
     end
   end
 end
+
