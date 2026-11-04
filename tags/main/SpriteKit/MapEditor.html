@@ -795,7 +795,12 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
 191
 192
 193
-194</pre>
+194
+195
+196
+197
+198
+199</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 59</span>
@@ -837,104 +842,109 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
   <span class='ivar'>@panel_buttons</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='ivar'>@tools</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='label'>paint:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paint (B)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:paint</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>erase:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:e</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Erase (E)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:erase</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>rect:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:r</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Rect fill (R)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:rect</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>pick:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:p</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pick tile (P)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:pick</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>keyboard:</span> <span class='lbrace'>{</span>
+      <span class='label'>paint:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:b</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Paint (B)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:paint</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>erase:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:e</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Erase (E)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:erase</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>rect:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:r</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Rect fill (R)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:rect</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>pick:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:p</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>label:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pick tile (P)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_tool'>select_tool</span><span class='lparen'>(</span><span class='symbol'>:pick</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='rbrace'>}</span>
   <span class='rbrace'>}</span>
 
   <span class='ivar'>@hotkeys</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='label'>undo_change:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_undo_change'>undo_change</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>redo_change:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:shift</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:shift</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_redo_change'>redo_change</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>save:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_save'>save</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>show_grid:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:g</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='ivar'>@show_grid</span> <span class='op'>=</span> <span class='op'>!</span><span class='ivar'>@show_grid</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>add_layer:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:n</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_add_layer'>add_layer</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>toggle_layer_visibility:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:v</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_toggle_layer_visibility'>toggle_layer_visibility</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>select_previous_layer:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:open_square_brace</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_layer'>select_layer</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>select_next_layer:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:close_square_brace</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_layer'>select_layer</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>clear:</span> <span class='lbrace'>{</span>
-      <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
-        <span class='lbracket'>[</span><span class='symbol'>:escape</span><span class='rbracket'>]</span>
-      <span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span>
-        <span class='kw'>if</span> <span class='ivar'>@stroke</span>
-          <span class='ivar'>@stroke</span> <span class='op'>=</span> <span class='kw'>nil</span>
-        <span class='kw'>else</span>
-          <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='kw'>nil</span>
-        <span class='kw'>end</span>
+    <span class='label'>keyboard:</span> <span class='lbrace'>{</span>
+      <span class='label'>undo_change:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_undo_change'>undo_change</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>redo_change:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:shift</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:shift</span><span class='comma'>,</span> <span class='symbol'>:z</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_redo_change'>redo_change</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>save:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:ctrl</span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='rbracket'>]</span><span class='comma'>,</span>
+          <span class='lbracket'>[</span><span class='symbol'>:meta</span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_save'>save</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>show_grid:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:g</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='ivar'>@show_grid</span> <span class='op'>=</span> <span class='op'>!</span><span class='ivar'>@show_grid</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>add_layer:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:n</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_add_layer'>add_layer</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>toggle_layer_visibility:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:v</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_toggle_layer_visibility'>toggle_layer_visibility</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>select_previous_layer:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:open_square_brace</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_layer'>select_layer</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>select_next_layer:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:close_square_brace</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_select_layer'>select_layer</span><span class='lparen'>(</span><span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_current_layer_index'>current_layer_index</span> <span class='op'>+</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>clear:</span> <span class='lbrace'>{</span>
+        <span class='label'>keybindings:</span> <span class='lbracket'>[</span>
+          <span class='lbracket'>[</span><span class='symbol'>:escape</span><span class='rbracket'>]</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>action:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span>
+          <span class='kw'>if</span> <span class='ivar'>@stroke</span>
+            <span class='ivar'>@stroke</span> <span class='op'>=</span> <span class='kw'>nil</span>
+          <span class='kw'>else</span>
+            <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span> <span class='op'>=</span> <span class='kw'>nil</span>
+          <span class='kw'>end</span>
+        <span class='rbrace'>}</span>
       <span class='rbrace'>}</span>
     <span class='rbrace'>}</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='ivar'>@tools</span><span class='rparen'>)</span>
 
   <span class='ivar'>@background_color</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@background_color</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>r:</span> <span class='int'>40</span><span class='comma'>,</span> <span class='label'>g:</span> <span class='int'>42</span><span class='comma'>,</span> <span class='label'>b:</span> <span class='int'>54</span><span class='comma'>,</span> <span class='label'>a:</span> <span class='int'>255</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@hotkey_handler</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="HotkeyHandler.html" title="SpriteKit::HotkeyHandler (class)">HotkeyHandler</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="HotkeyHandler.html#initialize-instance_method" title="SpriteKit::HotkeyHandler#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@hotkeys</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1264,21 +1274,21 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-261
-262
-263
-264
-265
 266
 267
 268
 269
 270
 271
-272</pre>
+272
+273
+274
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_brush_tiles'>brush_tiles</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sprite'>sprite</span> <span class='op'>=</span> <span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_current_sprite'>current_sprite</span>
@@ -1312,15 +1322,15 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-230
-231
-232
-233
-234
-235</pre>
+235
+236
+237
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_calc'>calc</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_calc_camera'>calc_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1348,12 +1358,12 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-251
-252
-253</pre>
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_grid_h'>grid_h</span>
   <span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_grid_size'>grid_size</span><span class='period'>.</span><span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
@@ -1378,12 +1388,12 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-247
-248
-249</pre>
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_grid_w'>grid_w</span>
   <span class='lbracket'>[</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_grid_size'>grid_size</span><span class='period'>.</span><span class='id identifier rubyid_w'>w</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
@@ -1408,11 +1418,6 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-210
-211
-212
-213
-214
 215
 216
 217
@@ -1426,10 +1431,15 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
 225
 226
 227
-228</pre>
+228
+229
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_calc_layout'>calc_layout</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1443,7 +1453,7 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
   <span class='id identifier rubyid_handle_pan'>handle_pan</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@state</span><span class='period'>.</span><span class='id identifier rubyid_text_input_focused'>text_input_focused</span>
-    <span class='const'><span class='object_link'><a href="HotkeyHandler.html" title="SpriteKit::HotkeyHandler (class)">HotkeyHandler</a></span></span><span class='period'>.</span><span class='id identifier rubyid_handle'>handle</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_inputs'>inputs</span><span class='period'>.</span><span class='id identifier rubyid_keyboard'>keyboard</span><span class='comma'>,</span> <span class='ivar'>@hotkeys</span><span class='rparen'>)</span>
+    <span class='ivar'>@hotkey_handler</span><span class='period'>.</span><span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_build_panel'>build_panel</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1470,18 +1480,18 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-237
-238
-239
-240
-241
 242
 243
 244
-245</pre>
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_render_camera'>render_camera</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1512,13 +1522,13 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-255
-256
-257
-258</pre>
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save'>save</span>
   <span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
@@ -1544,14 +1554,14 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-196
-197
-198
-199
-200</pre>
+201
+202
+203
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick'>tick</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_input'>input</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1587,15 +1597,15 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
       <pre class="lines">
 
 
-203
-204
-205
-206
-207
-208</pre>
+208
+209
+210
+211
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'mygame/lib/sprite_kit/map_editor.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tick_panel'>tick_panel</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_calc_layout'>calc_layout</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -1613,7 +1623,7 @@ The grid size is the same as the brush size (<code>@state.tile_selection.w</code
 </div>
 
       <div id="footer">
-  Generated on Mon Nov  2 00:15:21 2026 by
+  Generated on Wed Nov  4 00:52:56 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.12).
 </div>
