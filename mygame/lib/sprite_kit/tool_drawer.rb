@@ -66,7 +66,7 @@ module SpriteKit
 
         @primitives[:decrement_button].tap do |button|
           button.x = input.x + input.w + 20
-          button.y = input.y + PAD[:bottom]
+          button.y = input.y + PAD[:bottom] + PAD[:top] + 1
         end
 
         @primitives[:increment_button].tap do |button|
@@ -267,8 +267,8 @@ module SpriteKit
         @clickables.concat(@counters.values.map do |c|
           [
             c.primitives[:input],
-            # c.primitives[:increment_button],
-            # c.primitives[:decrement_button],
+            c.primitives[:increment_button],
+            c.primitives[:decrement_button],
           ]
         end.flatten)
       end
@@ -292,6 +292,7 @@ module SpriteKit
 
     def calc(args)
     end
+
 
     def render(args)
       @state.draw_buffer.primitives << self.serialize
@@ -356,199 +357,18 @@ module SpriteKit
 
         if (primitives = attr(c, :primitives))
           render_primitives(primitives.values, @primitives)
+          primitives.values
         else
           render_primitives(c, @primitives)
+          c
         end
       end
 
-      if args.inputs.mouse.click
-        @clickables.concat(controls.select do |c|
-          c.x && c.y && c.h && c.w
-        end)
-
-        clicked_item = Geometry.find_intersect_rect(args.inputs.mouse, @clickables)
-
-        if clicked_item
-          if @focus && @focus != attr(clicked_item, :input)
-            @focus.blur if @focus.can_respond?(:blur)
-          end
-
-
-          if (on_click = attr(clicked_item, :on_click))
-            on_click.call if on_click.is_a?(Proc)
-          end
-
-          putz clicked_item.inspect if clicked_item
-          if clicked_item.is_a?(Hash)
-            clicked_item.focus
-            @focus = clicked_item
-            # prims = clicked_item.primitives || {}
-            # prims&.input&.focus
-            # @focus = clicked_item&.primitives&.input
-            # puts "#{prims}"
-          else
-            @focus = nil
-          end
-        else
-          @focus&.blur
-        end
-      end
+      build_clickables(controls)
+      handle_click(args)
 
       @state.draw_buffer[@render_path]
         .concat(@primitives)
-
-
-      # prev_y = 0
-      # label_gap = 14
-      # text.each_with_index do |label, index|
-      #   label_w, label_h = GTK.calcstringbox(label.text)
-      #   label.w = label_w
-      #   label.h = label_h
-      #   label.x = label_offset_x
-      #   label.y = @h - label_offset_y - prev_y - label_h - (label_gap * index)
-      #   label.primitive_marker = :label
-      #   label.anchor_y = 0
-      #   prev_y += label_h
-      # end
-
-      # if args.inputs.mouse.click
-      #   focus = Geometry.find_intersect_rect(args.inputs.mouse, text)
-
-      #   if focus
-      #     @focus = focus
-      #   else
-      #     @focus = nil
-      #   end
-      # end
-
-      # label_offset_x = 20
-      # counter_buttons = []
-      # button_borders = []
-
-      # @buttons.each do |key, button|
-      #   label = text.find { |hash| hash[:id] == key }
-      #   if label
-      #     button_borders.concat(Primitives.borders(label, padding: 8).values)
-      #     if args.inputs.click && args.inputs.mouse.intersect_rect?(label)
-      #       button.on_click.call
-      #     end
-      #   end
-      # end
-
-      # @counters.each do |key, counter|
-      #   hash = text.find { |hash| hash[:id] == key }
-
-      #   next if !hash
-
-      #   row_gap = 8
-      #   btn_x = hash.x + row_gap + hash.w
-      #   btn_y = hash.y
-
-      #   gap = 20
-      #   decrement_button = {
-      #     x: btn_x + gap,
-      #     y: btn_y + 5,
-      #     w: 16,
-      #     h: 16,
-      #     path: SpriteKit.to_load_path("sprites/minus-sprite.png")
-      #   }
-
-      #   gap = 20
-      #   increment_button = decrement_button.merge({
-      #     x: decrement_button.x + decrement_button.w + gap,
-      #     y: decrement_button.y,
-      #     path: SpriteKit.to_load_path("sprites/plus-sprite.png")
-      #   })
-
-      #   counter_buttons << increment_button
-      #   counter_buttons << decrement_button
-
-      #   if args.inputs.mouse.click || args.inputs.mouse.buttons.left.held
-      #     if args.inputs.mouse.intersect_rect?(increment_button)
-      #       if args.inputs.mouse.click
-      #         counter.increment.call
-      #       elsif args.inputs.mouse.buttons.left.held
-      #         start_tick = args.inputs.mouse.buttons.left.click_at
-      #         current_tick = Kernel.tick_count
-
-      #         diff = (current_tick - (start_tick + 30))
-      #         if diff > 0
-      #           counter.increment.call
-      #         end
-      #       end
-      #     elsif args.inputs.mouse.intersect_rect?(decrement_button)
-      #       if args.inputs.mouse.click
-      #         counter.decrement.call
-      #       elsif args.inputs.mouse.buttons.left.held
-      #         start_tick = args.inputs.mouse.buttons.left.click_at
-      #         current_tick = Kernel.tick_count
-
-      #         diff = (current_tick - (start_tick + 30))
-      #         if diff > 0
-      #           counter.decrement.call
-      #         end
-      #       end
-      #     end
-      #   end
-      # end
-
-      # @state.draw_buffer[@render_path]
-      #   .concat(button_borders)
-      #   .concat(text)
-      #   .concat(counter_buttons)
-
-      # if @focus
-      #   @focus = text.find { |obj| obj.id == @focus.id }
-      #   if @focus
-      #     @state.draw_buffer[@render_path].concat(
-      #       Primitives.borders(@focus, padding: 8).values
-      #     )
-      #   end
-      # end
-
-
-      # need this top-layer
-      # path = labels[-5]
-      # if path && current_sprite
-      #   text_width, text_height = GTK.calcstringbox(path.text)
-      #   path_rect = path.merge({
-      #     w: text_width,
-      #     h: text_height,
-      #   })
-      #   if args.inputs.mouse.intersect_rect?(serialize) && args.inputs.mouse.intersect_rect?(path_rect)
-      #     solid = {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         w: path_rect.w,
-      #         h: path_rect.h,
-      #         r: 0,
-      #         b: 0,
-      #         g: 0,
-      #         a: 255,
-      #         path: :solid
-      #     }.anchor_rect(path_rect.anchor_x || 0, path_rect.anchor_y || 0)
-      #     solid.x -= 4
-      #     solid.y -= 4
-      #     solid.w += 8
-      #     solid.h += 8
-
-      #     @state.draw_buffer[:top_layer].concat([
-      #       solid,
-      #       {
-      #         x: path_rect.x,
-      #         y: path_rect.y,
-      #         text: path_rect.text,
-      #         primitive_marker: :label,
-      #         anchor_y: path_rect.anchor_y,
-      #         r: 255,
-      #         g: 255,
-      #         b: 255,
-      #         a: 255,
-      #       }.label!,
-      #     ])
-      #   end
-      # end
-
     end
 
     def render_primitives(c, ary = [])
@@ -579,6 +399,57 @@ module SpriteKit
         end
         c[:anchor_y] ||= 0
       end
+    end
+
+    # Order matters: find_intersect_rect returns the first hit,
+    # so the most specific targets go first.
+    def build_clickables(controls)
+      @clickables = []
+
+      @counters.each_value do |c|
+        prims = c.primitives
+        @clickables << prims[:input]
+        @clickables << prims[:increment_button]
+        @clickables << prims[:decrement_button]
+      end
+
+      # Only real buttons (hashes with on_click), never plain labels or Counter wrappers
+      controls.each do |c|
+        @clickables << c if c.is_a?(Hash) && c[:on_click]
+      end
+
+      @clickables.compact!
+    end
+
+    def handle_click(args)
+      mouse = args.inputs.mouse
+      return unless mouse.click
+
+      clicked = Geometry.find_intersect_rect(mouse, @clickables)
+
+      # Focus first, so an input blurs (and syncs state -> input)
+      # before a +/- button changes the value
+      set_focus(focusable_for(clicked))
+
+      on_click = clicked && attr(clicked, :on_click)
+      on_click.call if on_click.is_a?(Proc)
+    end
+
+    # Only text inputs can take focus; everything else clears it
+    def focusable_for(item)
+      return nil unless item
+      return item if item.is_a?(Vendor::Input::Text)
+
+      prims = attr(item, :primitives)
+      prims && prims[:input]
+    end
+
+    def set_focus(target)
+      return if target.equal?(@focus)
+
+      @focus&.blur
+      @focus = target
+      @focus&.focus
     end
 
     def attr(obj, key)
