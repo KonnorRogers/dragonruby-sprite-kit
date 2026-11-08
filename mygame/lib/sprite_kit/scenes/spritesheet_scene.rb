@@ -48,6 +48,7 @@ module SpriteKit
       end
 
       def tick(args)
+        @state.focus = @tool_drawer.focus
         @state.outputs = args.outputs
         @state.draw_buffer.outputs = args.outputs
 

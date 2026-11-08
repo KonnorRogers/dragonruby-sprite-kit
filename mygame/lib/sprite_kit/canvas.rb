@@ -74,6 +74,8 @@ module SpriteKit
     end
 
     def move_camera(args)
+      return if @state.focus
+
       inputs = args.inputs
 
       speed = camera_speed
