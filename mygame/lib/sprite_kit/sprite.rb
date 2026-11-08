@@ -7,6 +7,18 @@ module SpriteKit
       kwargs.each { |k, v| send("#{k}=", v) }
     end
 
+    def [](key)
+      send(key)
+    end
+
+    def []=(key, value)
+      send("#{key}=", value)
+    end
+
+    def key?(key)
+      respond_to?(key) || instance_variable_defined?(key)
+    end
+
     def method_missing(m, *args, &block)
       name = m.to_s
       return super if name.end_with?("?", "!") || block

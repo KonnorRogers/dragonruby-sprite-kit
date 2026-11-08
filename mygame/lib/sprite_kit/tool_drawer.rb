@@ -131,7 +131,7 @@ module SpriteKit
               h: hash.h + (hash.padding * 2),
             })
 
-            @clickables << click_box
+            # @clickables << click_box
             hash.y = hash.y + (hash.padding / 2) + 2
             hash.x = hash.x + (hash.padding / 2) + 2
           }
@@ -162,7 +162,7 @@ module SpriteKit
               h: hash.h + (hash.padding * 2),
             })
 
-            @clickables << click_box
+            # @clickables << click_box
             hash.y = hash.y + (hash.padding / 2) + 2
             hash.x = hash.x + (hash.padding / 2) + 2
           }
@@ -190,7 +190,7 @@ module SpriteKit
               h: hash.h + (hash.padding * 2),
             })
 
-            @clickables << click_box
+            # @clickables << click_box
             hash.y = hash.y + (hash.padding / 2) + 2
             hash.x = hash.x + (hash.padding / 2) + 2
           }
@@ -267,8 +267,8 @@ module SpriteKit
         @clickables.concat(@counters.values.map do |c|
           [
             c.primitives[:input],
-            c.primitives[:increment_button],
-            c.primitives[:decrement_button],
+            # c.primitives[:increment_button],
+            # c.primitives[:decrement_button],
           ]
         end.flatten)
       end
@@ -349,13 +349,13 @@ module SpriteKit
         end
 
         padding = 0
-        if c.is_a?(Hash) || c.respond_to?(:padding)
+        if can_respond?(c, :padding)
           padding = (c.padding || 0) * 2
         end
         cursor_y = c.y - gap - padding
 
-        if (c.is_a?(Hash) || c.respond_to?(:primitives)) && c.primitives
-          render_primitives(c.primitives.values, @primitives)
+        if (primitives = attr(c, :primitives))
+          render_primitives(primitives.values, @primitives)
         else
           render_primitives(c, @primitives)
         end
@@ -369,20 +369,28 @@ module SpriteKit
         clicked_item = Geometry.find_intersect_rect(args.inputs.mouse, @clickables)
 
         if clicked_item
-          @focus.blur if @focus != clicked_item.input
-
-          if (clicked_item.is_a?(Hash) && clicked_item.on_click.is_a?(Proc))
-            clicked_item.on_click.call
+          if @focus && @focus != attr(clicked_item, :input)
+            @focus.blur if @focus.can_respond?(:blur)
           end
 
-          if (clicked_item.is_a?(Hash) || clicked_item.respond_to?(:primitives)) && clicked_item.primitives
-            clicked_item.primitives.input.focus
-            @focus = clicked_item.primitives.input
+
+          if (on_click = attr(clicked_item, :on_click))
+            on_click.call if on_click.is_a?(Proc)
+          end
+
+          putz clicked_item.inspect if clicked_item
+          if clicked_item.is_a?(Hash)
+            clicked_item.focus
+            @focus = clicked_item
+            # prims = clicked_item.primitives || {}
+            # prims&.input&.focus
+            # @focus = clicked_item&.primitives&.input
+            # puts "#{prims}"
           else
             @focus = nil
           end
         else
-          @focus.blur if @focus
+          @focus&.blur
         end
       end
 
@@ -553,7 +561,7 @@ module SpriteKit
           stack.concat(item.reverse)   # keep original order after pop
         elsif item.is_a?(Hash)
           ary << item                  # a primitive, not a container
-        elsif item.respond_to?(:primitives) && (prims = item.primitives)
+        elsif (prims = attr(item, :primitives))
           stack.push(prims)
         else
           ary << item                  # a primitive, not a container
@@ -570,6 +578,22 @@ module SpriteKit
           c.h ||= c_h + ((c.padding || 0) * 2)
         end
         c[:anchor_y] ||= 0
+      end
+    end
+
+    def attr(obj, key)
+      if obj.respond_to?(:[])
+        obj[key]
+      elsif obj.respond_to?(key)
+        obj.send(key)
+      end
+    end
+
+    def can_respond?(obj, key)
+      if obj.respond_to?(:key?)
+        true
+      else
+        obj.respond_to?(key)
       end
     end
   end
